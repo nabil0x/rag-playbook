@@ -1,0 +1,11 @@
+[
+  {
+    "content": "A vector database stores embeddings and returns the nearest neighbours of a query vector."
+  },
+  {
+    "content": "RecursiveCharacterTextSplitter cuts documents by character count while respecting paragraph boundaries."
+  },
+  {
+    "content": "Metadata filters restrict which chunks a search considers before any similarity comparison is made."
+  }
+]

@@ -1,0 +1,5 @@
+title,author,year,summary
+Attention Is All You Need,Vaswani et al.,2017,"Introduces the Transformer, a self-attention architecture for sequence modelling."
+BERT,Devlin et al.,2018,"Pre-trains a bidirectional Transformer on unlabeled text for transfer learning."
+Retrieval-Augmented Generation,Lewis et al.,2020,"Combines a parametric generator with a non-parametric retriever over a corpus."
+Reciprocal Rank Fusion,Cormack et al.,2009,"Fuses ranked lists by summing the reciprocal of each document's rank."

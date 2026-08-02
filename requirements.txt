@@ -1,0 +1,19 @@
+langchain
+langchain-classic
+langchain-core
+langchain-community
+langchain-google-genai
+langchain-groq
+langchain-text-splitters
+langchain-chroma
+langchain-openai
+langchain-huggingface
+pypdf
+python-dotenv
+
+# Optional, per Topics/Project-07-Compare-Vector-Databases/README.md:
+# faiss-cpu
+# langchain-qdrant
+# langchain-pinecone
+# langchain-postgres
+# langchain-milvus

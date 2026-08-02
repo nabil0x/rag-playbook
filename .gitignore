@@ -1,0 +1,25 @@
+# Secrets — never publish
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Vector DB artifacts (regenerable)
+**/chroma_langchain_db/
+**/*.sqlite3
+**/lancedb/
+**/qdrant_storage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tooling artifacts
+.omo/
