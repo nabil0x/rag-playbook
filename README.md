@@ -90,7 +90,7 @@ RAG/
 ├── requirements.txt              ← Python dependencies
 ├── .env.example                  ← copy to .env, add your API keys
 ├── .gitignore                    ← keeps secrets & regenerable artifacts out of git
-├── main.py                       ← target wiring for Project 17 (aspirational)
+├── main.py                       ← runnable RAGPipeline wiring (Project 17)
 │
 ├── Topics/                       ← publishable content — one folder per project
 │   ├── README.md                 ← content map + per-project status
@@ -119,32 +119,32 @@ can swap any block without touching the rest of the pipeline.
 | Module | Class | What it does | Status |
 |--------|-------|--------------|--------|
 | `loaders/web.py` | `WebLoader` | Scrapes one URL (requests + BeautifulSoup) → `list[Document]` | ✅ Implemented |
-| `loaders/pdf.py` | `PDFLoader` | Parses a PDF (PyPDFLoader) → documents | 🚧 Stub |
-| `loaders/csv.py` | `CSVLoader` | Reads CSV rows → documents | 🚧 Stub |
+| `loaders/pdf.py` | `PDFLoader` | Parses a PDF (PyPDFLoader) → documents | ✅ Implemented |
+| `loaders/csv_loader.py` | `CSVLoader` | Reads CSV rows → documents | ✅ Implemented |
 | `splitters/recursive.py` | `DocumentProcessor` | Splits documents into overlapping chunks (RecursiveCharacterTextSplitter) | ✅ Implemented |
-| `splitters/semantic.py` | `SemanticSplitter` | Splits on semantic similarity (embedding-aware) | 🚧 Stub |
-| `splitters/token.py` | `TokenSplitter` | Splits by token budget | 🚧 Stub |
-| `embeddings/gemini.py` | `GeminiEmbedding` | Gemini embeddings (Google AI Studio) — the default model | 🚧 Stub |
-| `embeddings/bge.py` | `BGEEmbedding` | Local BGE embeddings (sentence-transformers) | 🚧 Stub |
-| `embeddings/e5.py` | `E5Embedding` | Local E5 embeddings | 🚧 Stub |
-| `vectordb/chroma.py` | `ChromaVectorStore` | Chroma — persistent, the default store | 🚧 Stub |
-| `vectordb/faiss.py` | `FAISSVectorStore` | FAISS — fast in-memory index | 🚧 Stub |
-| `vectordb/qdrant.py` | `QdrantVectorStore` | Qdrant — server-based store | 🚧 Stub |
-| `retrieval/similarity.py` | `SimilarityRetriever` | Top-k by vector similarity | 🚧 Stub |
-| `retrieval/mmr.py` | `MMRRetriever` | Maximum Marginal Relevance — diverse results | 🚧 Stub |
-| `retrieval/hybrid.py` | `HybridRetriever` | BM25 keyword + dense vector fusion | 🚧 Stub |
+| `splitters/semantic.py` | `SemanticSplitter` | Splits on semantic similarity (embedding-aware) | ✅ Implemented |
+| `splitters/token_splitter.py` | `TokenSplitter` | Splits by token budget | ✅ Implemented |
+| `embeddings/gemini.py` | `GeminiEmbedding` | Gemini embeddings (Google AI Studio) — the default model | ✅ Implemented |
+| `embeddings/bge.py` | `BGEEmbedding` | Local BGE embeddings (sentence-transformers) | ✅ Implemented |
+| `embeddings/e5.py` | `E5Embedding` | Local E5 embeddings | ✅ Implemented |
+| `vectordb/chroma.py` | `ChromaVectorStore` | Chroma — persistent, the default store | ✅ Implemented |
+| `vectordb/faiss.py` | `FAISSVectorStore` | FAISS — fast in-memory index | ✅ Implemented |
+| `vectordb/qdrant.py` | `QdrantVectorStore` | Qdrant — server-based store | ✅ Implemented |
+| `retrieval/similarity.py` | `SimilarityRetriever` | Top-k by vector similarity | ✅ Implemented |
+| `retrieval/mmr.py` | `MMRRetriever` | Maximum Marginal Relevance — diverse results | ✅ Implemented |
+| `retrieval/hybrid.py` | `HybridRetriever` | BM25 keyword + dense vector fusion | ✅ Implemented |
 | `prompts/basic.py` | `BasicPrompt` | "Answer from context" template + `format()` | ✅ Implemented |
 | `prompts/citation.py` | `CitationPrompt` | "Answer with source citations" template + `format()` | ✅ Implemented |
-| `llms/gemini.py` | `GeminiLLM` | Gemini chat completions — the default LLM | 🚧 Stub |
-| `llms/openai.py` | `OpenAILLM` | OpenAI chat completions | 🚧 Stub |
+| `llms/gemini.py` | `GeminiLLM` | Gemini chat completions — the default LLM | ✅ Implemented |
+| `llms/openai.py` | `OpenAILLM` | OpenAI chat completions | ✅ Implemented |
 
-**Implemented today (4):** `WebLoader`, `DocumentProcessor`, `BasicPrompt`,
-`CitationPrompt` — enough to run the first half of the pipeline right now
-(see [Try it now](#try-it-now)).
-
-**Stubs (15):** each raises `NotImplementedError` and carries a docstring
-explaining the contract and which project will implement it. They are the
-curriculum's to-do list, in dependency order (see [Roadmap](#roadmap--build-order)).
+**All 19 blocks are implemented.** Run any module directly
+(`python loaders/csv_loader.py`, `python splitters/token_splitter.py`, …) for
+a self-check, or the whole pipeline with `python main.py` (needs a
+`GOOGLE_API_KEY` in `.env`). Every component that depends on an optional
+package (`pypdf`, `sentence-transformers`, `faiss-cpu`, `langchain-qdrant`,
+`langchain-openai`) imports it lazily and prints a `SKIP: pip install …` hint
+when it's missing.
 
 ### Notebooks — one per project, under `NoteBooks/Project-NN-*`
 
@@ -189,21 +189,23 @@ inside the notebooks directory is a regenerable vector-store artifact.
 ### `main.py` — the endgame
 
 ```python
-loader = PDFLoader()
-splitter = SemanticSplitter()
-embedder = BGEEmbedding()
-db = FAISSVectorStore()
-retriever = MMRRetriever(db)
-llm = GeminiLLM()
-
-pipeline = RAGPipeline(loader, splitter, embedder, db, retriever, llm)
-pipeline.ask("What is Task Decomposition?")
+pipeline = RAGPipeline(
+    loader=CSVLoader("NoteBooks/Data/sample.csv"),
+    splitter=DocumentProcessor(),     # any splitter — swap freely
+    embedder=GeminiEmbedding(),      # any embedding model
+    db=ChromaVectorStore(embedding=embedder),  # any vector store
+    retriever=SimilarityRetriever(db),         # any retriever
+    llm=GeminiLLM(),                 # any LLM
+)
+pipeline.ingest()                    # load → split → embed → store
+pipeline.ask("What is the sample about?")
 ```
 
-This is the **target**, not the current state: `RAGPipeline` doesn't exist yet,
-and most of these classes are still stubs. By the end of Project 17 you will
-have built exactly this — your own pluggable framework assembled from the
-classes you implemented along the way.
+This is the **endgame**: `RAGPipeline` in `main.py` wires the six blocks together
+and every block is a swappable class from the component library above. Run
+`python main.py` to see the whole pipeline work end to end (needs a
+`GOOGLE_API_KEY` in `.env`). By the end of Project 17 you build exactly this
+from the components you implemented along the way.
 
 ### Configuration
 
@@ -274,8 +276,9 @@ is `Topics/Project-01-Baseline-RAG/01-baseline-rag.md`.
 
 ## Roadmap — build order
 
-The stubs form a dependency chain. Implementing in this order keeps every
-pipeline runnable as soon as the next block lands:
+All components are implemented; this is the dependency order the projects
+unlock them in — and the order you'd rebuild them from scratch in Project 16
+(pure Python) and Project 17 (your own framework):
 
 1. `embeddings/gemini.py` → `vectordb/chroma.py` → `llms/gemini.py`
    — completes the **Project 01** pipeline as plain code.
@@ -283,7 +286,7 @@ pipeline runnable as soon as the next block lands:
 3. `embeddings/bge.py` + `vectordb/faiss.py` — unlocks **Project 03** (offline).
 4. `vectordb/qdrant.py` — **Project 07** store comparison.
 5. `retrieval/mmr.py` → `retrieval/hybrid.py` — **Projects 08 & 15**.
-6. `splitters/semantic.py` + `splitters/token.py` — **Projects 09 & 11**.
+6. `splitters/semantic.py` + `splitters/token_splitter.py` — **Projects 09 & 11**.
 7. `llms/openai.py` — optional alternative backend.
 8. **Project 16** — rewrite each block in pure Python (no LangChain).
 9. **Project 17** — assemble `RAGPipeline` in `main.py` from your classes.

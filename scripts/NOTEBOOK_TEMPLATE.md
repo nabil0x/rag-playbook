@@ -14,8 +14,9 @@ real library imports and patterns used in this repo.
 - **Teacher-first markdown.** Every markdown cell explains WHAT the step does,
   WHY it matters for RAG, and WHAT to expect in the output. No bare headers.
 - **Runnable, real code.** Notebooks use the real libraries already in
-  `requirements.txt` — never the repo stub modules (they raise
-  `NotImplementedError`). Match the imports of `04-baseline-rag.ipynb`.
+  `requirements.txt` — never the repo component modules in `loaders/`…`llms/`
+  (they are the Project 17 assembly, not what the notebooks teach). Match the
+  imports of `04-baseline-rag.ipynb`.
 - **Honest about optional deps.** If a step needs an optional package
   (sentence-transformers, faiss-cpu, langchain-qdrant), include an install
   cell in Setup and note it's needed for this project only.
@@ -154,7 +155,7 @@ missing.
 
 - Small section-wise cells: split logic into many tiny code cells; md cells teach each step.
 - Every markdown section explains WHAT + WHY (learning documentation).
-- Use real libraries only (cheat-sheet above); the repo stub modules are off-limits.
+- Use real libraries only (cheat-sheet above); the repo component modules in `loaders/`…`llms/` are off-limits (notebooks teach the underlying libraries, not the repo's Project-17 assembly).
 - Match the kernelspec/format produced by the generator (never hand-write ipynb JSON).
 - End with "What you should notice" + "Exercises" markdown sections.
 - Keep code cells ≤ ~15 lines; if a step is long, split it into more cells.
@@ -163,7 +164,7 @@ missing.
 ## MUST NOT DO
 
 - Do NOT edit anything outside the notebook(s) you are assigned.
-- Do NOT modify `Topics/`, `README.md`, `requirements.txt`, repo stub modules, or `scripts/`.
+- Do NOT modify `Topics/`, `README.md`, `requirements.txt`, repo component modules, or `scripts/`.
 - Do NOT delete or rename the existing Project-01 notebooks.
 - Do NOT execute notebook cells (no API calls, no model downloads, no training).
 - Do NOT use `nbformat` (not installed); always go through `scripts/gen_notebook.py`.

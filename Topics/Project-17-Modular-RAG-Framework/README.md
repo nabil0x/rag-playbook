@@ -44,8 +44,9 @@ pipeline = RAGPipeline(
 ## Code
 
 This is what `loaders/`, `splitters/`, `embeddings/`, `vectordb/`, `retrieval/`,
-`prompts/`, `llms/` + `main.py` become — the class stubs in the repo root are the
-starting point.
+`prompts/`, `llms/` + `main.py` become — every block in the repo root is a
+working implementation, and the interface each one follows is the contract
+you'd enforce here.
 
 ## Notebook
 
