@@ -38,13 +38,15 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, "Data")
 MANIFEST = os.path.join(DATA_DIR, ".samples-manifest.txt")
 USER_AGENT = "rag-playbook/1.0 contact@example.com"
+# Wikimedia Commons Special:FilePath 403s the generic agent; it needs a browser UA.
+BROWSER_UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 ENRON_URL = "https://www.cs.cmu.edu/~./enron/enron_mail_20150507.tar.gz"
 HEX = set("0123456789abcdef")
 
 
-def _open(url, timeout=180):
+def _open(url, timeout=180, ua=None):
     """Open *url* with a descriptive User-Agent (SEC requires one)."""
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    req = urllib.request.Request(url, headers={"User-Agent": ua or USER_AGENT})
     return urllib.request.urlopen(req, timeout=timeout)
 
 
@@ -67,10 +69,10 @@ def candidate_url(cand: dict) -> str:
     return ia_file_url(cand["ia"]["item"], cand["ia"]["needle"]) if "ia" in cand else cand["url"]
 
 
-def fetch(url: str, dest: str) -> bool:
+def fetch(url: str, dest: str, ua=None) -> bool:
     """Stream *url* to *dest*; True on success, False on any error."""
     try:
-        with _open(url) as resp, open(dest, "wb") as fh:
+        with _open(url, ua=ua) as resp, open(dest, "wb") as fh:
             for chunk in iter(lambda: resp.read(65536), b""):
                 fh.write(chunk)
         return True
@@ -241,6 +243,14 @@ SAMPLES = [
     {"relpath": "SD-06-tables/aapl-20230930.htm", "primary": {"url": "https://www.sec.gov/Archives/edgar/data/0000320193/000032019323000106/aapl-20230930.htm", "magic": "text", "min_size": 500000}},
     {"relpath": "SD-07-chat/sample-chat.txt", "primary": {"url": "https://raw.githubusercontent.com/mutluksap/whatsapp-chat-export-viewer/main/docs/sample-chat.txt", "magic": "text", "min_size": 200}, "alt": {"url": "https://raw.githubusercontent.com/roboteam-digital/telegram-json-ui/main/frontend/sveltekit/static/example/telegram-test-json/result.json", "relpath": "SD-07-chat/result.json", "magic": "text", "min_size": 200}},
     {"relpath": "SD-08-invoices/Invoice_1.pdf", "primary": {"url": "https://raw.githubusercontent.com/Azure-Samples/azure-openai-gpt-4-vision-pdf-extraction-sample/main/Invoice_1.pdf", "magic": b"%PDF", "min_size": 100000}, "alt": {"url": "https://raw.githubusercontent.com/Azure/azure-sdk-for-js/main/sdk/formrecognizer/ai-form-recognizer/assets/invoice/Invoice_1.pdf", "magic": b"%PDF", "min_size": 100000}},
+    {"relpath": "SD-08-invoices/Invoice-6.pdf", "primary": {"url": "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/Invoice-6.pdf", "magic": b"%PDF", "min_size": 50000}, "alt": {"url": "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/sample-invoice.pdf", "relpath": "SD-08-invoices/sample-invoice.pdf", "magic": b"%PDF", "min_size": 50000}},
+    {"relpath": "SD-08-invoices/sample-invoice.pdf", "primary": {"url": "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/sample-invoice.pdf", "magic": b"%PDF", "min_size": 50000}},
+    {"relpath": "SD-08-invoices/multipage_invoice1.pdf", "primary": {"url": "https://raw.githubusercontent.com/Azure/azure-sdk-for-python/master/sdk/formrecognizer/azure-ai-formrecognizer/tests/sample_forms/forms/multipage_invoice1.pdf", "magic": b"%PDF", "min_size": 50000}, "alt": {"url": "https://raw.githubusercontent.com/Azure/azure-sdk-for-python/master/sdk/formrecognizer/azure-ai-formrecognizer/tests/sample_forms/forms/Invoice_1.pdf", "relpath": "SD-08-invoices/sdk-invoice1.pdf", "magic": b"%PDF", "min_size": 50000}},
+    {"relpath": "SD-08-invoices/sdk-invoice1.pdf", "primary": {"url": "https://raw.githubusercontent.com/Azure/azure-sdk-for-python/master/sdk/formrecognizer/azure-ai-formrecognizer/tests/sample_forms/forms/Invoice_1.pdf", "magic": b"%PDF", "min_size": 50000}},
+    {"relpath": "SD-08-invoices/watson-hall-1898.pdf", "primary": {"url": "https://commons.wikimedia.org/wiki/Special:FilePath/1898-11-01_Watson_and_Co_to_Mrs_Hall.pdf", "ua": BROWSER_UA, "magic": b"%PDF", "min_size": 500000}, "alt": {"url": "https://commons.wikimedia.org/wiki/Special:FilePath/Josiah_Macy_and_Sons_receipt_to_Almy_Patterson_and_Company_%28e980cf771c8440bd878580ee90692241%29.pdf", "relpath": "SD-08-invoices/macy-receipt.pdf", "ua": BROWSER_UA, "magic": b"%PDF", "min_size": 500000}},
+    {"relpath": "SD-08-invoices/macy-receipt.pdf", "primary": {"url": "https://commons.wikimedia.org/wiki/Special:FilePath/Josiah_Macy_and_Sons_receipt_to_Almy_Patterson_and_Company_%28e980cf771c8440bd878580ee90692241%29.pdf", "ua": BROWSER_UA, "magic": b"%PDF", "min_size": 500000}},
+    {"relpath": "SD-08-invoices/german-zugferd.pdf", "primary": {"url": "https://erechnungs-validator.de/wp-content/uploads/2024/10/zugferd-beispiel.pdf", "magic": b"%PDF", "min_size": 50000}, "alt": {"url": "https://www.vgsd.de/wp-content/uploads/2023/09/EN16931_Einfach.pdf", "magic": b"%PDF", "min_size": 50000}},
+    {"relpath": "SD-08-invoices/szamla-minta.jpg", "primary": {"url": "https://commons.wikimedia.org/wiki/Special:FilePath/Sz%C3%A1mla_minta.jpg", "ua": BROWSER_UA, "magic": b"\xff\xd8", "min_size": 500000}},
 ]
 
 
@@ -266,7 +276,7 @@ def process_sample(spec: dict, manifest: dict, force: bool, lines: list, results
         last_url = url
         if os.path.exists(dest):
             os.remove(dest)
-        if fetch(url, dest) and verify(dest, cand["magic"], cand["min_size"]):
+        if fetch(url, dest, ua=cand.get("ua")) and verify(dest, cand["magic"], cand["min_size"]):
             used_url, status = url, "OK" if cand is spec["primary"] else "fallback-used"
             break
 

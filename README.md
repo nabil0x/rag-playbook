@@ -110,7 +110,7 @@ aren't clean PDFs and markdown? Every entry uses the same benchmark methodology
 | 05 | Scanned/OCR | `gilman1892.pdf`, `gitanjali1914_jp2.zip` | — | 🟡 Planned |
 | 06 | Tables & forms | SEC filing (`.htm`), bank statements (`bkash`, `nagad`), IRS `f1040.pdf` | — | 🟡 Planned |
 | 07 | Chat transcripts | `sample-chat.txt`, `bangla_chat.txt` | — | 🟡 Planned |
-| 08 | Invoices (multilingual) | restaurant bill, `Invoice_1.pdf`, `mushak63_invoice.pdf` | — | 🟡 Planned |
+| 08 | Invoices (multilingual) | 9 real files — 6 text PDFs (`sample-invoice`, `multipage_invoice1`, `Invoice_1`, `Invoice-6`, `sdk-invoice1`, German ZUGFeRD) + 2 scanned (`watson-hall-1898`, `macy-receipt`) + `szamla-minta.jpg` | `SD-08-Invoices/01…03` | ✅ Shipped |
 
 **Headline findings so far (SD-01, Word):**
 
