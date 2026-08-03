@@ -11,6 +11,12 @@ langchain-huggingface
 pypdf
 python-dotenv
 
+# Special Documents series (Projects SD-01..SD-08): structure-aware parsing
+python-docx
+python-pptx
+openpyxl
+pdfplumber
+
 # Optional, per Topics/Project-07-Compare-Vector-Databases/README.md:
 # faiss-cpu
 # langchain-qdrant

@@ -1,0 +1,10 @@
+https://archive.org/download/Gitanjali1914RabindranathTagore/Gitanjali%20%281914%29%20Rabindranath%20Tagore_jp2.zip|9f1dbed17c5146b37d62f73ee0f40f69c7c5e71acd7a2fdc23517bc3cff5b4a3|12531704|SD-05-ocr/gitanjali1914_jp2.zip
+https://archive.org/download/gilman1892/gilman1892.pdf|a0ef70d8e92864449a411e0d85ee08318306d098f63f0988fbae6f3d121e92de|4502926|SD-05-ocr/gilman1892.pdf
+https://raw.githubusercontent.com/Azure-Samples/azure-openai-gpt-4-vision-pdf-extraction-sample/main/Invoice_1.pdf|9e6b10c05343d1c7e21a6cb655a8fe2630c21ff8ca4e4c5f21f41c5816909a93|309123|SD-08-invoices/Invoice_1.pdf
+https://raw.githubusercontent.com/apache/poi/trunk/test-data/spreadsheet/SampleSS.xlsx|44f1b6ef310c370d4902ee3452e6174da25a67bdb09f47850d51b3287cb3db71|9112|SD-03-excel/SampleSS.xlsx
+https://raw.githubusercontent.com/mikel/mail/master/spec/fixtures/emails/mime_emails/raw_email_with_nested_attachment.eml|726a7affbd671a8b193d231834bea9a66e69ca323a13c8bed30feabeca9e12c0|5051|SD-04-email/raw_email_with_nested_attachment.eml
+https://raw.githubusercontent.com/mutluksap/whatsapp-chat-export-viewer/main/docs/sample-chat.txt|509b40be829862d3a97d1f14371bcc29070698157b77ea33109d58fb54b75512|1189|SD-07-chat/sample-chat.txt
+https://raw.githubusercontent.com/python-openxml/python-docx/master/features/steps/test_files/blk-paras-and-tables.docx|93f40c8a23dbcbc75b073e0f7050a5f064e6aff58c1bc6c6003359122e9faf79|15649|SD-01-word/blk-paras-and-tables.docx
+https://raw.githubusercontent.com/scanny/python-pptx/master/features/steps/test_files/prs-notes.pptx|664dc13965c7ea24688256d1ecd869936ca51a2e94d2aefe0f614bb8554976ea|86792|SD-02-ppt/prs-notes.pptx
+https://www.irs.gov/pub/irs-pdf/f1040.pdf|3d31c226df0d189ced80e039d01cf0f8820c1019681a0f0ca6264de277b7e982|220237|SD-06-tables/f1040.pdf
+https://www.sec.gov/Archives/edgar/data/0000320193/000032019323000106/aapl-20230930.htm|bda1f34435199672c16ecdf2034c650872d2cac8399ed0d179fc25450b080b90|1558924|SD-06-tables/aapl-20230930.htm
