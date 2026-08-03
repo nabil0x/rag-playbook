@@ -26,7 +26,7 @@ class CSVLoader:
 
 
 if __name__ == "__main__":
-    path = sys.argv[1] if len(sys.argv) > 1 else "NoteBooks/Data/sample.csv"
+    path = sys.argv[1] if len(sys.argv) > 1 else "Data/sample.csv"
     docs = CSVLoader(path).load()
     print(f"Loaded {len(docs)} document(s) from {path}")
     if docs:

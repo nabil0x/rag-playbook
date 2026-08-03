@@ -110,7 +110,7 @@ replace the sample entirely.
 from pathlib import Path
 
 # PDF_PATH -> set this to your own PDF, or leave it to use the Gutenberg sample.
-PDF_PATH = Path("NoteBooks/Data/pg79247.pdf")
+PDF_PATH = Path("Data/pg79247.pdf")
 
 GUTENBERG_PDF = "https://www.gutenberg.org/cache/epub/79247/pg79247-pdf.pdf"
 GUTENBERG_HTML = "https://www.gutenberg.org/cache/epub/79247/pg79247-images.html"

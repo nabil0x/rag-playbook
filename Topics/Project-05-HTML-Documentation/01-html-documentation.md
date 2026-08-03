@@ -84,7 +84,7 @@ the Python tutorial — a stable URL with a rich `h1`/`h2` structure.
 visible text into `Document`s, with the URL saved in `metadata["source"]`.
 
 **Fallback note:** if the network is unavailable (or the site blocks the
-request), save the page once (`curl -o NoteBooks/Data/controlflow.html
+request), save the page once (`curl -o Data/controlflow.html
 https://docs.python.org/3/tutorial/controlflow.html`) and load it from disk —
 the custom loader we build next reads from a saved file just as easily.
 

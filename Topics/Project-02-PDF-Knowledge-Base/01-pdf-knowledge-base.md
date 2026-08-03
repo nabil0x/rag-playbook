@@ -74,15 +74,15 @@ RAG needs plain text, so the loader's job is to pull the words out of the PDF.
 zero-based `page` number, which you can use later to tell the user *which page*
 an answer came from.
 
-* Drop your own PDF into `NoteBooks/Data/` and point `PDF_PATH` at it, **or**
+* Drop your own PDF into `Data/` and point `PDF_PATH` at it, **or**
 * run the fallback cell below to download a public-domain sample from Project
   Gutenberg.
 
 ---
 
 ```python
-# Point this at a PDF you dropped into NoteBooks/Data/.
-PDF_PATH = "NoteBooks/Data/my-document.pdf"
+# Point this at a PDF you dropped into Data/.
+PDF_PATH = "Data/my-document.pdf"
 
 if os.path.exists(PDF_PATH):
     print(f"Found your PDF: {PDF_PATH}")
@@ -98,7 +98,7 @@ else:
 # "The Declaration of Independence of the United States of America".
 import urllib.request
 
-PDF_PATH = "NoteBooks/Data/declaration-of-independence.pdf"
+PDF_PATH = "Data/declaration-of-independence.pdf"
 URL = "https://www.gutenberg.org/files/16780/16780-pdf.pdf"
 
 if not os.path.exists(PDF_PATH):

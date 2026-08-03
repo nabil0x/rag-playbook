@@ -83,14 +83,14 @@ per-format loader (`TextLoader` for `.md` / `.txt`). That is what makes a
 "local documentation search": point it at your docs folder and every file
 becomes searchable.
 
-We index `NoteBooks/Data/local-docs/` — a tiny sample knowledge base with a
+We index `Data/local-docs/` — a tiny sample knowledge base with a
 `README.md` and two topic pages under `docs/`. Add your own files there later
 to grow the index.
 
 ---
 
 ```python
-DATA_DIR = "NoteBooks/Data/local-docs"
+DATA_DIR = "Data/local-docs"
 
 loader = DirectoryLoader(
     DATA_DIR,
@@ -278,7 +278,7 @@ print(response.content)
 
 ## 8 · Try it yourself
 
-Add your own `.md` / `.txt` files to `NoteBooks/Data/local-docs/`, re-run Load →
+Add your own `.md` / `.txt` files to `Data/local-docs/`, re-run Load →
 Store (no API cost — embedding is local), then ask new questions. Or change `k`
 in retrieval to widen or narrow the context given to the LLM.
 
@@ -320,14 +320,14 @@ print(answer3.content)
 * **FAISS is an in-memory index.** No server process; persistence is manual via
   `save_local` / `load_local`.
 * **DirectoryLoader scales to whole trees.** One `glob` indexed every markdown
-  file under `NoteBooks/Data/local-docs/` — point it at a bigger folder and you
+  file under `Data/local-docs/` — point it at a bigger folder and you
   have a local docs search.
 
 ---
 
 ## Exercises
 
-1. Add 2–3 of your own `.md` files under `NoteBooks/Data/local-docs/` (or switch
+1. Add 2–3 of your own `.md` files under `Data/local-docs/` (or switch
    `glob` to `"**/*.txt"`) and re-index. No API cost — only the final LLM answer
    needs a key.
 2. Build the index once with `vector_store.save_local("faiss_index/")`, then in

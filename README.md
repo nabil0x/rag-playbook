@@ -1,18 +1,30 @@
-# RAG from Zero to Advanced
+# RAG Playbook
 
-A hands-on curriculum that teaches Retrieval-Augmented Generation (RAG) by
-building **one application** and swapping **one component at a time**.
+> **RAG from Zero to Advanced** — a hands-on, component-swappable curriculum for
+> Retrieval-Augmented Generation, with a benchmark-driven research series on
+> special document formats.
 
-Instead of 20 unrelated demos, you build the same RAG pipeline through
-**17 projects + a benchmark capstone**. Each project changes exactly one block —
-a loader, a splitter, an embedding model, a vector database, a retriever, a
-prompt, or an LLM — so you can isolate the effect of every design decision and
-answer the questions that matter:
+Three things live in this repo, all built on the same swappable pipeline:
 
-- Why this chunk size?
-- Why this embedding model?
-- Why this retriever?
-- How do I measure the difference?
+1. **A curriculum** — 18 projects + a benchmark capstone. You build **one RAG
+   application** and swap **one component at a time**: loader, splitter,
+   embedding model, vector database, retriever, prompt, or LLM. Each swap is a
+   project, so you can isolate the effect of every design decision and answer
+   the questions that matter:
+
+   - Why this chunk size?
+   - Why this embedding model?
+   - Why this retriever?
+   - How do I measure the difference?
+
+2. **A component library** — every block of the pipeline as a swappable class
+   (19 implemented modules). Swap any block without touching the rest.
+
+3. **A Special Documents research series** (`NoteBooks/SD-0N-*`) — real
+   benchmark experiments on structured document formats most RAG tutorials
+   skip: Word (.docx), PowerPoint (.pptx), Excel (.xlsx), Email (.eml), and
+   more. Each one ships with sample data under `Data/SD-0N-<slug>/` and a
+   notebook that measures naive vs structure-preserving parsing.
 
 ---
 
@@ -78,14 +90,47 @@ Work through the projects in order. Each row changes one block of the pipeline.
 
 Each project card (linked above) lists its stack, the component modules it
 exercises, and the matching notebook. Drafted articles live inside the project
-folders as the curriculum evolves (Project 01 already has one).
+folders as the curriculum evolves.
+
+---
+
+## Special Documents research series
+
+The `SD-*` notebooks are a parallel track: what happens when your documents
+aren't clean PDFs and markdown? Every entry uses the same benchmark methodology
+(Project 18's question set) to compare **naive** parsing against
+**structure-preserving** parsing — and reports real numbers.
+
+| # | Format | Sample data (`Data/SD-0N-<slug>/`) | Notebooks | Status |
+|---|--------|------------------------------------|-----------|--------|
+| 01 | Word (`.docx`) | 4 real documents — FCC notice, EPA TSD, UNDP evaluation, docx4j guide | `SD-01-Word-Documents/01…03` | ✅ Shipped |
+| 02 | PowerPoint (`.pptx`) | `prs-notes.pptx` | `SD-02-PowerPoint/01` | ✅ Shipped |
+| 03 | Excel (`.xlsx`) | `SampleSS.xlsx` | `SD-03-Excel/01` | ✅ Shipped |
+| 04 | Email (`.eml`) | `raw_email_with_nested_attachment.eml` | `SD-04-Email-Threads/01` | ✅ Shipped |
+| 05 | Scanned/OCR | `gilman1892.pdf`, `gitanjali1914_jp2.zip` | — | 🟡 Planned |
+| 06 | Tables & forms | SEC filing (`.htm`), bank statements (`bkash`, `nagad`), IRS `f1040.pdf` | — | 🟡 Planned |
+| 07 | Chat transcripts | `sample-chat.txt`, `bangla_chat.txt` | — | 🟡 Planned |
+| 08 | Invoices (multilingual) | restaurant bill, `Invoice_1.pdf`, `mushak63_invoice.pdf` | — | 🟡 Planned |
+
+**Headline findings so far (SD-01, Word):**
+
+- **Naive character splitting destroys document structure.** FCC EAS
+  questionnaire accuracy dropped from `0.75` (structured) to `0.50` (naive)
+  because table cells were torn apart mid-question.
+- **Structure-preserving loaders fix title pollution.** EPA TSD rose from
+  `0.33` → `1.00`; UNDP evaluation from `0.00` → `0.33+` once page-footers and
+  header boilerplate stopped contaminating chunks.
+- **Benchmark totals:** naive `5–6/14` vs structured `8–9/14` across four
+  documents — structure wins even when it produces *more* chunks.
+- See `NoteBooks/SD-01-Word-Documents/03-word-rag-pure-langchain.ipynb` for the
+  full comparison table and methodology.
 
 ---
 
 ## Repository map — everything in this repo
 
 ```
-RAG/
+rag-playbook/
 ├── README.md                     ← you are here
 ├── requirements.txt              ← Python dependencies
 ├── .env.example                  ← copy to .env, add your API keys
@@ -94,13 +139,16 @@ RAG/
 │
 ├── Topics/                       ← publishable content — one folder per project
 │   ├── README.md                 ← content map + per-project status
-│   └── Project-01-…/Project-18-…  ← 18 project cards (stack, modules, notebooks)
-│       └── Project-01-Baseline-RAG/
-│           └── 01-baseline-rag.md ← first drafted article
+│   └── Project-01-…/Project-18-… ← 18 project cards (stack, modules, notebooks)
 │
-├── NoteBooks/
-│   ├── Data/                     ← sample documents (public domain, Project Gutenberg)
-│   └── Project-01-Baseline-RAG/  ← notebooks for Project 01 (see below)
+├── NoteBooks/                    ← runnable notebooks (run each from its own folder)
+│   ├── Project-01-…/Project-17-… ← one notebook per curriculum project
+│   └── SD-01-Word-Documents/     ← Special Documents series (SD-01…SD-08)
+│       └── 01…03-*.ipynb         ← naive vs structured benchmark experiments
+│
+├── Data/                         ← sample documents (public domain), at repo root
+│   ├── sample.csv, sample.json, local-docs/   ← Project 01 fixtures
+│   └── SD-01-word/ … SD-08-invoices/          ← Special Documents samples
 │
 ├── loaders/                      ← pipeline block #1: text in → Documents out
 ├── splitters/                    ← pipeline block #2: documents → chunks
@@ -108,7 +156,8 @@ RAG/
 ├── vectordb/                     ← pipeline block #4: store & search vectors
 ├── retrieval/                    ← pipeline block #5: query → top-k chunks
 ├── prompts/                      ← pipeline block #6: chunks + question → prompt
-└── llms/                         ← pipeline block #7: prompt → answer
+├── llms/                         ← pipeline block #7: prompt → answer
+└── scripts/                      ← tooling (fetch SD samples, generate fixtures)
 ```
 
 ### Component library (the pluggable blocks)
@@ -151,7 +200,8 @@ when it's missing.
 Every project ships a structured, runnable notebook: small section-wise cells,
 setup → load → split → embed → store → retrieve → prompt → answer, plus
 "What you should notice" and exercises. Project 01 has four (basics + the
-baseline); Projects 02–17 have one each.
+baseline); Projects 02–17 have one each. Run each notebook from **its own
+folder** — paths are relative to the notebook directory.
 
 | Project | Notebook | What it teaches |
 |---------|----------|-----------------|
@@ -181,16 +231,17 @@ baseline); Projects 02–17 have one each.
 > import them with a `try/except` fallback, and `requirements.txt` now includes
 > `langchain-classic`.
 
-`NoteBooks/Data/` holds the sample documents the notebooks read — public-domain
-text (Project Gutenberg) plus small fixtures (`sample.csv`, `sample.json`, a
-local markdown doc set under `local-docs/`). The `chroma_langchain_db/` folder
-inside the notebooks directory is a regenerable vector-store artifact.
+All sample documents live under `Data/` at the **repo root** — `sample.csv`,
+`sample.json`, a local markdown doc set under `local-docs/`, and one folder per
+Special Document (`SD-01-word/` … `SD-08-invoices/`). The
+`chroma_langchain_db/` folders inside the notebooks directory are regenerable
+vector-store artifacts.
 
 ### `main.py` — the endgame
 
 ```python
 pipeline = RAGPipeline(
-    loader=CSVLoader("NoteBooks/Data/sample.csv"),
+    loader=CSVLoader("Data/sample.csv"),
     splitter=DocumentProcessor(),     # any splitter — swap freely
     embedder=GeminiEmbedding(),      # any embedding model
     db=ChromaVectorStore(embedding=embedder),  # any vector store
@@ -203,9 +254,9 @@ pipeline.ask("What is the sample about?")
 
 This is the **endgame**: `RAGPipeline` in `main.py` wires the six blocks together
 and every block is a swappable class from the component library above. Run
-`python main.py` to see the whole pipeline work end to end (needs a
-`GOOGLE_API_KEY` in `.env`). By the end of Project 17 you build exactly this
-from the components you implemented along the way.
+`python main.py` from the repo root to see the whole pipeline work end to end
+(needs a `GOOGLE_API_KEY` in `.env`). By the end of Project 17 you build exactly
+this from the components you implemented along the way.
 
 ### Configuration
 
@@ -216,8 +267,9 @@ from the components you implemented along the way.
   the optional vector-DB drivers (`faiss-cpu`, `langchain-qdrant`, …) are listed
   as comments, activated when you reach Project 07.
 - `.gitignore` — keeps `.env`, `__pycache__/`, vector-store artifacts
-  (`chroma_langchain_db/`, `*.sqlite3`, `lancedb/`, `qdrant_storage/`) and
-  tooling state out of version control.
+  (`chroma_langchain_db/`, `*.sqlite3`, `lancedb/`, `qdrant_storage/`), the
+  large Enron corpus (`Data/SD-04-email/enron/`), and tooling state out of
+  version control.
 
 ---
 
@@ -271,6 +323,8 @@ is `Topics/Project-01-Baseline-RAG/01-baseline-rag.md`.
 2. When you hit an advanced project (06–15), read its card in `Topics/` first,
    then implement the component in the matching module.
 3. Finish with Project 17 (build the framework) and Project 18 (benchmark it).
+4. Curious about hard document formats? Try the Special Documents series —
+   start with `NoteBooks/SD-01-Word-Documents/01-word-documents-rag.ipynb`.
 
 ---
 
@@ -291,13 +345,17 @@ unlock them in — and the order you'd rebuild them from scratch in Project 16
 8. **Project 16** — rewrite each block in pure Python (no LangChain).
 9. **Project 17** — assemble `RAGPipeline` in `main.py` from your classes.
 
+**Special Documents series** — SD-05…SD-08 notebooks are next: scanned/OCR,
+tables & forms, chat transcripts, and multilingual invoices. Sample data
+already ships in `Data/`.
+
 ---
 
 ## Notes
 
-- Sample data (`NoteBooks/Data/`) is public-domain text from
-  [Project Gutenberg](https://www.gutenberg.org/).
+- Sample data under `Data/` is public-domain text from
+  [Project Gutenberg](https://www.gutenberg.org/) plus small original fixtures.
 - Vector database folders (e.g. `chroma_langchain_db/`) are regenerable
   artifacts and gitignored.
-- This repo grows with you: each project card, article, and component
-  implementation lands as the curriculum evolves.
+- This repo grows with you: each project card, article, component, and Special
+  Documents experiment lands as the curriculum evolves.

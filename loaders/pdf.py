@@ -37,7 +37,7 @@ class PDFLoader:
 
 if __name__ == "__main__":
     try:
-        path = sys.argv[1] if len(sys.argv) > 1 else "NoteBooks/Data/sample.pdf"
+        path = sys.argv[1] if len(sys.argv) > 1 else "Data/sample.pdf"
         docs = PDFLoader(path).load()
         print(f"Loaded {len(docs)} document(s) from {path}")
         if docs:

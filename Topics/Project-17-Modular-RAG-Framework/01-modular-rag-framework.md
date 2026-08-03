@@ -560,7 +560,7 @@ document with a second `pipeline.index(source)`. The cell below is your sandbox.
    PDF with `pypdf` (e.g. `PdfReader(open(path, "rb"))`, joining
    `page.extract_text()` per page into one document dict) and swap it into the
    pipeline — *only* the `loader=` line changes. Point it at a PDF in
-   `NoteBooks/Data/`.
+   `Data/`.
 2. **Add MMR to the retriever.** Write `MMRRetriever(BaseRetriever)` that
    re-ranks the top results: each pick is the most similar remaining chunk
    *minus* a penalty for being similar to chunks already chosen (diversity).

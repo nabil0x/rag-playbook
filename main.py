@@ -64,7 +64,7 @@ if __name__ == "__main__":
     embedder = GeminiEmbedding()
     db = ChromaVectorStore(embedding=embedder)
     pipeline = RAGPipeline(
-        loader=CSVLoader("NoteBooks/Data/sample.csv"),
+        loader=CSVLoader("Data/sample.csv"),
         splitter=DocumentProcessor(),
         embedder=embedder,
         db=db,

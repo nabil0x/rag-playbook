@@ -118,8 +118,8 @@ Optional deps (install cell in Setup, commented note):
 - FAISS: `pip install faiss-cpu`
 - Qdrant: `pip install langchain-qdrant` → `from langchain_qdrant import Qdrant`
 
-Sample data: `NoteBooks/Data/` (public domain, Project Gutenberg). For PDF
-projects, instruct the user to drop a PDF into `NoteBooks/Data/` and set a
+Sample data: `Data/` (public domain, Project Gutenberg). For PDF
+projects, instruct the user to drop a PDF into `Data/` and set a
 `PDF_PATH` variable; offer a fallback download from Gutenberg if the file is
 missing.
 

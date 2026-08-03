@@ -30,7 +30,7 @@ modules it exercises, and the matching notebook. Tick boxes as articles are publ
 - Component modules (repo root): `loaders/`, `splitters/`, `embeddings/`, `vectordb/`,
   `retrieval/`, `prompts/`, `llms/` — one class per component, named in each project card.
 - Hands-on notebooks: `NoteBooks/Project-NN-*` (see each project card).
-- Sample data: `NoteBooks/Data/` (e.g. `Waiting.txt`, a public-domain Project Gutenberg book).
+- Sample data: `Data/` (e.g. `Waiting.txt`, a public-domain Project Gutenberg book).
 
 ## Publishing workflow
 

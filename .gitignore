@@ -18,8 +18,8 @@ venv/
 **/qdrant_storage/
 
 # Special Documents — large/private samples (never publish)
-NoteBooks/Data/SD-04-email/enron/
-NoteBooks/Data/**/large/
+Data/SD-04-email/enron/
+Data/**/large/
 
 # OS
 .DS_Store

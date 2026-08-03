@@ -123,14 +123,14 @@ Sections `1.1`–`1.5` each load one format into a `*_docs` list. A helper in
 
 A PDF's words live in a **text layer**; `PyPDFLoader` reads it and returns **one
 `Document` per page**, each carrying `source` (the file path) and `page`
-(zero-based) in its metadata. Drop your own PDF into `NoteBooks/Data/` and set
+(zero-based) in its metadata. Drop your own PDF into `Data/` and set
 `PDF_PATH`, or run the fallback cell to download the public-domain
 *Declaration of Independence* from Project Gutenberg.
 
 ---
 
 ```python
-PDF_PATH = "NoteBooks/Data/my-document.pdf"
+PDF_PATH = "Data/my-document.pdf"
 
 if os.path.exists(PDF_PATH):
     print(f"Found your PDF: {PDF_PATH}")
@@ -149,7 +149,7 @@ URL = "https://www.gutenberg.org/files/16780/16780-pdf.pdf"
 
 if not os.path.exists(PDF_PATH):
     print(f"No file at {PDF_PATH!r} — using the Gutenberg sample instead.")
-    PDF_PATH = "NoteBooks/Data/declaration-of-independence.pdf"
+    PDF_PATH = "Data/declaration-of-independence.pdf"
 
 if not os.path.exists(PDF_PATH):
     print("Downloading a sample PDF …")
@@ -174,12 +174,12 @@ print("First page metadata:", pdf_docs[0].metadata)
 
 A `.md` file is plain text with a bit of syntax. `TextLoader` reads it as-is and
 tags each `Document` with its `source` path. We load one page from the repo's
-sample docs tree, `NoteBooks/Data/local-docs/docs/bge-embeddings.md`.
+sample docs tree, `Data/local-docs/docs/bge-embeddings.md`.
 
 ---
 
 ```python
-MD_PATH = "NoteBooks/Data/local-docs/docs/bge-embeddings.md"
+MD_PATH = "Data/local-docs/docs/bge-embeddings.md"
 
 md_docs = TextLoader(MD_PATH, encoding="utf-8").load()
 
@@ -193,7 +193,7 @@ print("Metadata:", md_docs[0].metadata)
 
 CSV data is tabular. `CSVLoader` turns **each row** into its own `Document`,
 rendering the row as `column: value` lines, and tags it with the file `source`
-and a `row` number. The sample file `NoteBooks/Data/sample.csv` holds a tiny
+and a `row` number. The sample file `Data/sample.csv` holds a tiny
 table of landmark ML papers. The next two cells define that file (writing it
 only if it is missing), so the notebook stays self-contained.
 
@@ -203,7 +203,7 @@ only if it is missing), so the notebook stays self-contained.
 import csv
 from pathlib import Path
 
-CSV_PATH = Path("NoteBooks/Data/sample.csv")
+CSV_PATH = Path("Data/sample.csv")
 CSV_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 rows = [
@@ -271,14 +271,14 @@ print("Snippet:", web_docs[0].page_content.strip()[:80])
 query string. With `jq_schema=".[].content"` it selects the `content` key of
 *every* object in the root array, so each object becomes one `Document`. This
 is the fastest route for "records whose text lives in one named key". The
-sample file `NoteBooks/Data/sample.json` holds three short concept notes.
+sample file `Data/sample.json` holds three short concept notes.
 
 ---
 
 ```python
 import json
 
-JSON_PATH = Path("NoteBooks/Data/sample.json")
+JSON_PATH = Path("Data/sample.json")
 
 notes = [
     {"content": "A vector database stores embeddings and returns the nearest neighbours of a query vector."},

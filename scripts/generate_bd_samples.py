@@ -3,11 +3,11 @@
 
 Implements phase §7 of `.omo/plans/special-documents-phase.md`:
 
-  1. bKash statement PDF            -> NoteBooks/Data/SD-06-tables/bkash_statement.pdf
-  2. Nagad statement PDF            -> NoteBooks/Data/SD-06-tables/nagad_statement.pdf
-  3. Mushak 6.3 VAT invoice PDF     -> NoteBooks/Data/SD-08-invoices/mushak63_invoice.pdf
-  4. Bilingual restaurant bill PDF  -> NoteBooks/Data/SD-08-invoices/bilingual_restaurant_bill.pdf
-  5. Bengali WhatsApp chat txt      -> NoteBooks/Data/SD-07-chat/bangla_chat.txt
+  1. bKash statement PDF            -> Data/SD-06-tables/bkash_statement.pdf
+  2. Nagad statement PDF            -> Data/SD-06-tables/nagad_statement.pdf
+  3. Mushak 6.3 VAT invoice PDF     -> Data/SD-08-invoices/mushak63_invoice.pdf
+  4. Bilingual restaurant bill PDF  -> Data/SD-08-invoices/bilingual_restaurant_bill.pdf
+  5. Bengali WhatsApp chat txt      -> Data/SD-07-chat/bangla_chat.txt
 
 Every `<name>.schema.json` companion is written from the SAME in-memory data
 structures used to render the document (single source of truth), so QA can
@@ -55,7 +55,7 @@ from pathlib import Path
 # --------------------------------------------------------------------------
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DATA_DIR = REPO_ROOT / "NoteBooks" / "Data"
+DATA_DIR = REPO_ROOT / "Data"
 SD06 = DATA_DIR / "SD-06-tables"
 SD07 = DATA_DIR / "SD-07-chat"
 SD08 = DATA_DIR / "SD-08-invoices"

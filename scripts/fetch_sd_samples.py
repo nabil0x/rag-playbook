@@ -2,8 +2,8 @@
 """Fetch and verify the Special Documents (SD) sample files.
 
 Downloads the committed samples from `.omo/plans/special-documents-phase.md`
-section 4.2 into `NoteBooks/Data/SD-0N-<slug>/` and logs one line per file
-`url|sha256|bytes|relpath` to `NoteBooks/Data/.samples-manifest.txt`.
+section 4.2 into `Data/SD-0N-<slug>/` and logs one line per file
+`url|sha256|bytes|relpath` to `Data/.samples-manifest.txt`.
 
 * Idempotent: a file whose sha256 already matches the manifest is skipped;
   `--force` re-downloads it.
@@ -12,7 +12,7 @@ section 4.2 into `NoteBooks/Data/SD-0N-<slug>/` and logs one line per file
 * Failure rule (section 4.1): primary URL fails -> try the alt URL -> try the
   stdlib generator (SampleSS.xlsx per §4.3, .eml via stdlib email); only then
   is the sample marked FAILED in the manifest. Never silently pass a broken file.
-* `--large` fetches the Enron corpus into `NoteBooks/Data/SD-04-email/enron/`
+* `--large` fetches the Enron corpus into `Data/SD-04-email/enron/`
   (gitignored). Not run by default.
 
 Stdlib only (``requests`` optional).
@@ -35,7 +35,7 @@ from email.utils import formatdate
 from zipfile import ZIP_DEFLATED, ZipFile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(ROOT, "NoteBooks", "Data")
+DATA_DIR = os.path.join(ROOT, "Data")
 MANIFEST = os.path.join(DATA_DIR, ".samples-manifest.txt")
 USER_AGENT = "rag-playbook/1.0 contact@example.com"
 ENRON_URL = "https://www.cs.cmu.edu/~./enron/enron_mail_20150507.tar.gz"
