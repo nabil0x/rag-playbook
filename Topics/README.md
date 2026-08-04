@@ -24,12 +24,38 @@ modules it exercises, and the matching notebook. Tick boxes as articles are publ
 | 16 | [Build Without LangChain](Project-16-Build-Without-LangChain/README.md) | Pure Python pipeline | [01-rag-without-langchain.ipynb](../NoteBooks/Project-16-Build-Without-LangChain/01-rag-without-langchain.ipynb) | 🔲 Draft |
 | 17 | [Modular RAG Framework](Project-17-Modular-RAG-Framework/README.md) | Your own pluggable architecture | [01-modular-rag-framework.ipynb](../NoteBooks/Project-17-Modular-RAG-Framework/01-modular-rag-framework.ipynb) | 🔲 Draft |
 | 18 | [RAG Benchmark Suite](Project-18-RAG-Benchmark-Suite/README.md) | Capstone: design, compare, evaluate | — (capstone) | 🔲 Draft |
+| 20 | [Deep Eval](Project-20-Deep-Eval/README.md) | RAG generation metrics | [01-deep-eval.ipynb](../NoteBooks/Project-20-Deep-Eval/01-deep-eval.ipynb) | 🔲 Draft |
+| 21 | [Query Rewrite & Step-Back](Project-21-Query-Rewrite/README.md) | Query rewrite + step-back prompting | [01-query-rewrite-stepback.ipynb](../NoteBooks/Project-21-Query-Rewrite/01-query-rewrite-stepback.ipynb) | 🔲 Draft |
+| 22 | [HyDE & Decomposition](Project-22-HyDE-Decomposition/README.md) | HyDE + query decomposition | [01-hyde-decomposition.ipynb](../NoteBooks/Project-22-HyDE-Decomposition/01-hyde-decomposition.ipynb) | 🔲 Draft |
+| 24 | [Vector Index Internals](Project-24-Vector-Index-Internals/README.md) | IVF / HNSW / PQ / OPQ tradeoffs | [01-vector-index-internals.ipynb](../NoteBooks/Project-24-Vector-Index-Internals/01-vector-index-internals.ipynb) | 🔲 Draft |
+| 25 | [CrossEncoder Reranking](Project-25-CrossEncoder-Reranking/README.md) | Retrieve 50 → rerank → 5 | [01-crossencoder-reranking.ipynb](../NoteBooks/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking.ipynb) | 🔲 Draft |
+| 26 | [Late-Interaction Rerankers](Project-26-Late-Interaction-Rerankers/README.md) | ColBERT + MonoT5 | [01-late-interaction-rerankers.ipynb](../NoteBooks/Project-26-Late-Interaction-Rerankers/01-late-interaction-rerankers.ipynb) | 🔲 Draft |
+| 27 | [Context Assembly](Project-27-Context-Assembly/README.md) | Dedupe + ordering + lost-in-the-middle | [01-context-assembly.ipynb](../NoteBooks/Project-27-Context-Assembly/01-context-assembly.ipynb) | 🔲 Draft |
+| 28 | [Citations & Attribution](Project-28-Citations-Attribution/README.md) | Sentence-level citation scoring | [01-citations-attribution.ipynb](../NoteBooks/Project-28-Citations-Attribution/01-citations-attribution.ipynb) | 🔲 Draft |
+| 29 | [Tool-Calling RAG](Project-29-Tool-Calling-RAG/README.md) | LLM decides retrieve/answer/clarify | [01-tool-calling-rag.ipynb](../NoteBooks/Project-29-Tool-Calling-RAG/01-tool-calling-rag.ipynb) | 🔲 Draft |
+| 30 | [LangGraph Agentic RAG](Project-30-LangGraph-Agentic-RAG/README.md) | Graph + memory + reflection | [01-langgraph-agentic-rag.ipynb](../NoteBooks/Project-30-LangGraph-Agentic-RAG/01-langgraph-agentic-rag.ipynb) | 🔲 Draft |
+| 31 | [Multi-Agent RAG](Project-31-Multi-Agent-RAG/README.md) | Router / planner / executor / writer | [01-multi-agent-rag.ipynb](../NoteBooks/Project-31-Multi-Agent-RAG/01-multi-agent-rag.ipynb) | 🔲 Draft |
+| 32 | [RAG API Service](Project-32-RAG-API-Service/README.md) | FastAPI + Redis cache + Docker | [01-rag-api-service.ipynb](../NoteBooks/Project-32-RAG-API-Service/01-rag-api-service.ipynb) | 🔲 Draft |
+| 33 | [Async Ingestion](Project-33-Async-Ingestion/README.md) | Celery + Redis job queue | [01-async-ingestion.ipynb](../NoteBooks/Project-33-Async-Ingestion/01-async-ingestion.ipynb) | 🔲 Draft |
+| 34 | [Observability](Project-34-Observability/README.md) | OTel + logging + Prometheus + MLflow | [01-observability.ipynb](../NoteBooks/Project-34-Observability/01-observability.ipynb) | 🔲 Draft |
+| 35 | [Online Eval & A/B](Project-35-Online-Eval-AB/README.md) | Feedback loop + A/B testing | [01-online-eval-ab.ipynb](../NoteBooks/Project-35-Online-Eval-AB/01-online-eval-ab.ipynb) | 🔲 Draft |
+| 36 | [Drift & Regression](Project-36-Drift-Regression/README.md) | Capstone: monitoring + drift + regression gates | [01-drift-regression.ipynb](../NoteBooks/Project-36-Drift-Regression/01-drift-regression.ipynb) | 🔲 Draft |
+
+> Projects 21–36 are the **advanced roadmap** (query transformation → index internals →
+> re-ranking → context engineering → agentic RAG → production → evaluation at scale).
+> 23 is intentionally skipped. Cards in this range double as execution guides
+> (numbered **Execute** steps + acceptance criteria).
 
 ## How content maps to code
 
 - Component modules (repo root): `loaders/`, `splitters/`, `embeddings/`, `vectordb/`,
   `retrieval/`, `prompts/`, `llms/` — one class per component, named in each project card.
-- Hands-on notebooks: `NoteBooks/Project-NN-*` (see each project card).
+- Advanced modules (Projects 21–36): `agent/` (tool-calling, LangGraph, multi-agent),
+  `api/` (FastAPI service, Celery ingestion), `observability/` (tracing, metrics,
+  logging), `docker/` (Dockerfile + docker-compose), `evaluation/` (online eval,
+  drift, regression).
+- Hands-on notebooks: `NoteBooks/Project-NN-*` (see each project card). Advanced
+  cards ship a `01-*-spec.py` source you render with `scripts/gen_notebook.py`.
 - Sample data: `Data/` (e.g. `Waiting.txt`, a public-domain Project Gutenberg book).
 
 ## Publishing workflow
