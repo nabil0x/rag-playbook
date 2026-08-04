@@ -22,10 +22,16 @@ class BGEEmbedding:
         self._model = None
 
     def _get_model(self):
-        """Build and cache the HuggingFaceBgeEmbeddings model."""
+        """Build and cache the HuggingFaceEmbeddings model.
+
+        bge models require normalized embeddings for cosine similarity; the
+        universal HuggingFaceEmbeddings class provides that via
+        ``encode_kwargs``. The bge-specific ``HuggingFaceBgeEmbeddings`` class
+        is not used because langchain-huggingface 1.x no longer exports it.
+        """
         if self._model is None:
             try:
-                from langchain_huggingface import HuggingFaceBgeEmbeddings
+                from langchain_huggingface import HuggingFaceEmbeddings
             except ImportError as exc:
                 raise ImportError(
                     "BGEEmbedding needs langchain-huggingface: "
@@ -34,7 +40,7 @@ class BGEEmbedding:
 
             try:
                 # bge models require normalized embeddings for cosine similarity.
-                self._model = HuggingFaceBgeEmbeddings(
+                self._model = HuggingFaceEmbeddings(
                     model_name=self.model_name,
                     encode_kwargs={"normalize_embeddings": True},
                 )

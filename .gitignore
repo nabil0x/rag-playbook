@@ -17,6 +17,9 @@ venv/
 **/lancedb/
 **/qdrant_storage/
 
+# Regenerable lab plots
+**/umap_scatter.png
+
 # Special Documents — large/private samples (never publish)
 Data/SD-04-email/enron/
 Data/**/large/
