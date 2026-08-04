@@ -39,27 +39,48 @@ class ColBERTReranker:
         return self._model
 
     def _token_embeddings(self, text: str) -> list[list[float]]:
-        """TODO(Project 26): embed ``text`` into per-token vectors.
+        """Embed ``text`` into per-token vectors.
 
         Call ``self._get_model().encode(text, output_value="token_embeddings")``
         and return the resulting list of token vectors (one per token, not the
-        pooled sentence vector). Keep the raw list — no pooling or L2 norm.
+        pooled sentence vector). sentence-transformers returns a torch tensor
+        here, so it is converted to plain lists — ``_maxsim_score`` expects
+        list-of-lists and the truthiness check ``if not query_tokens`` breaks
+        on a multi-element tensor.
         """
-        raise NotImplementedError("TODO(Project 26): implement ColBERTReranker._token_embeddings")
+        embeddings = self._get_model().encode(
+            text, output_value="token_embeddings"
+        )
+        return embeddings.tolist() if hasattr(embeddings, "tolist") else list(embeddings)
 
     def _maxsim_score(self, query_tokens: list[list[float]], doc_tokens: list[list[float]]) -> float:
-        """TODO(Project 26): compute the MaxSim late-interaction score.
+        """Compute the MaxSim late-interaction score.
 
         For every query token vector, find the maximum cosine similarity
         against all document token vectors, and sum those maxima:
 
             score = sum_q max_d cosine(q_i, d_j)
 
-        Implement the cosine manually (dot / norms) or with numpy (optional
-        import inside the method). The score is higher when query tokens find
-        precise matches anywhere in the document.
+        Implemented with numpy (optional import inside the method): normalize
+        both token sets, take the query x doc similarity matrix, and sum the
+        row-wise maxima. The score is higher when query tokens find precise
+        matches anywhere in the document. Empty token lists score 0.0.
         """
-        raise NotImplementedError("TODO(Project 26): implement ColBERTReranker._maxsim_score")
+        if not query_tokens or not doc_tokens:
+            return 0.0
+        try:
+            import numpy as np
+        except ImportError as exc:
+            raise ImportError(
+                "ColBERTReranker._maxsim_score needs numpy: pip install numpy"
+            ) from exc
+
+        q = np.asarray(query_tokens, dtype=np.float32)
+        d = np.asarray(doc_tokens, dtype=np.float32)
+        q = q / np.linalg.norm(q, axis=1, keepdims=True)
+        d = d / np.linalg.norm(d, axis=1, keepdims=True)
+        sims = q @ d.T  # (n_query_tokens, n_doc_tokens) cosine matrix
+        return float(sims.max(axis=1).sum())
 
     def rerank(self, query: str, documents: list[Document], top_k: int = 5) -> list[Document]:
         """Score documents by late interaction, sort descending, keep ``top_k``."""
@@ -107,14 +128,27 @@ class MonoT5Reranker:
         return self._pipeline
 
     def _score_pair(self, query: str, passage: str) -> float:
-        """TODO(Project 26): score one (query, passage) pair.
+        """Score one (query, passage) pair with the MonoT5 logit difference.
 
         Feed the MonoT5 prompt ``f"Query: {query} Document: {passage} Relevant:"``
-        through the pipeline. Return the logit difference between the ``true``
-        and ``false`` output tokens (``output["token_ids"]``), i.e.
-        ``true_logit - false_logit`` — positive means relevant.
+        through the pipeline with ``return_dict_in_generate=True`` and
+        ``output_scores=True``. Take the logits of the FIRST decoding step,
+        read the logits at the ``true`` and ``false`` vocabulary ids, and
+        return ``true_logit - false_logit`` — positive means relevant.
         """
-        raise NotImplementedError("TODO(Project 26): implement MonoT5Reranker._score_pair")
+        prompt = f"Query: {query} Document: {passage} Relevant:"
+        result = self._get_pipeline()(
+            prompt,
+            max_length=512,
+            return_dict_in_generate=True,
+            output_scores=True,
+        )
+        out = result[0] if isinstance(result, (list, tuple)) else result
+        tokenizer = self._get_pipeline().tokenizer
+        true_id = tokenizer.convert_tokens_to_ids("true")
+        false_id = tokenizer.convert_tokens_to_ids("false")
+        logits = out["scores"][0][0]  # first decoding step, batch item 0
+        return float(logits[true_id] - logits[false_id])
 
     def rerank(self, query: str, documents: list[Document], top_k: int = 5) -> list[Document]:
         """Score each document pointwise, sort descending, keep ``top_k``."""
@@ -154,13 +188,19 @@ Relevant:"""
         self.llm = llm
 
     def _yes_no(self, query: str, passage: str) -> bool:
-        """TODO(Project 26): ask the LLM whether the passage is relevant.
+        """Ask the LLM whether the passage is relevant.
 
         Invoke ``self.llm.invoke(self.YES_NO_PROMPT.format(query=..., passage=...))``,
-        lowercase the response, and return True when it starts with "yes"
-        (also accept "y" alone, "true", "relevant"). Anything else -> False.
+        lowercase and trim the response, and return True when it is "yes", "y"
+        alone, "true", "relevant", or starts with "yes" followed by more text.
+        Anything else -> False.
         """
-        raise NotImplementedError("TODO(Project 26): implement LLMPointwiseReranker._yes_no")
+        response = self.llm.invoke(self.YES_NO_PROMPT.format(query=query, passage=passage))
+        answer = response.strip().lower().rstrip(".,!? \n")
+        return (
+            answer in ("yes", "y", "true", "relevant")
+            or answer.startswith("yes ")
+        )
 
     def rerank(self, query: str, documents: list[Document], top_k: int = 5) -> list[Document]:
         """Filter to relevant documents, keep the original order, cut to ``top_k``."""
@@ -176,19 +216,7 @@ if __name__ == "__main__":
         def encode(self, text: str, **kwargs) -> list[list[float]]:
             return [[1.0 if c == text[0] else 0.0 for c in "abcdefgh"] for _ in text]
 
-    class _ColBERT(ColBERTReranker):
-        """Fills in the Project-26 stubs so the rerank scaffold can be tested."""
-
-        def _token_embeddings(self, text: str) -> list[list[float]]:
-            return self._get_model().encode(text, output_value="token_embeddings")
-
-        def _maxsim_score(self, query_tokens: list[list[float]], doc_tokens: list[list[float]]) -> float:
-            total = 0.0
-            for qv in query_tokens:
-                total += max(sum(a * b for a, b in zip(qv, dv)) for dv in doc_tokens)
-            return total
-
-    colbert = _ColBERT()
+    colbert = ColBERTReranker()
     colbert._model = _FakeTokenModel()
     docs = [
         Document(page_content="alpha apple"),
@@ -196,30 +224,48 @@ if __name__ == "__main__":
     ]
     ranked = colbert.rerank("alpha", docs, top_k=1)
     assert len(ranked) == 1 and "alpha" in ranked[0].page_content
+    # All "alpha" query tokens match "alpha apple" tokens exactly (score = 5.0),
+    # while "beta banana" tokens are orthogonal (score = 0.0).
+    assert ranked[0].metadata["score"] == 5.0
+    assert docs[1].metadata["score"] == 0.0
+
+    class _Logits:
+        """Indexable logit vector without torch (used by the scripted pipeline)."""
+
+        def __init__(self, values: dict[int, float]):
+            self.values = values
+
+        def __getitem__(self, idx):
+            return self.values.get(idx, 0.0)
+
+    class _FakeMonoT5Pipeline:
+        """Scripted pipeline: true logit 3.0, false logit 1.0 at vocab ids 42/43."""
+
+        def __init__(self):
+            self.tokenizer = type(
+                "T",
+                (),
+                {"convert_tokens_to_ids": lambda self, tok: {"true": 42, "false": 43}.get(tok, 0)},
+            )()
+
+        def __call__(self, prompt, **kwargs):
+            step0 = _Logits({42: 3.0, 43: 1.0})  # (1, vocab) batch: index 0 = logits
+            step1 = _Logits({})
+            return [{"token_ids": [42, 43], "scores": [[step0], [step1]]}]
 
     t5 = MonoT5Reranker()
-    t5._pipeline = type(
-        "FakePipeline",
-        (),
-        {
-            "tokenizer": type("T", (), {"convert_ids_to_tokens": lambda self, ids: ["true" if i == 0 else "false" for i in ids]})(),
-        },
-    )()
-    assert t5._pipeline.tokenizer is not None
+    t5._pipeline = _FakeMonoT5Pipeline()
+    score = t5._score_pair("fruit", "an apple a day")
+    assert score == 3.0 - 1.0, score  # true_logit - false_logit
 
     class _FakeYesNoLLM:
         def invoke(self, prompt: str) -> str:
             return "yes" if "apple" in prompt else "no"
 
-    class _YesNoReranker(LLMPointwiseReranker):
-        """Fills in the Project-26 _yes_no stub so the rerank scaffold can be tested."""
-
-        def _yes_no(self, query: str, passage: str) -> bool:
-            response = self.llm.invoke(self.YES_NO_PROMPT.format(query=query, passage=passage))
-            return response.strip().lower().startswith("yes")
-
-    llm_rr = _YesNoReranker(_FakeYesNoLLM())
+    llm_rr = LLMPointwiseReranker(_FakeYesNoLLM())
     kept = llm_rr.rerank("fruit", docs, top_k=5)
     assert len(kept) == 1 and "apple" in kept[0].page_content
+    assert llm_rr._yes_no("fruit", "an apple a day") is True
+    assert llm_rr._yes_no("fruit", "a banana a day") is False
 
-    print("OK: ColBERT MaxSim, MonoT5, and LLM pointwise rerankers wired up")
+    print("OK: ColBERT MaxSim, MonoT5 logit-diff, and LLM pointwise rerankers implemented")

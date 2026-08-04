@@ -41,14 +41,14 @@ class CrossEncoderReranker:
         return self._model
 
     def _score(self, query: str, documents: list[Document]) -> list[float]:
-        """TODO(Project 25): score every (query, document) pair.
+        """Score every (query, document) pair with the cross-encoder.
 
-        Build the pair list — ``[(query, doc.page_content) for doc in documents]``
-        — and call ``self._get_model().predict(pairs)``, returning the raw
-        score list. ``predict`` may also accept ``show_progress_bar=False``
-        and ``batch_size``; keep it minimal.
+        Build the pair list — ``[(query, doc.page_content) for doc in
+        documents]`` — and call ``self._get_model().predict(pairs)``, returning
+        the raw score list (one float per document; higher = more relevant).
         """
-        raise NotImplementedError("TODO(Project 25): implement CrossEncoderReranker._score")
+        pairs = [(query, doc.page_content) for doc in documents]
+        return list(self._get_model().predict(pairs))
 
     def rerank(self, query: str, documents: list[Document], top_k: int = 5) -> list[Document]:
         """Score the candidates, sort by score descending, keep ``top_k``.
@@ -101,11 +101,7 @@ if __name__ == "__main__":
             return [sum(1 for w in q.split() if w in d) for q, d in pairs]
 
     class _ScoringReranker(CrossEncoderReranker):
-        """Fills in the Project-25 _score stub so the scaffold can be tested."""
-
-        def _score(self, query: str, documents: list[Document]) -> list[float]:
-            pairs = [(query, doc.page_content) for doc in documents]
-            return self._get_model().predict(pairs)
+        """Runs the real ``_score`` against the injected fake model."""
 
     reranker = _ScoringReranker()
     reranker._model = _FakeCrossEncoder()  # inject the fake, no download
