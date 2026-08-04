@@ -52,16 +52,21 @@ class HyDERetriever:
         self.top_k = top_k
 
     def _hypothetical(self, question: str) -> str:
-        """TODO(Project 22): implement the hypothetical-passage generation.
+        """Generate a hypothetical answer passage, falling back to the question.
 
-        Call self.hyde_llm.invoke(HYDE_PROMPT.format(question=question)),
-        strip the result, and fall back to the original question when the
+        Calls ``self.hyde_llm.invoke(HYDE_PROMPT.format(question=question))``,
+        strips the result, and falls back to the original question when the
         output is empty or unusable. That fallback is the safety net a real
-        system needs.
+        system needs: a broken LLM call must never take retrieval down with it.
         """
-        raise NotImplementedError(
-            "TODO(Project 22): implement HyDERetriever._hypothetical"
-        )
+        try:
+            out = self.hyde_llm.invoke(
+                HYDE_PROMPT.format(question=question)
+            )
+        except Exception:
+            return question
+        out = (out or "").strip()
+        return out if out else question
 
     def retrieve(self, question: str) -> list[Document]:
         """Generate a hypothetical passage, then delegate retrieval to the inner retriever."""

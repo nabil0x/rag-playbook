@@ -41,16 +41,21 @@ class QueryRewriteRetriever:
         self.top_k = top_k
 
     def _rewrite(self, question: str) -> str:
-        """TODO(Project 21): implement the rewrite step.
+        """Rewrite the question with the LLM, falling back to the original.
 
-        Call self.rewriter_llm.invoke(REWRITE_PROMPT.format(question=question)),
-        strip the result, and fall back to the original question when the
+        Calls ``self.rewriter_llm.invoke(REWRITE_PROMPT.format(question=question))``,
+        strips the result, and falls back to the original question when the
         output is empty or unusable. That fallback is the safety net a real
-        system needs.
+        system needs: a broken LLM call must never take retrieval down with it.
         """
-        raise NotImplementedError(
-            "TODO(Project 21): implement QueryRewriteRetriever._rewrite"
-        )
+        try:
+            out = self.rewriter_llm.invoke(
+                REWRITE_PROMPT.format(question=question)
+            )
+        except Exception:
+            return question
+        out = (out or "").strip()
+        return out if out else question
 
     def retrieve(self, question: str) -> list[Document]:
         """Rewrite the question, then delegate retrieval to the inner retriever."""

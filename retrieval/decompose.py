@@ -50,16 +50,30 @@ class DecomposeRetriever:
         self.top_k = top_k
 
     def _decompose(self, question: str) -> list[str]:
-        """TODO(Project 22): implement the decomposition step.
+        """Split the question into independent sub-questions via the LLM.
 
-        Call self.decomposer_llm.invoke(DECOMPOSE_PROMPT.format(question=question)),
-        split the result into lines, strip each one, and drop empty lines.
-        Fall back to [question] when nothing usable comes back - retrieving
-        with the original question alone is still a valid retrieval.
+        Calls ``self.decomposer_llm.invoke(DECOMPOSE_PROMPT.format(question=question))``,
+        splits the result into lines, strips each one, and drops empty lines
+        and lines that merely restate the original question. Falls back to
+        ``[question]`` when nothing usable comes back - retrieving with the
+        original question alone is still a valid retrieval.
         """
-        raise NotImplementedError(
-            "TODO(Project 22): implement DecomposeRetriever._decompose"
-        )
+        try:
+            out = self.decomposer_llm.invoke(
+                DECOMPOSE_PROMPT.format(question=question)
+            )
+        except Exception:
+            return [question]
+        sub = [
+            line.strip()
+            for line in (out or "").splitlines()
+            if line.strip()
+        ]
+        # Drop lines that just repeat the original question (noise from
+        # LLMs that ignore the "do not include the original" rule).
+        normalized = question.strip().lower()
+        sub = [s for s in sub if s.lower() != normalized]
+        return sub if sub else [question]
 
     def retrieve(self, question: str) -> list[Document]:
         """Retrieve with the original + sub-questions, dedupe, return top-k."""

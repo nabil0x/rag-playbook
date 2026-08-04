@@ -50,16 +50,21 @@ class StepBackRetriever:
         self.top_k = top_k
 
     def _step_back(self, question: str) -> str:
-        """TODO(Project 21): implement the step-back generation.
+        """Generate a broader step-back question, falling back to the original.
 
-        Call self.stepback_llm.invoke(STEPBACK_PROMPT.format(question=question)),
-        strip the result, and fall back to the original question when the
+        Calls ``self.stepback_llm.invoke(STEPBACK_PROMPT.format(question=question))``,
+        strips the result, and falls back to the original question when the
         output is empty. A step-back question identical to the original is
         fine (the merge then just dedupes).
         """
-        raise NotImplementedError(
-            "TODO(Project 21): implement StepBackRetriever._step_back"
-        )
+        try:
+            out = self.stepback_llm.invoke(
+                STEPBACK_PROMPT.format(question=question)
+            )
+        except Exception:
+            return question
+        out = (out or "").strip()
+        return out if out else question
 
     def retrieve(self, question: str) -> list[Document]:
         """Retrieve with step-back + original queries, dedupe, return top-k."""
