@@ -1,413 +1,349 @@
 # RAG Playbook
 
-> **RAG from Zero to Advanced** — a hands-on, component-swappable curriculum for
-> Retrieval-Augmented Generation, with a benchmark-driven research series on
-> special document formats.
+> A hands-on Retrieval-Augmented Generation portfolio: 34 project cards covering
+> Projects 01-36, 10 python-first concept tracks, runnable notebooks, reusable
+> pipeline components, benchmark datasets, and special-document experiments.
 
-Three things live in this repo, all built on the same swappable pipeline:
+I built this repository to study RAG the way it is actually engineered: not as
+one demo notebook, but as a system of decisions. Every lab changes one part of
+the pipeline, measures what changed, and turns the lesson into reusable code.
 
-1. **A curriculum** — 18 projects + a benchmark capstone. You build **one RAG
-   application** and swap **one component at a time**: loader, splitter,
-   embedding model, vector database, retriever, prompt, or LLM. Each swap is a
-   project, so you can isolate the effect of every design decision and answer
-   the questions that matter:
+For recruiters, this repo is evidence that I can reason across the RAG stack:
+loading, chunking, embeddings, vector search, retrieval strategy, reranking,
+prompting, evaluation, agentic flows, observability, and service design.
 
-   - Why this chunk size?
-   - Why this embedding model?
-   - Why this retriever?
-   - How do I measure the difference?
-
-2. **A component library** — every block of the pipeline as a swappable class
-   (19 implemented modules). Swap any block without touching the rest.
-
-3. **A Special Documents research series** (`NoteBooks/SD-0N-*`) — real
-   benchmark experiments on structured document formats most RAG tutorials
-   skip: Word (.docx), PowerPoint (.pptx), Excel (.xlsx), Email (.eml), and
-   more. Each one ships with sample data under `Data/SD-0N-<slug>/` and a
-   notebook that measures naive vs structure-preserving parsing.
-
-4. **A Layer-1 RAG Playbook curriculum** (`curriculum/`) — the learning
-   laboratory: **10 concept tracks** (chunking, embeddings, vector databases,
-   retrieval, query transformation, re-ranking, evaluation, GraphRAG, RAPTOR,
-   agentic RAG) as python-first labs that convert to verified notebooks under
-   `NoteBooks/Curriculum-NN-*` — all running on **local embeddings** and the
-   fresh benchmark corpora in `Data/corpus/`.
+For learners, this repo is a guided path: start with a baseline RAG app, swap
+one component at a time, then study advanced retrieval and production patterns
+without losing sight of the full system.
 
 ---
 
-## Layer-1 playbook curriculum
+## What This Project Demonstrates
 
-The learning laboratory: **10 concept tracks** under `curriculum/`, each a
-folder of python-first labs. Workflow (see `AGENTS.md`): write the `.py`,
-run it and pass the verification gate, **then** convert to a notebook under
-`NoteBooks/Curriculum-NN-*`. Everything embeds locally (BGE/E5 via
-sentence-transformers); LangChain first, custom classes only where it has gaps
-(`tools/`).
+This is not only a collection of notebooks. It is a structured learning and
+implementation system for RAG.
 
-| Track | Concept | Data (`Data/corpus/`) | Custom tools |
-|---|---|---|---|
-| 01 | Chunking | `Data/corpus/gutenberg/` (public domain), `Data/local-docs/`, SD samples | — |
-| 02 | Embeddings | rag-mini-wikipedia | — |
-| 03 | Vector databases | rag-mini-wikipedia | — |
-| 04 | Retrieval | rag-mini + beir-fiqa/nfcorpus qrels | — |
-| 05 | Query transformation | rag-mini test, hotpotqa | `tools/prf.py` |
-| 06 | Re-ranking | beir-fiqa/nfcorpus qrels, lost-in-the-middle | `tools/reranker.py` |
-| 07 | Evaluation | qrels + gold answers | — |
-| 08 | GraphRAG | hotpotqa, rag-mini-wikipedia | `tools/{graph,graphrag}.py` |
-| 09 | RAPTOR | rag-mini-wikipedia | `tools/raptor.py` |
-| 10 | Agentic RAG | hotpotqa, scifact | evidence verifier |
-
-Plan: `.omo/plans/layer1-rag-playbook.md`.
+| Signal | What it shows |
+|---|---|
+| End-to-end RAG architecture | Loader -> splitter -> embedder -> vector DB -> retriever -> prompt -> LLM |
+| Component-level understanding | Each block lives in its own module and can be swapped independently |
+| Local-first embedding discipline | BGE/E5 sentence-transformer embeddings are the default study path |
+| LangChain ecosystem fluency | Uses LangChain, LangChain Community, HuggingFace, Chroma, FAISS, Qdrant, and LangGraph-style patterns |
+| Evaluation mindset | Retrieval metrics, qrels, generation metrics, attribution checks, drift, regression, and judge cross-checking |
+| Advanced RAG coverage | Query rewrite, HyDE, decomposition, MMR, hybrid search, parent-child retrieval, compression, reranking, GraphRAG, RAPTOR, agentic RAG |
+| Production awareness | API service, async ingestion, observability, online evaluation, regression gates, and Docker-oriented structure |
+| Teaching ability | Topics, notebooks, and curriculum tracks explain concepts step by step |
 
 ---
 
-## The pipeline
+## The Core Idea
 
-Every project below is a RAG pipeline. Each block is replaceable — and each
-block maps to a folder in this repo.
+Most RAG tutorials hide the real engineering question:
 
-```
-            Documents                        ← your data (web pages, PDFs, markdown…)
-                │
-                ▼
-         Document Loader   loaders/          ← text in → LangChain Documents out
-                │
-                ▼
-          Text Splitter    splitters/        ← big documents → small chunks
-                │
-                ▼
-        Embedding Model    embeddings/       ← chunks → vectors (numbers)
-                │
-                ▼
-        Vector Database    vectordb/         ← vectors stored, searched by similarity
-                │
-                ▼
-           Retriever       retrieval/        ← query → top-k most relevant chunks
-                │
-                ▼
-             Prompt         prompts/         ← package the chunks + the question
-                │
-                ▼
-               LLM           llms/           ← reads the prompt → answers
-                │
-                ▼
-              Answer
+> Which component should change, and how do I know it improved the system?
+
+This repo answers that by treating RAG as a replaceable pipeline.
+
+```text
+Documents
+  -> Loaders
+  -> Splitters
+  -> Embeddings
+  -> Vector DB
+  -> Retriever
+  -> Prompt
+  -> LLM
+  -> Answer
 ```
 
----
+Each folder maps to one part of that pipeline:
 
-## Curriculum
+| Pipeline block | Folder | Examples |
+|---|---|---|
+| Load documents | `loaders/` | Web, PDF, CSV, Word, Gutenberg |
+| Split text | `splitters/` | Recursive, semantic, token-aware |
+| Embed chunks | `embeddings/` | Local BGE, local E5, Gemini |
+| Store vectors | `vectordb/` | Chroma, FAISS, Qdrant, FAISS index internals |
+| Retrieve context | `retrieval/` | Similarity, MMR, hybrid, rewrite, HyDE, decomposition, rerank, context assembly |
+| Build prompts | `prompts/` | Basic prompt, citation prompt |
+| Generate answers | `llms/` | Gemini, OpenAI, Groq |
+| Measure behavior | `evaluation/` | Metrics, golden tests, judge, attribution, drift, regression, online eval |
 
-Work through the projects in order. Each row changes one block of the pipeline.
-
-| # | Project | What changes | Core concept |
-|---|---------|--------------|--------------|
-| 01 | [Baseline RAG](Topics/Project-01-Baseline-RAG/README.md) | — | Full pipeline with the simplest components |
-| 02 | [PDF Knowledge Base](Topics/Project-02-PDF-Knowledge-Base/README.md) | Loader | PDF parsing |
-| 03 | [Local Documentation Search](Topics/Project-03-Local-Documentation-Search/README.md) | Loader + Embedding + Vector DB | Offline embeddings, offline vector search |
-| 04 | [Markdown Documentation RAG](Topics/Project-04-Markdown-Documentation-RAG/README.md) | Splitter + Prompt | Structure-preserving splitting |
-| 05 | [HTML Documentation](Topics/Project-05-HTML-Documentation/README.md) | Loader + Splitter | HTML hierarchy |
-| 06 | [Better Embeddings](Topics/Project-06-Better-Embeddings/README.md) | Embedding | Embedding model comparison |
-| 07 | [Compare Vector Databases](Topics/Project-07-Compare-Vector-Databases/README.md) | Vector DB | Store comparison (index, query, memory) |
-| 08 | [MMR Retrieval](Topics/Project-08-MMR-Retrieval/README.md) | Retriever | Diversity vs relevance |
-| 09 | [Parent-Child Retrieval](Topics/Project-09-Parent-Child-Retrieval/README.md) | Splitter + Retriever | Small chunks in, large context out |
-| 10 | [MultiQuery Retrieval](Topics/Project-10-MultiQuery-Retrieval/README.md) | Retriever | Query expansion |
-| 11 | [Context Compression](Topics/Project-11-Context-Compression/README.md) | Retriever | Token reduction |
-| 12 | [Prompt Engineering](Topics/Project-12-Prompt-Engineering/README.md) | Prompt | Basic → JSON → few-shot → citation → reasoning |
-| 13 | [Multi-format RAG](Topics/Project-13-Multi-format-RAG/README.md) | Loader | PDF + Markdown + CSV + Web + JSON |
-| 14 | [Metadata Filtering](Topics/Project-14-Metadata-Filtering/README.md) | Retriever | Scoped retrieval |
-| 15 | [Hybrid Search](Topics/Project-15-Hybrid-Search/README.md) | Retriever | BM25 + dense fusion |
-| 16 | [Build Without LangChain](Topics/Project-16-Build-Without-LangChain/README.md) | Everything | Pure-Python pipeline, no framework |
-| 17 | [Modular RAG Framework](Topics/Project-17-Modular-RAG-Framework/README.md) | Architecture | Your own pluggable framework |
-| 18 | [RAG Benchmark Suite](Topics/Project-18-RAG-Benchmark-Suite/README.md) | Capstone | Design, compare, and evaluate RAG systems |
-| 20 | [Deep Eval](Topics/Project-20-Deep-Eval/README.md) | Capstone | RAG generation metrics |
-
-Each project card (linked above) lists its stack, the component modules it
-exercises, and the matching notebook. Drafted articles live inside the project
-folders as the curriculum evolves.
-
----
-
-## Special Documents research series
-
-The `SD-*` notebooks are a parallel track: what happens when your documents
-aren't clean PDFs and markdown? Every entry uses the same benchmark methodology
-(Project 18's question set) to compare **naive** parsing against
-**structure-preserving** parsing — and reports real numbers.
-
-| # | Format | Sample data (`Data/SD-0N-<slug>/`) | Notebooks | Status |
-|---|--------|------------------------------------|-----------|--------|
-| 01 | Word (`.docx`) | 4 real documents — FCC notice, EPA TSD, UNDP evaluation, docx4j guide | `SD-01-Word-Documents/01…03` | ✅ Shipped |
-| 02 | PowerPoint (`.pptx`) | `prs-notes.pptx` | `SD-02-PowerPoint/01` | ✅ Shipped |
-| 03 | Excel (`.xlsx`) | `SampleSS.xlsx` | `SD-03-Excel/01` | ✅ Shipped |
-| 04 | Email (`.eml`) | `raw_email_with_nested_attachment.eml` | `SD-04-Email-Threads/01` | ✅ Shipped |
-| 05 | Scanned/OCR | `gilman1892.pdf`, `gitanjali1914_jp2.zip` | — | 🟡 Planned |
-| 06 | Tables & forms | SEC filing (`.htm`), bank statements (`bkash`, `nagad`), IRS `f1040.pdf` | — | 🟡 Planned |
-| 07 | Chat transcripts | `sample-chat.txt`, `bangla_chat.txt` | — | 🟡 Planned |
-| 08 | Invoices (multilingual) | 9 real files — 6 text PDFs (`sample-invoice`, `multipage_invoice1`, `Invoice_1`, `Invoice-6`, `sdk-invoice1`, German ZUGFeRD) + 2 scanned (`watson-hall-1898`, `macy-receipt`) + `szamla-minta.jpg` | `SD-08-Invoices/01…03` | ✅ Shipped |
-
-**Headline findings so far (SD-01, Word):**
-
-- **Naive character splitting destroys document structure.** FCC EAS
-  questionnaire accuracy dropped from `0.75` (structured) to `0.50` (naive)
-  because table cells were torn apart mid-question.
-- **Structure-preserving loaders fix title pollution.** EPA TSD rose from
-  `0.33` → `1.00`; UNDP evaluation from `0.00` → `0.33+` once page-footers and
-  header boilerplate stopped contaminating chunks.
-- **Benchmark totals:** naive `5–6/14` vs structured `8–9/14` across four
-  documents — structure wins even when it produces *more* chunks.
-- See `NoteBooks/SD-01-Word-Documents/03-word-rag-pure-langchain.ipynb` for the
-  full comparison table and methodology.
-
----
-
-## Repository map — everything in this repo
-
-```
-rag-playbook/
-├── README.md                     ← you are here
-├── AGENTS.md                     ← standing working conventions (read me first)
-├── requirements.txt              ← Python dependencies
-├── .env.example                  ← copy to .env, add your API keys
-├── .gitignore                    ← keeps secrets & regenerable artifacts out of git
-├── main.py                       ← runnable RAGPipeline wiring (Project 17)
-│
-├── curriculum/                   ← Layer-1 playbook: python-first labs,
-│   │                               10 concept tracks (chunking → agentic RAG)
-│   └── README.md                 ← curriculum map (concept → data → modules)
-├── tools/                        ← custom classes where LangChain has gaps
-│   └── README.md                 ← inventory (reranker, prf, graph, graphrag, raptor)
-│
-├── Topics/                       ← publishable content — one folder per project
-│   ├── README.md                 ← content map + per-project status
-│   └── Project-01-…/Project-18-… ← 18 project cards (stack, modules, notebooks)
-│
-├── NoteBooks/                    ← runnable notebooks (run each from its own folder)
-│   ├── Project-01-…/Project-17-… ← one notebook per curriculum project
-│   ├── SD-01-Word-Documents/     ← Special Documents series (SD-01…SD-08)
-│   │       └── 01…03-*.ipynb     ← naive vs structured benchmark experiments
-│   └── Curriculum-01-…/          ← verified conversions of curriculum/ labs
-│
-├── Data/                         ← sample documents + benchmark corpora
-│   ├── sample.csv, sample.json, local-docs/   ← Project 01 fixtures
-│   ├── SD-01-word/ … SD-08-invoices/          ← Special Documents samples
-│   ├── README.md                 ← per-corpus license declaration & provenance
-│   └── corpus/                   ← fresh corpora (rag-mini-wikipedia, beir-fiqa,
-│                                    beir-nfcorpus, lost-in-the-middle, scifact,
-│                                    hotpotqa, gutenberg) + .corpus-manifest.txt provenance
-│
-├── loaders/                      ← pipeline block #1: text in → Documents out
-├── splitters/                    ← pipeline block #2: documents → chunks
-├── embeddings/                   ← pipeline block #3: chunks → vectors
-├── vectordb/                     ← pipeline block #4: store & search vectors
-├── retrieval/                    ← pipeline block #5: query → top-k chunks
-├── prompts/                      ← pipeline block #6: chunks + question → prompt
-├── llms/                         ← pipeline block #7: prompt → answer
-├── evaluation/                   ← retrieval + generation metrics, harness
-└── scripts/                      ← fetchers + tooling (samples, corpus)
-```
-
-### Component library (the pluggable blocks)
-
-Every file is one class implementing the same contract as its siblings, so you
-can swap any block without touching the rest of the pipeline.
-
-| Module | Class | What it does | Status |
-|--------|-------|--------------|--------|
-| `loaders/web.py` | `WebLoader` | Scrapes one URL (requests + BeautifulSoup) → `list[Document]` | ✅ Implemented |
-| `loaders/pdf.py` | `PDFLoader` | Parses a PDF (PyPDFLoader) → documents | ✅ Implemented |
-| `loaders/csv_loader.py` | `CSVLoader` | Reads CSV rows → documents | ✅ Implemented |
-| `splitters/recursive.py` | `DocumentProcessor` | Splits documents into overlapping chunks (RecursiveCharacterTextSplitter) | ✅ Implemented |
-| `splitters/semantic.py` | `SemanticSplitter` | Splits on semantic similarity (embedding-aware) | ✅ Implemented |
-| `splitters/token_splitter.py` | `TokenSplitter` | Splits by token budget | ✅ Implemented |
-| `embeddings/gemini.py` | `GeminiEmbedding` | Gemini embeddings (Google AI Studio) — the default model | ✅ Implemented |
-| `embeddings/bge.py` | `BGEEmbedding` | Local BGE embeddings (sentence-transformers) | ✅ Implemented |
-| `embeddings/e5.py` | `E5Embedding` | Local E5 embeddings | ✅ Implemented |
-| `vectordb/chroma.py` | `ChromaVectorStore` | Chroma — persistent, the default store | ✅ Implemented |
-| `vectordb/faiss.py` | `FAISSVectorStore` | FAISS — fast in-memory index | ✅ Implemented |
-| `vectordb/qdrant.py` | `QdrantVectorStore` | Qdrant — server-based store | ✅ Implemented |
-| `retrieval/similarity.py` | `SimilarityRetriever` | Top-k by vector similarity | ✅ Implemented |
-| `retrieval/mmr.py` | `MMRRetriever` | Maximum Marginal Relevance — diverse results | ✅ Implemented |
-| `retrieval/hybrid.py` | `HybridRetriever` | BM25 keyword + dense vector fusion | ✅ Implemented |
-| `prompts/basic.py` | `BasicPrompt` | "Answer from context" template + `format()` | ✅ Implemented |
-| `prompts/citation.py` | `CitationPrompt` | "Answer with source citations" template + `format()` | ✅ Implemented |
-| `llms/gemini.py` | `GeminiLLM` | Gemini chat completions — the default LLM | ✅ Implemented |
-| `llms/openai.py` | `OpenAILLM` | OpenAI chat completions | ✅ Implemented |
-| `evaluation/` | — | RAGAS-style generation metrics, LLM-as-judge, evaluation harness — fully local | ✅ Implemented |
-
-**All 19 blocks are implemented.** Run any module directly
-(`python loaders/csv_loader.py`, `python splitters/token_splitter.py`, …) for
-a self-check, or the whole pipeline with `python main.py` (needs a
-`GOOGLE_API_KEY` in `.env`). Every component that depends on an optional
-package (`pypdf`, `sentence-transformers`, `faiss-cpu`, `langchain-qdrant`,
-`langchain-openai`) imports it lazily and prints a `SKIP: pip install …` hint
-when it's missing.
-
-### Notebooks — one per project, under `NoteBooks/Project-NN-*`
-
-Every project ships a structured, runnable notebook: small section-wise cells,
-setup → load → split → embed → store → retrieve → prompt → answer, plus
-"What you should notice" and exercises. Project 01 has four (basics + the
-baseline); Projects 02–17 have one each. Run each notebook from **its own
-folder** — paths are relative to the notebook directory.
-
-| Project | Notebook | What it teaches |
-|---------|----------|-----------------|
-| 01 | `Project-01-Baseline-RAG/01-langchain-intro.ipynb` | LangChain basics — loaders and splitters (`WebBaseLoader`, `RecursiveCharacterTextSplitter`) |
-| 01 | `Project-01-Baseline-RAG/02-document-loader.ipynb` | Rolling your own loader — requests + BeautifulSoup → `Document` → splitter |
-| 01 | `Project-01-Baseline-RAG/03-ingestion-pipeline.ipynb` | Ingestion template — build your own end-to-end ingestion step |
-| 01 | `Project-01-Baseline-RAG/04-baseline-rag.ipynb` | **The baseline** — load → chunk → embed (Gemini) → store (Chroma) → answer |
-| 02 | `Project-02-PDF-Knowledge-Base/01-pdf-knowledge-base.ipynb` | PDF parsing into a searchable knowledge base |
-| 03 | `Project-03-Local-Documentation-Search/01-local-documentation-search.ipynb` | Offline BGE embeddings + FAISS, no API keys |
-| 04 | `Project-04-Markdown-Documentation-RAG/01-markdown-documentation-rag.ipynb` | Structure-preserving markdown splitting |
-| 05 | `Project-05-HTML-Documentation/01-html-documentation.ipynb` | HTML hierarchy — load & split by document structure |
-| 06 | `Project-06-Better-Embeddings/01-comparing-embedding-models.ipynb` | Embedding model comparison (Gemini vs local) |
-| 07 | `Project-07-Compare-Vector-Databases/01-comparing-vector-databases.ipynb` | Chroma vs FAISS vs Qdrant — index, query, memory |
-| 08 | `Project-08-MMR-Retrieval/01-mmr-retrieval.ipynb` | MMR — diversity vs relevance |
-| 09 | `Project-09-Parent-Child-Retrieval/01-parent-child-retrieval.ipynb` | Small chunks in, large context out |
-| 10 | `Project-10-MultiQuery-Retrieval/01-multiquery-retrieval.ipynb` | Query expansion via `MultiQueryRetriever` |
-| 11 | `Project-11-Context-Compression/01-context-compression.ipynb` | Token reduction via contextual compression |
-| 12 | `Project-12-Prompt-Engineering/01-prompt-engineering.ipynb` | Basic → JSON → few-shot → citation → reasoning |
-| 13 | `Project-13-Multi-format-RAG/01-multi-format-rag.ipynb` | PDF + Markdown + CSV + Web + JSON loaders |
-| 14 | `Project-14-Metadata-Filtering/01-metadata-filtering.ipynb` | Scoped retrieval with metadata filters |
-| 15 | `Project-15-Hybrid-Search/01-hybrid-search.ipynb` | BM25 keyword + dense vector fusion (`EnsembleRetriever`) |
-| 16 | `Project-16-Build-Without-LangChain/01-rag-without-langchain.ipynb` | Pure-Python pipeline, no framework |
-| 17 | `Project-17-Modular-RAG-Framework/01-modular-rag-framework.ipynb` | Your own pluggable `RAGPipeline` framework |
-| 20 | `Project-20-Deep-Eval/01-deep-eval.ipynb` | evaluate the SD-08 invoice RAG pipeline with 4 generation metrics, from scratch and RAGAS cross-checked, LLM-as-judge vs reference-based agreement (kappa) |
-
-> `langchain` 1.3.14 note: retriever classes (Project 09–11, 15) live in the
-> `langchain-classic` package (`langchain_classic.retrievers`). The notebooks
-> import them with a `try/except` fallback, and `requirements.txt` now includes
-> `langchain-classic`.
-
-All sample documents live under `Data/` at the **repo root** — `sample.csv`,
-`sample.json`, a local markdown doc set under `local-docs/`, and one folder per
-Special Document (`SD-01-word/` … `SD-08-invoices/`). The
-`chroma_langchain_db/` folders inside the notebooks directory are regenerable
-vector-store artifacts.
-
-### `main.py` — the endgame
+The endgame is [`main.py`](main.py), where these pieces become a pluggable
+`RAGPipeline`.
 
 ```python
 pipeline = RAGPipeline(
     loader=CSVLoader("Data/sample.csv"),
-    splitter=DocumentProcessor(),     # any splitter — swap freely
-    embedder=GeminiEmbedding(),      # any embedding model
-    db=ChromaVectorStore(embedding=embedder),  # any vector store
-    retriever=SimilarityRetriever(db),         # any retriever
-    llm=GeminiLLM(),                 # any LLM
+    splitter=DocumentProcessor(),
+    embedder=GeminiEmbedding(),
+    db=ChromaVectorStore(embedding=embedder),
+    retriever=SimilarityRetriever(db),
+    llm=GeminiLLM(),
 )
-pipeline.ingest()                    # load → split → embed → store
-pipeline.ask("What is the sample about?")
-```
 
-This is the **endgame**: `RAGPipeline` in `main.py` wires the six blocks together
-and every block is a swappable class from the component library above. Run
-`python main.py` from the repo root to see the whole pipeline work end to end
-(needs a `GOOGLE_API_KEY` in `.env`). By the end of Project 17 you build exactly
-this from the components you implemented along the way.
-
-### Configuration
-
-- `.env.example` — template with the keys used by the projects:
-  `GOOGLE_API_KEY` (Gemini — most projects), `GROQ_API_KEY` (fast local-hosted
-  LLM option), `LANGSMITH_API_KEY` (optional tracing).
-- `requirements.txt` — `langchain` stack plus `pypdf` and `python-dotenv`;
-  the optional vector-DB drivers (`faiss-cpu`, `langchain-qdrant`, …) are listed
-  as comments, activated when you reach Project 07.
-- `.gitignore` — keeps `.env`, `__pycache__/`, vector-store artifacts
-  (`chroma_langchain_db/`, `*.sqlite3`, `lancedb/`, `qdrant_storage/`), the
-  large Enron corpus (`Data/SD-04-email/enron/`), and tooling state out of
-  version control.
-
----
-
-## Try it now
-
-Only the implemented components, no API keys needed. Run this from the repo
-root to see loading → chunking → prompting work end to end:
-
-```bash
-python -c "
-from loaders.web import WebLoader
-from splitters.recursive import DocumentProcessor
-from prompts.basic import BasicPrompt
-
-docs = WebLoader('https://dev.to/gautamvhavle/building-production-rag-systems-from-zero-to-hero-2f1i').load()
-chunks = DocumentProcessor(chunk_size=1000, chunk_overlap=200).split_docs(docs)
-
-print(f'Loaded {len(docs)} document(s), split into {len(chunks)} chunks')
-print(BasicPrompt().format(context=chunks[0].page_content, question='What is RAG?')[:600])
-"
+pipeline.ingest()
+answer = pipeline.ask("What is the sample about?")
 ```
 
 ---
 
-## Getting started
+## Recruiter View: Skills Proven Here
 
-**Prerequisites**
+If you are evaluating this repo quickly, these are the strongest signals.
 
-- Python 3.10+
-- A free [Google AI Studio](https://aistudio.google.com/) API key for Gemini
-  (most projects use Gemini embeddings + LLM by default)
+| Skill area | Evidence in the repo |
+|---|---|
+| RAG systems | 34 project cards in [`Topics/`](Topics/) covering Projects 01-36, plus runnable notebooks in [`NoteBooks/`](NoteBooks/) |
+| Retrieval engineering | Similarity, MMR, hybrid, parent-child, query transformation, context compression, reranking |
+| Embedding and vector search | Local BGE/E5, Gemini embeddings, FAISS, Chroma, Qdrant, index tradeoffs |
+| Evaluation | BEIR qrels, rag-mini-wikipedia, HotpotQA, SciFact, generation metrics, attribution, drift, regression |
+| Production patterns | [`api/`](api/), [`agent/`](agent/), [`observability/`](observability/), [`docker/`](docker/) |
+| Learning-to-teaching | Topic cards, curriculum tracks, notebooks, and special-document studies |
+| Engineering discipline | Python-first labs, verification before notebooks, shared components, local embeddings by default |
 
-**Install**
+Suggested review path:
+
+1. Start with [`main.py`](main.py) to see the final architecture.
+2. Open [`curriculum/README.md`](curriculum/README.md) to see the concept map.
+3. Open [`Topics/README.md`](Topics/README.md) to see the full project roadmap.
+4. Inspect [`retrieval/`](retrieval/) and [`evaluation/`](evaluation/) for advanced RAG work.
+5. Run one notebook from [`NoteBooks/Project-01-Baseline-RAG/`](NoteBooks/Project-01-Baseline-RAG/) or one curriculum lab from [`curriculum/`](curriculum/).
+
+---
+
+## Learner View: How To Use This Repo
+
+The repo has three learning layers.
+
+### 1. Project Track: Build A RAG System Piece By Piece
+
+The project track starts from baseline RAG and then swaps one component at a
+time.
+
+| Range | Focus |
+|---|---|
+| Projects 01-05 | Baseline RAG, PDF, local docs, markdown, HTML |
+| Projects 06-11 | Embeddings, vector DBs, MMR, parent-child retrieval, MultiQuery, compression |
+| Projects 12-18 | Prompting, multi-format loading, metadata filtering, hybrid search, no-framework RAG, modular framework, benchmarking |
+| Projects 20-22 | Deep evaluation, query rewrite, HyDE, decomposition |
+| Projects 24-36 | Index internals, reranking, context assembly, citation scoring, tool-calling RAG, LangGraph, multi-agent RAG, API service, async ingestion, observability, online eval, drift and regression |
+
+Project cards live in [`Topics/`](Topics/). Notebooks live in
+[`NoteBooks/`](NoteBooks/).
+
+### 2. Curriculum Track: Study Core Concepts Directly
+
+The curriculum is python-first. Each lab starts as a standalone `.py` file under
+[`curriculum/`](curriculum/) and is converted to a notebook only after it runs
+and passes verification.
+
+| Track | Concept |
+|---|---|
+| 01 | Chunking |
+| 02 | Embeddings |
+| 03 | Vector databases |
+| 04 | Retrieval |
+| 05 | Query transformation |
+| 06 | Re-ranking |
+| 07 | Evaluation |
+| 08 | GraphRAG |
+| 09 | RAPTOR |
+| 10 | Agentic RAG |
+
+See [`curriculum/README.md`](curriculum/README.md) for the detailed map.
+
+### 3. Special Documents Track: RAG On Messy Real Formats
+
+The special-document series studies formats that simple RAG demos usually skip:
+
+| Series | Format |
+|---|---|
+| SD-01 | Word documents |
+| SD-02 | PowerPoint |
+| SD-03 | Excel |
+| SD-04 | Email threads |
+| SD-05 | Scanned/OCR documents |
+| SD-06 | Tables and forms |
+| SD-07 | Chat transcripts |
+| SD-08 | Multilingual invoices |
+
+The goal is to compare naive parsing against structure-preserving parsing and
+measure the impact on retrieval and answer quality.
+
+---
+
+## RAG Concepts Covered
+
+This repo is designed to make each concept concrete.
+
+| Concept | What you can study here |
+|---|---|
+| Chunking | Fixed, recursive, token-aware, markdown-aware, HTML-aware, semantic, chunk-size sweeps |
+| Embeddings | Local BGE, local E5, embedding similarity, model comparison, dimensionality visualization |
+| Vector DBs | FAISS, Chroma persistence, Qdrant, vector index benchmarking |
+| Retrieval | Top-k, MMR, hybrid search, parent-child retrieval, compression, self-query-style filtering |
+| Query transformation | Rewrite, MultiQuery, decomposition, HyDE, step-back prompting, pseudo-relevance feedback |
+| Reranking | Cross-encoder reranking and advanced reranker patterns |
+| Context engineering | Deduplication, ordering, citation-aware context, lost-in-the-middle mitigation |
+| Evaluation | Recall, MRR, nDCG, answer metrics, judge agreement, attribution, golden sets |
+| Advanced RAG | GraphRAG, RAPTOR, tool-calling RAG, LangGraph-style agentic RAG, multi-agent RAG |
+| Production RAG | FastAPI service, async ingestion, observability, online eval, drift, prompt regression |
+
+---
+
+## Data And Evaluation
+
+The repo uses local sample data plus benchmark corpora under [`Data/`](Data/).
+
+| Dataset area | Used for |
+|---|---|
+| `rag-mini-wikipedia` | General RAG generation and retrieval experiments |
+| `beir-fiqa` and `beir-nfcorpus` | Retrieval metrics with qrels |
+| `lost-in-the-middle` | Context ordering and position-bias experiments |
+| `scifact` | Attribution and verification |
+| `hotpotqa` | Multi-hop, GraphRAG, and agentic RAG |
+| `gutenberg` | Long-document chunking experiments |
+| `SD-*` samples | Structure-preserving parsing benchmarks |
+
+Corpus provenance is tracked through manifest files in [`Data/`](Data/). See
+[`Data/README.md`](Data/README.md) for dataset notes.
+
+---
+
+## Local-First Embeddings
+
+By default, labs and notebooks embed locally with sentence-transformer models:
+
+| Model family | Module |
+|---|---|
+| BGE | [`embeddings/bge.py`](embeddings/bge.py) |
+| E5 | [`embeddings/e5.py`](embeddings/e5.py) |
+
+API models such as Gemini, OpenAI, or Groq are used as LLM backends when a lab
+needs generation. They are not the default workaround for embeddings.
+
+This distinction matters because it makes retrieval experiments reproducible,
+cheap to run, and easier to compare.
+
+---
+
+## Repository Map
+
+```text
+.
+|-- README.md                  # portfolio and learning entrypoint
+|-- AGENTS.md                  # working conventions for this repo
+|-- main.py                    # pluggable RAGPipeline assembly
+|-- requirements.txt           # Python dependencies
+|-- curriculum/                # python-first concept labs
+|-- Topics/                    # project cards and article plans
+|-- NoteBooks/                 # runnable notebooks
+|-- Data/                      # samples, benchmark corpora, manifests
+|-- loaders/                   # document loaders
+|-- splitters/                 # chunking strategies
+|-- embeddings/                # local and API embedding wrappers
+|-- vectordb/                  # vector store wrappers and index internals
+|-- retrieval/                 # retrieval, query transformation, reranking
+|-- prompts/                   # prompt templates
+|-- llms/                      # LLM adapters
+|-- evaluation/                # metrics, judge, drift, regression
+|-- tools/                     # custom tools where LangChain has gaps
+|-- agent/                     # tool-calling, LangGraph-style, multi-agent RAG
+|-- api/                       # service layer experiments
+|-- observability/             # tracing and metrics
+|-- docker/                    # deployment-oriented files
+`-- scripts/                   # corpus fetchers and notebook tooling
+```
+
+---
+
+## Quick Start
+
+### 1. Install
 
 ```bash
-git clone https://github.com/nabil0x/rag-playbook.git && cd rag-playbook
-python -m venv .venv && source .venv/bin/activate
+git clone https://github.com/nabil0x/rag-playbook.git
+cd rag-playbook
+
+python -m venv .venv
+source .venv/bin/activate
+
 pip install -r requirements.txt
-cp .env.example .env        # then paste your API keys
 ```
 
-**Run the first project**
+### 2. Configure Optional LLM Keys
 
-Open `NoteBooks/Project-01-Baseline-RAG/04-baseline-rag.ipynb` and run it end
-to end — that is Project 01, the full baseline pipeline. The companion article
-is `Topics/Project-01-Baseline-RAG/01-baseline-rag.md`.
+Some notebooks use API LLMs for generation.
 
-**Follow along**
+```bash
+cp .env.example .env
+```
 
-1. Work through the projects in order. Each one changes one block.
-2. When you hit an advanced project (06–15), read its card in `Topics/` first,
-   then implement the component in the matching module.
-3. Finish with Project 17 (build the framework) and Project 18 (benchmark it).
-4. Curious about hard document formats? Try the Special Documents series —
-   start with `NoteBooks/SD-01-Word-Documents/01-word-documents-rag.ipynb`.
+Then add keys as needed:
+
+```text
+GOOGLE_API_KEY=...
+GROQ_API_KEY=...
+OPENAI_API_KEY=...
+LANGSMITH_API_KEY=...
+```
+
+Local embedding labs do not require embedding API keys.
+
+### 3. Run A Python Lab
+
+```bash
+python curriculum/01-chunking/01-fixed-vs-recursive.py
+```
+
+### 4. Run The End-To-End Pipeline
+
+`main.py` uses Gemini for embeddings and generation, so it requires
+`GOOGLE_API_KEY`.
+
+```bash
+python main.py
+```
+
+### 5. Open A Notebook
+
+Start with:
+
+```text
+NoteBooks/Project-01-Baseline-RAG/04-baseline-rag.ipynb
+```
+
+Run notebooks from their own folder because paths are relative to the notebook
+directory.
 
 ---
 
-## Roadmap — build order
+## My Learning Philosophy In This Repo
 
-All components are implemented; this is the dependency order the projects
-unlock them in — and the order you'd rebuild them from scratch in Project 16
-(pure Python) and Project 17 (your own framework):
+RAG quality is not created by one model call. It is created by the interaction
+between data preparation, chunking, embedding choice, vector indexing, retrieval
+strategy, context assembly, prompting, answer generation, and evaluation.
 
-1. `embeddings/gemini.py` → `vectordb/chroma.py` → `llms/gemini.py`
-   — completes the **Project 01** pipeline as plain code.
-2. `loaders/pdf.py` — unlocks **Project 02**.
-3. `embeddings/bge.py` + `vectordb/faiss.py` — unlocks **Project 03** (offline).
-4. `vectordb/qdrant.py` — **Project 07** store comparison.
-5. `retrieval/mmr.py` → `retrieval/hybrid.py` — **Projects 08 & 15**.
-6. `splitters/semantic.py` + `splitters/token_splitter.py` — **Projects 09 & 11**.
-7. `llms/openai.py` — optional alternative backend.
-8. **Project 16** — rewrite each block in pure Python (no LangChain).
-9. **Project 17** — assemble `RAGPipeline` in `main.py` from your classes.
+That is why this repo is organized as a playbook:
 
-**Special Documents series** — SD-05…SD-08 notebooks are next: scanned/OCR,
-tables & forms, chat transcripts, and multilingual invoices. Sample data
-already ships in `Data/`.
+1. Build the simplest working system.
+2. Change exactly one component.
+3. Measure the effect.
+4. Turn the lesson into reusable code.
+5. Convert verified code into notebooks and teaching material.
+
+The result is both a personal study record and a teaching resource for anyone
+who wants to understand RAG beyond copy-paste demos.
 
 ---
 
-## Notes
+## Current Notes
 
-- Sample data under `Data/` comes from a mix of public-domain and licensed
-  sources (Gutenberg, BEIR, lost-in-the-middle, scifact, hotpotqa, MIND …) —
-  see [`Data/README.md`](Data/README.md) for the per-corpus license
-  declaration, and `Data/.corpus-manifest.txt` for the sha256-verified
-  provenance of every fetched file.
-- Vector database folders (e.g. `chroma_langchain_db/`) are regenerable
-  artifacts and gitignored.
-- This repo grows with you: each project card, article, component, and Special
-  Documents experiment lands as the curriculum evolves.
+- Some advanced modules and project cards are still evolving.
+- P20-P36 module stubs, topic cards, fresh corpora, and related scripts may be
+  uncommitted depending on the current working tree.
+- Vector-store folders and regenerated artifacts are intentionally excluded
+  from git.
+- See [`AGENTS.md`](AGENTS.md) for the standing conventions used while working
+  in this repository.
