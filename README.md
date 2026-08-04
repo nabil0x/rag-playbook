@@ -26,6 +26,39 @@ Three things live in this repo, all built on the same swappable pipeline:
    more. Each one ships with sample data under `Data/SD-0N-<slug>/` and a
    notebook that measures naive vs structure-preserving parsing.
 
+4. **A Layer-1 RAG Playbook curriculum** (`curriculum/`) — the learning
+   laboratory: **10 concept tracks** (chunking, embeddings, vector databases,
+   retrieval, query transformation, re-ranking, evaluation, GraphRAG, RAPTOR,
+   agentic RAG) as python-first labs that convert to verified notebooks under
+   `NoteBooks/Curriculum-NN-*` — all running on **local embeddings** and the
+   fresh benchmark corpora in `Data/corpus/`.
+
+---
+
+## Layer-1 playbook curriculum
+
+The learning laboratory: **10 concept tracks** under `curriculum/`, each a
+folder of python-first labs. Workflow (see `AGENTS.md`): write the `.py`,
+run it and pass the verification gate, **then** convert to a notebook under
+`NoteBooks/Curriculum-NN-*`. Everything embeds locally (BGE/E5 via
+sentence-transformers); LangChain first, custom classes only where it has gaps
+(`tools/`).
+
+| Track | Concept | Data (`Data/corpus/`) | Custom tools |
+|---|---|---|---|
+| 01 | Chunking | `Data/corpus/gutenberg/` (public domain), `Data/local-docs/`, SD samples | — |
+| 02 | Embeddings | rag-mini-wikipedia | — |
+| 03 | Vector databases | rag-mini-wikipedia | — |
+| 04 | Retrieval | rag-mini + beir-fiqa/nfcorpus qrels | — |
+| 05 | Query transformation | rag-mini test, hotpotqa | `tools/prf.py` |
+| 06 | Re-ranking | beir-fiqa/nfcorpus qrels, lost-in-the-middle | `tools/reranker.py` |
+| 07 | Evaluation | qrels + gold answers | — |
+| 08 | GraphRAG | hotpotqa, rag-mini-wikipedia | `tools/{graph,graphrag}.py` |
+| 09 | RAPTOR | rag-mini-wikipedia | `tools/raptor.py` |
+| 10 | Agentic RAG | hotpotqa, scifact | evidence verifier |
+
+Plan: `.omo/plans/layer1-rag-playbook.md`.
+
 ---
 
 ## The pipeline
@@ -87,6 +120,7 @@ Work through the projects in order. Each row changes one block of the pipeline.
 | 16 | [Build Without LangChain](Topics/Project-16-Build-Without-LangChain/README.md) | Everything | Pure-Python pipeline, no framework |
 | 17 | [Modular RAG Framework](Topics/Project-17-Modular-RAG-Framework/README.md) | Architecture | Your own pluggable framework |
 | 18 | [RAG Benchmark Suite](Topics/Project-18-RAG-Benchmark-Suite/README.md) | Capstone | Design, compare, and evaluate RAG systems |
+| 20 | [Deep Eval](Topics/Project-20-Deep-Eval/README.md) | Capstone | RAG generation metrics |
 
 Each project card (linked above) lists its stack, the component modules it
 exercises, and the matching notebook. Drafted articles live inside the project
@@ -132,10 +166,17 @@ aren't clean PDFs and markdown? Every entry uses the same benchmark methodology
 ```
 rag-playbook/
 ├── README.md                     ← you are here
+├── AGENTS.md                     ← standing working conventions (read me first)
 ├── requirements.txt              ← Python dependencies
 ├── .env.example                  ← copy to .env, add your API keys
 ├── .gitignore                    ← keeps secrets & regenerable artifacts out of git
 ├── main.py                       ← runnable RAGPipeline wiring (Project 17)
+│
+├── curriculum/                   ← Layer-1 playbook: python-first labs,
+│   │                               10 concept tracks (chunking → agentic RAG)
+│   └── README.md                 ← curriculum map (concept → data → modules)
+├── tools/                        ← custom classes where LangChain has gaps
+│   └── README.md                 ← inventory (reranker, prf, graph, graphrag, raptor)
 │
 ├── Topics/                       ← publishable content — one folder per project
 │   ├── README.md                 ← content map + per-project status
@@ -143,12 +184,17 @@ rag-playbook/
 │
 ├── NoteBooks/                    ← runnable notebooks (run each from its own folder)
 │   ├── Project-01-…/Project-17-… ← one notebook per curriculum project
-│   └── SD-01-Word-Documents/     ← Special Documents series (SD-01…SD-08)
-│       └── 01…03-*.ipynb         ← naive vs structured benchmark experiments
+│   ├── SD-01-Word-Documents/     ← Special Documents series (SD-01…SD-08)
+│   │       └── 01…03-*.ipynb     ← naive vs structured benchmark experiments
+│   └── Curriculum-01-…/          ← verified conversions of curriculum/ labs
 │
-├── Data/                         ← sample documents (public domain), at repo root
+├── Data/                         ← sample documents + benchmark corpora
 │   ├── sample.csv, sample.json, local-docs/   ← Project 01 fixtures
-│   └── SD-01-word/ … SD-08-invoices/          ← Special Documents samples
+│   ├── SD-01-word/ … SD-08-invoices/          ← Special Documents samples
+│   ├── README.md                 ← per-corpus license declaration & provenance
+│   └── corpus/                   ← fresh corpora (rag-mini-wikipedia, beir-fiqa,
+│                                    beir-nfcorpus, lost-in-the-middle, scifact,
+│                                    hotpotqa, gutenberg) + .corpus-manifest.txt provenance
 │
 ├── loaders/                      ← pipeline block #1: text in → Documents out
 ├── splitters/                    ← pipeline block #2: documents → chunks
@@ -157,7 +203,8 @@ rag-playbook/
 ├── retrieval/                    ← pipeline block #5: query → top-k chunks
 ├── prompts/                      ← pipeline block #6: chunks + question → prompt
 ├── llms/                         ← pipeline block #7: prompt → answer
-└── scripts/                      ← tooling (fetch SD samples, generate fixtures)
+├── evaluation/                   ← retrieval + generation metrics, harness
+└── scripts/                      ← fetchers + tooling (samples, corpus)
 ```
 
 ### Component library (the pluggable blocks)
@@ -186,6 +233,7 @@ can swap any block without touching the rest of the pipeline.
 | `prompts/citation.py` | `CitationPrompt` | "Answer with source citations" template + `format()` | ✅ Implemented |
 | `llms/gemini.py` | `GeminiLLM` | Gemini chat completions — the default LLM | ✅ Implemented |
 | `llms/openai.py` | `OpenAILLM` | OpenAI chat completions | ✅ Implemented |
+| `evaluation/` | — | RAGAS-style generation metrics, LLM-as-judge, evaluation harness — fully local | ✅ Implemented |
 
 **All 19 blocks are implemented.** Run any module directly
 (`python loaders/csv_loader.py`, `python splitters/token_splitter.py`, …) for
@@ -225,6 +273,7 @@ folder** — paths are relative to the notebook directory.
 | 15 | `Project-15-Hybrid-Search/01-hybrid-search.ipynb` | BM25 keyword + dense vector fusion (`EnsembleRetriever`) |
 | 16 | `Project-16-Build-Without-LangChain/01-rag-without-langchain.ipynb` | Pure-Python pipeline, no framework |
 | 17 | `Project-17-Modular-RAG-Framework/01-modular-rag-framework.ipynb` | Your own pluggable `RAGPipeline` framework |
+| 20 | `Project-20-Deep-Eval/01-deep-eval.ipynb` | evaluate the SD-08 invoice RAG pipeline with 4 generation metrics, from scratch and RAGAS cross-checked, LLM-as-judge vs reference-based agreement (kappa) |
 
 > `langchain` 1.3.14 note: retriever classes (Project 09–11, 15) live in the
 > `langchain-classic` package (`langchain_classic.retrievers`). The notebooks
@@ -353,8 +402,11 @@ already ships in `Data/`.
 
 ## Notes
 
-- Sample data under `Data/` is public-domain text from
-  [Project Gutenberg](https://www.gutenberg.org/) plus small original fixtures.
+- Sample data under `Data/` comes from a mix of public-domain and licensed
+  sources (Gutenberg, BEIR, lost-in-the-middle, scifact, hotpotqa, MIND …) —
+  see [`Data/README.md`](Data/README.md) for the per-corpus license
+  declaration, and `Data/.corpus-manifest.txt` for the sha256-verified
+  provenance of every fetched file.
 - Vector database folders (e.g. `chroma_langchain_db/`) are regenerable
   artifacts and gitignored.
 - This repo grows with you: each project card, article, component, and Special
