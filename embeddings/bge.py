@@ -8,9 +8,16 @@ These are imported lazily inside the methods so that this module can be
 imported even on machines where the heavy deps are not installed.
 """
 
+from langchain_core.embeddings import Embeddings
 
-class BGEEmbedding:
+
+class BGEEmbedding(Embeddings):
     """Embed text with BAAI/bge-base-en-v1.5 via sentence-transformers.
+
+    Subclasses ``langchain_core.embeddings.Embeddings`` so every vector-store
+    integration (FAISS, Chroma, Qdrant) accepts it — integrations dispatch on
+    ``isinstance(embedding, Embeddings)`` and treat plain objects as the
+    deprecated callable contract.
 
     The model is built lazily on first use and cached; the heavy
     dependencies (langchain-huggingface, sentence-transformers, torch)

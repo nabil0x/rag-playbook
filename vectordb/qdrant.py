@@ -7,16 +7,33 @@ See Topics/Project-07-Compare-Vector-Databases/README.md.
 import sys
 
 from langchain_core.documents import Document
+from langchain_core.embeddings import Embeddings
 
 
-class _PrecomputedEmbeddings:
-    """Tiny passthrough adapter returning precomputed vectors by index."""
+class _PrecomputedEmbeddings(Embeddings):
+    """Passthrough adapter mapping precomputed vectors back to their texts.
 
-    def __init__(self, embeddings: list[list[float]]):
-        self.embeddings = embeddings
+    Subclasses ``Embeddings`` so vector-store integrations accept it — they
+    dispatch on ``isinstance(embedding, Embeddings)`` (langchain-qdrant raises
+    otherwise). Vectors are looked up BY TEXT, not by call order: stores may
+    call ``embed_documents`` once with the full list (FAISS, Chroma) or in
+    batches (langchain-qdrant batches at 64), and a positional offset would
+    silently misalign vectors past the first batch.
+    """
+
+    def __init__(self, texts: list[str], embeddings: list[list[float]]):
+        if len(texts) != len(embeddings):
+            raise ValueError("texts and embeddings must be parallel lists")
+        self._table: dict[str, list[float]] = dict(zip(texts, embeddings))
 
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
-        return self.embeddings
+        missing = [t for t in texts if t not in self._table]
+        if missing:
+            raise ValueError(
+                f"{len(missing)} text(s) have no precomputed vector; "
+                "the store asked to embed text it was not given at add() time"
+            )
+        return [self._table[t] for t in texts]
 
     def embed_query(self, text: str) -> list[float]:
         raise NotImplementedError(
@@ -47,7 +64,9 @@ class QdrantVectorStore:
             ) from exc
 
         if embeddings is not None:
-            embedder = _PrecomputedEmbeddings(embeddings)
+            embedder = _PrecomputedEmbeddings(
+                [c.page_content for c in chunks], embeddings
+            )
         elif self.embedding is not None:
             embedder = self.embedding
         else:
@@ -64,6 +83,21 @@ class QdrantVectorStore:
         if self._store is None:
             raise RuntimeError("call add() first")
         return self._store.similarity_search_by_vector(query_embedding, k=top_k)
+
+    def query_with_scores(
+        self, query_embedding: list, top_k: int = 5, filter: dict | None = None
+    ) -> list[tuple[Document, float]]:
+        """Return top-k as (Document, score) pairs, optionally metadata-filtered.
+
+        Qdrant's default distance is Cosine, so the score is a cosine
+        similarity — HIGHER is more similar. The ``filter`` dict uses Qdrant
+        condition syntax, e.g. ``{"must": [{"key": "bucket", "match": {"value": "b1"}}]}``.
+        """
+        if self._store is None:
+            raise RuntimeError("call add() first")
+        return self._store.similarity_search_with_score_by_vector(
+            query_embedding, k=top_k, filter=filter
+        )
 
     def query_mmr(
         self, query_embedding: list, top_k: int = 5, lambda_mult: float = 0.5
@@ -96,7 +130,7 @@ if __name__ == "__main__":
         )
         raise SystemExit(0)
 
-    class _FakeEmbedding:
+    class _FakeEmbedding(Embeddings):
         """Keyword-presence fake embedding (identity-ish: 3 vocab slots)."""
 
         VOCAB = ["rag", "vector", "mmr"]

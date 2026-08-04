@@ -11,9 +11,16 @@ These are imported lazily inside the methods so that this module can be
 imported even on machines where the heavy deps are not installed.
 """
 
+from langchain_core.embeddings import Embeddings
 
-class E5Embedding:
+
+class E5Embedding(Embeddings):
     """Embed text with intfloat/multilingual-e5-base.
+
+    Subclasses ``langchain_core.embeddings.Embeddings`` so every vector-store
+    integration (FAISS, Chroma, Qdrant) accepts it — integrations dispatch on
+    ``isinstance(embedding, Embeddings)`` and treat plain objects as the
+    deprecated callable contract.
 
     Applies the E5 instruction prefixes ("query: " / "passage: ") before
     embedding. The model is built lazily on first use and cached.

@@ -18,8 +18,11 @@ openpyxl
 pdfplumber
 
 # Optional, per Topics/Project-07-Compare-Vector-Databases/README.md:
-# faiss-cpu
-# langchain-qdrant
+faiss-cpu
+langchain-qdrant
+# qdrant-client must stay <=1.13.x: langchain-qdrant 1.1.0 passes init_from
+# to create_collection, which newer qdrant-client rejects (AssertionError).
+qdrant-client==1.13.3
 # langchain-pinecone
 # langchain-postgres
 # langchain-milvus

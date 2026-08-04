@@ -7,16 +7,33 @@ See Topics/Project-07-Compare-Vector-Databases/README.md.
 import sys
 
 from langchain_core.documents import Document
+from langchain_core.embeddings import Embeddings
 
 
-class _PrecomputedEmbeddings:
-    """Tiny passthrough adapter returning precomputed vectors by index."""
+class _PrecomputedEmbeddings(Embeddings):
+    """Passthrough adapter mapping precomputed vectors back to their texts.
 
-    def __init__(self, embeddings: list[list[float]]):
-        self.embeddings = embeddings
+    Subclasses ``Embeddings`` so vector-store integrations accept it — they
+    dispatch on ``isinstance(embedding, Embeddings)``. Vectors are looked up
+    BY TEXT, not by call order: stores may call ``embed_documents`` once with
+    the full list (FAISS, Chroma) or in batches (langchain-qdrant batches at
+    64), and a positional offset would silently misalign vectors past the
+    first batch.
+    """
+
+    def __init__(self, texts: list[str], embeddings: list[list[float]]):
+        if len(texts) != len(embeddings):
+            raise ValueError("texts and embeddings must be parallel lists")
+        self._table: dict[str, list[float]] = dict(zip(texts, embeddings))
 
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
-        return self.embeddings
+        missing = [t for t in texts if t not in self._table]
+        if missing:
+            raise ValueError(
+                f"{len(missing)} text(s) have no precomputed vector; "
+                "the store asked to embed text it was not given at add() time"
+            )
+        return [self._table[t] for t in texts]
 
     def embed_query(self, text: str) -> list[float]:
         raise NotImplementedError(
@@ -53,7 +70,9 @@ class ChromaVectorStore:
             ) from exc
 
         if embeddings is not None:
-            embedder = _PrecomputedEmbeddings(embeddings)
+            embedder = _PrecomputedEmbeddings(
+                [c.page_content for c in chunks], embeddings
+            )
         elif self.embedding is not None:
             embedder = self.embedding
         else:
@@ -66,10 +85,46 @@ class ChromaVectorStore:
             persist_directory=self.persist_dir,
         )
 
+    def load(self) -> None:
+        """Reopen an existing persistent collection from disk (no re-adding).
+
+        The query methods take query VECTORS, so reading a collection back
+        needs no embedding model — the precomputed adapter is a no-op
+        stand-in. Requires the collection to exist in ``persist_dir``.
+        """
+        try:
+            from langchain_chroma import Chroma
+        except ImportError as exc:
+            raise ImportError(
+                "ChromaVectorStore needs langchain-chroma: pip install langchain-chroma"
+            ) from exc
+
+        self._store = Chroma(
+            collection_name=self.collection_name,
+            persist_directory=self.persist_dir,
+            embedding_function=_PrecomputedEmbeddings([], []),
+        )
+
     def query(self, query_embedding: list, top_k: int = 5) -> list[Document]:
         if self._store is None:
             raise RuntimeError("call add() first")
         return self._store.similarity_search_by_vector(query_embedding, k=top_k)
+
+    def query_with_scores(
+        self, query_embedding: list, top_k: int = 5, filter: dict | None = None
+    ) -> list[tuple[Document, float]]:
+        """Return top-k as (Document, score) pairs, optionally metadata-filtered.
+
+        With Chroma's default collection (l2 space) the score is the raw
+        (squared) L2 distance — LOWER is more similar, with the same values
+        FAISS reports. The ``filter`` dict uses Chroma ``where`` syntax, e.g.
+        ``{"bucket": "b1"}``.
+        """
+        if self._store is None:
+            raise RuntimeError("call add() first")
+        return self._store.similarity_search_by_vector_with_relevance_scores(
+            query_embedding, k=top_k, filter=filter
+        )
 
     def query_mmr(
         self, query_embedding: list, top_k: int = 5, lambda_mult: float = 0.5
@@ -105,7 +160,7 @@ if __name__ == "__main__":
         )
         raise SystemExit(0)
 
-    class _FakeEmbedding:
+    class _FakeEmbedding(Embeddings):
         """Keyword-presence fake embedding (identity-ish: 3 vocab slots)."""
 
         VOCAB = ["rag", "vector", "mmr"]
