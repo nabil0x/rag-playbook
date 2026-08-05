@@ -66,7 +66,7 @@ Each folder maps to one part of that pipeline:
 | Store vectors | `vectordb/` | Chroma, FAISS, Qdrant, FAISS index internals |
 | Retrieve context | `retrieval/` | Similarity, MMR, hybrid, rewrite, HyDE, decomposition, rerank, context assembly |
 | Build prompts | `prompts/` | Basic prompt, citation prompt |
-| Generate answers | `llms/` | Gemini, OpenAI, Groq |
+| Generate answers | `llms/` | Gemini, OpenAI, Groq, NVIDIA NIM, local Ollama |
 | Measure behavior | `evaluation/` | Metrics, golden tests, judge, attribution, drift, regression, online eval |
 
 The endgame is [`main.py`](main.py), where these pieces become a pluggable
@@ -220,8 +220,10 @@ By default, labs and notebooks embed locally with sentence-transformer models:
 | BGE | [`embeddings/bge.py`](embeddings/bge.py) |
 | E5 | [`embeddings/e5.py`](embeddings/e5.py) |
 
-API models such as Gemini, OpenAI, or Groq are used as LLM backends when a lab
-needs generation. They are not the default workaround for embeddings.
+API models such as Gemini, OpenAI, Groq, or NVIDIA NIM are used as LLM backends
+when a lab needs generation, and the advanced curriculum tracks (08-10) default
+to a fully local Ollama LLM so they run without any API key. API models are not
+the default workaround for embeddings.
 
 This distinction matters because it makes retrieval experiments reproducible,
 cheap to run, and easier to compare.
@@ -274,7 +276,7 @@ pip install -r requirements.txt
 
 ### 2. Configure Optional LLM Keys
 
-Some notebooks use API LLMs for generation.
+Most notebooks use API LLMs for generation and read keys from `.env`.
 
 ```bash
 cp .env.example .env
@@ -286,10 +288,13 @@ Then add keys as needed:
 GOOGLE_API_KEY=...
 GROQ_API_KEY=...
 OPENAI_API_KEY=...
+NVIDIA_API_KEY=...
 LANGSMITH_API_KEY=...
 ```
 
-Local embedding labs do not require embedding API keys.
+No key is required for the local path: curriculum tracks 08-10 default to a
+locally served Ollama LLM (`ollama pull qwen2.5-coder:7b`), and local embedding
+labs need no embedding API key at all.
 
 ### 3. Run A Python Lab
 
@@ -340,9 +345,9 @@ who wants to understand RAG beyond copy-paste demos.
 
 ## Current Notes
 
-- Some advanced modules and project cards are still evolving.
-- P20-P36 module stubs, topic cards, fresh corpora, and related scripts may be
-  uncommitted depending on the current working tree.
+- All 10 curriculum tracks are complete and verified (tracks 08-10: GraphRAG,
+  RAPTOR, and agentic RAG), with notebooks generated from the verified labs.
+- Everything in this working tree is committed and pushed to `origin/main`.
 - Vector-store folders and regenerated artifacts are intentionally excluded
   from git.
 - See [`AGENTS.md`](AGENTS.md) for the standing conventions used while working
