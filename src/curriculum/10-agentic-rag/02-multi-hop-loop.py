@@ -21,8 +21,8 @@ retrieve the wrong paragraphs and still pass — what the lab verifies is that
 the loop terminates, accumulates evidence, and produces a non-empty answer.
 
 Run from the repo root:
-    python curriculum/10-agentic-rag/02-multi-hop-loop.py
-    python curriculum/10-agentic-rag/02-multi-hop-loop.py --verify
+    python src/curriculum/10-agentic-rag/02-multi-hop-loop.py
+    python src/curriculum/10-agentic-rag/02-multi-hop-loop.py --verify
 """
 
 from __future__ import annotations
@@ -33,9 +33,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/10-agentic-rag/02-multi-hop-loop.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/10-agentic-rag/02-multi-hop-loop.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from llms.ollama import OllamaLLM  # noqa: E402

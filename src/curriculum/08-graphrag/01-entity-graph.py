@@ -6,7 +6,7 @@ between them from the corpus and stores that structure as a graph. A query is
 then answered by walking or summarizing the graph instead of (or in addition
 to) dense retrieval.
 
-This lab implements the index half of that recipe with ``tools/graph``:
+This lab implements the index half of that recipe with ``src/tools/graph``:
 
 * each passage is sent to a local-LLM-backed extractor (OllamaLLM +
   ``json_object``) which returns ``(head, relation, tail)`` triples;
@@ -18,8 +18,8 @@ The graph is the artifact everything else in this track builds on: lab 03
 detects communities over it and lab 04 queries it locally and globally.
 
 Run from the repo root:
-    python curriculum/08-graphrag/01-entity-graph.py
-    python curriculum/08-graphrag/01-entity-graph.py --verify
+    python src/curriculum/08-graphrag/01-entity-graph.py
+    python src/curriculum/08-graphrag/01-entity-graph.py --verify
 """
 
 from __future__ import annotations
@@ -29,9 +29,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/08-graphrag/01-entity-graph.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/08-graphrag/01-entity-graph.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import pandas as pd  # noqa: E402
 

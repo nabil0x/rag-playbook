@@ -23,8 +23,8 @@ Same three questions as lab 01 (1606/1610/1626) so you can compare the
 transformations directly.
 
 Run from the repo root:
-    python curriculum/05-query-transformation/02-multi-query.py
-    python curriculum/05-query-transformation/02-multi-query.py --verify
+    python src/curriculum/05-query-transformation/02-multi-query.py
+    python src/curriculum/05-query-transformation/02-multi-query.py --verify
 """
 
 from __future__ import annotations
@@ -37,9 +37,9 @@ import pandas as pd
 from dotenv import load_dotenv
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/05-query-transformation/02-multi-query.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/05-query-transformation/02-multi-query.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 load_dotenv(REPO_ROOT / ".env")  # GROQ_API_KEY lives in the repo-root .env
 

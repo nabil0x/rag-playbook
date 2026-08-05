@@ -4,10 +4,10 @@ The second decision in every RAG pipeline is: what unit do I budget chunks
 in? This lab runs the SAME budget number (300) through two splitters where
 the number means different units:
 
-* TOKEN splitting (``splitters/token_splitter.TokenSplitter`` →
+* TOKEN splitting (``src/splitters/token_splitter.TokenSplitter`` →
   ``TokenTextSplitter``) cuts on token boundaries, so every chunk is
   guaranteed to stay inside the token budget the LLM actually bills against.
-* CHARACTER splitting (``splitters/recursive.DocumentProcessor`` →
+* CHARACTER splitting (``src/splitters/recursive.DocumentProcessor`` →
   ``RecursiveCharacterTextSplitter``) cuts on character counts, which say
   nothing about tokens: a 300-character chunk can cost anywhere from ~20 to
   300+ tokens depending on how token-dense the text is (markdown markup,
@@ -15,11 +15,11 @@ the number means different units:
 
 This lab measures both outputs in real token space with tiktoken
 (``cl100k_base``, the gpt-4 tokenizer — the same encoder
-``splitters/token_splitter.py`` uses to measure) and reports, per splitter:
+``src/splitters/token_splitter.py`` uses to measure) and reports, per splitter:
 chunk count, average / min / max tokens per chunk, and the spread (population
 std dev). The corpus is three public-domain Project Gutenberg novels
 (``Data/corpus/gutenberg/`` — Pride and Prejudice, Moby-Dick, A Tale of Two
-Cities), loaded through ``loaders/gutenberg.GutenbergLoader`` so the license
+Cities), loaded through ``src/loaders/gutenberg.GutenbergLoader`` so the license
 preamble/footer is stripped before splitting. Token-budgeted chunks come out
 uniform and bounded; character-budgeted chunks vary widely for the same
 nominal budget, and a larger character budget (e.g. the repo default of 1000
@@ -31,7 +31,7 @@ tokens. See splitters/token_splitter.py and
 Topics/Project-04-Markdown-Documentation-RAG/README.md.
 
 Run from the repo root:
-    python curriculum/01-chunking/02-token-aware.py
+    python src/curriculum/01-chunking/02-token-aware.py
 """
 
 from __future__ import annotations
@@ -44,9 +44,9 @@ import tiktoken
 from langchain_core.documents import Document
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/01-chunking/02-token-aware.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/01-chunking/02-token-aware.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from loaders.gutenberg import GutenbergLoader  # noqa: E402
 from splitters.recursive import DocumentProcessor  # noqa: E402

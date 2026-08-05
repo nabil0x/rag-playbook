@@ -26,8 +26,8 @@ Three question types show the tradeoff:
 (c) a two-retrieval comparison that must combine two passages.
 
 Run from the repo root:
-    python curriculum/10-agentic-rag/01-tool-calling.py
-    python curriculum/10-agentic-rag/01-tool-calling.py --verify
+    python src/curriculum/10-agentic-rag/01-tool-calling.py
+    python src/curriculum/10-agentic-rag/01-tool-calling.py --verify
 """
 
 from __future__ import annotations
@@ -39,9 +39,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/10-agentic-rag/01-tool-calling.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/10-agentic-rag/01-tool-calling.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import pandas as pd  # noqa: E402
 

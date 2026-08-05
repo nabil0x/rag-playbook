@@ -22,8 +22,8 @@ is deliberately not gated — a local 7B model driving this graph is a
 demonstration, not a benchmark.
 
 Run from the repo root:
-    python curriculum/10-agentic-rag/04-react-reflection.py
-    python curriculum/10-agentic-rag/04-react-reflection.py --verify
+    python src/curriculum/10-agentic-rag/04-react-reflection.py
+    python src/curriculum/10-agentic-rag/04-react-reflection.py --verify
 """
 
 from __future__ import annotations
@@ -35,9 +35,9 @@ from pathlib import Path
 from typing import Annotated, TypedDict
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/10-agentic-rag/04-react-reflection.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/10-agentic-rag/04-react-reflection.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from langgraph.graph import END, START, StateGraph  # noqa: E402
 

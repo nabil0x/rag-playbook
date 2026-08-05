@@ -8,7 +8,7 @@ specific search query BEFORE it is embedded, so the retrieval step sees the
 query the document store can actually answer.
 
 This lab wraps the ``SimilarityRetriever`` block in the
-``QueryRewriteRetriever`` (``retrieval/query_rewrite.py``) and compares, for
+``QueryRewriteRetriever`` (``src/retrieval/query_rewrite.py``) and compares, for
 the same questions:
 
 * RAW — plain top-k: embed the question as the user typed it.
@@ -24,8 +24,8 @@ gate checks that the rewritten path still surfaces the passage carrying the
 answer keyword.
 
 Run from the repo root:
-    python curriculum/05-query-transformation/01-rewrite.py
-    python curriculum/05-query-transformation/01-rewrite.py --verify
+    python src/curriculum/05-query-transformation/01-rewrite.py
+    python src/curriculum/05-query-transformation/01-rewrite.py --verify
 """
 
 from __future__ import annotations
@@ -38,9 +38,9 @@ import pandas as pd
 from dotenv import load_dotenv
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/05-query-transformation/01-rewrite.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/05-query-transformation/01-rewrite.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 load_dotenv(REPO_ROOT / ".env")  # GROQ_API_KEY lives in the repo-root .env
 

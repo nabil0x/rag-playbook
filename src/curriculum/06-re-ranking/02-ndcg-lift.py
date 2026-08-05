@@ -31,8 +31,8 @@ Corpus: beir-nfcorpus (medical QA, 3633 docs). We index a deterministic
 600-doc head and evaluate every qrels-covered query with gold inside it.
 
 Run from the repo root:
-    python curriculum/06-re-ranking/02-ndcg-lift.py
-    python curriculum/06-re-ranking/02-ndcg-lift.py --verify
+    python src/curriculum/06-re-ranking/02-ndcg-lift.py
+    python src/curriculum/06-re-ranking/02-ndcg-lift.py --verify
 """
 
 from __future__ import annotations
@@ -44,9 +44,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/06-re-ranking/02-ndcg-lift.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/06-re-ranking/02-ndcg-lift.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from langchain_core.documents import Document  # noqa: E402

@@ -2,7 +2,7 @@
 
 A golden set is a small, hand-checked set of (question, reference) pairs that
 never changes — the evaluation anchor. The repo's is
-``evaluation/golden.py``: 23 verified invoice QA pairs (source of truth from
+``src/evaluation/golden.py``: 23 verified invoice QA pairs (source of truth from
 the SD-08 notebooks). This lab turns the sample-invoice + Invoice_1 pairs
 into a regression gate:
 
@@ -20,8 +20,8 @@ gate, no matter how good the new code looks. A golden set that never moves is
 what makes the comparison fair.
 
 Run from the repo root:
-    python curriculum/07-evaluation/04-golden-regression.py
-    python curriculum/07-evaluation/04-golden-regression.py --verify
+    python src/curriculum/07-evaluation/04-golden-regression.py
+    python src/curriculum/07-evaluation/04-golden-regression.py --verify
 """
 
 from __future__ import annotations
@@ -32,8 +32,8 @@ from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
 # directly.
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from dotenv import load_dotenv  # noqa: E402
 from embeddings.bge import BGEEmbedding  # noqa: E402

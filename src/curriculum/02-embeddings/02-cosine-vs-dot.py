@@ -13,7 +13,7 @@ even when it points in a worse direction.
 
 For text embeddings this matters because magnitude is usually noise. BGE
 (``BAAI/bge-base-en-v1.5``) is trained to produce L2-normalized vectors
-(``normalize_embeddings=True`` in ``embeddings/bge.py``), so every vector has
+(``normalize_embeddings=True`` in ``src/embeddings/bge.py``), so every vector has
 length 1 and the two scores collapse into one:
 
     ||a|| = ||b|| = 1  =>  cos(a, b) = a . b
@@ -25,7 +25,7 @@ that does not normalize, like E5) and watch the raw dot product mis-rank the
 results that cosine gets right.
 
 Run from the repo root:
-    python curriculum/02-embeddings/02-cosine-vs-dot.py
+    python src/curriculum/02-embeddings/02-cosine-vs-dot.py
 """
 
 from __future__ import annotations
@@ -43,9 +43,9 @@ import numpy as np
 import pandas as pd
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/02-embeddings/02-cosine-vs-dot.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/02-embeddings/02-cosine-vs-dot.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 

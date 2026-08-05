@@ -17,7 +17,7 @@ Each question ships its own 10-paragraph "context" plus gold
 each question's 10 paragraphs into its own small FAISS store, then compares:
 
 * PLAIN top-3 — the raw question through ``SimilarityRetriever``;
-* DECOMPOSED — ``DecomposeRetriever`` (``retrieval/decompose.py``) with the
+* DECOMPOSED — ``DecomposeRetriever`` (``src/retrieval/decompose.py``) with the
   same inner retriever.
 
 The three questions are pre-selected: plain top-3 MISSES at least one gold
@@ -29,8 +29,8 @@ The Groq LLM is only the decomposer (one call per question); embeddings stay
 local BGE.
 
 Run from the repo root:
-    python curriculum/05-query-transformation/03-decomposition.py
-    python curriculum/05-query-transformation/03-decomposition.py --verify
+    python src/curriculum/05-query-transformation/03-decomposition.py
+    python src/curriculum/05-query-transformation/03-decomposition.py --verify
 """
 
 from __future__ import annotations
@@ -43,9 +43,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/05-query-transformation/03-decomposition.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/05-query-transformation/03-decomposition.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 load_dotenv(REPO_ROOT / ".env")  # GROQ_API_KEY lives in the repo-root .env
 

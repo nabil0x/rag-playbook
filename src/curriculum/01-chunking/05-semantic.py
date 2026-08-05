@@ -37,9 +37,9 @@ import numpy as np
 from langchain_core.documents import Document
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/01-chunking/05-semantic.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/01-chunking/05-semantic.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from loaders.gutenberg import GutenbergLoader  # noqa: E402
 from splitters.recursive import DocumentProcessor  # noqa: E402
@@ -90,7 +90,7 @@ def load_books(paths: list[Path]) -> list[Document]:
 def consecutive_distances(model, sentences: list[str]) -> np.ndarray:
     """Cosine distance between consecutive sentences (1 - cosine similarity).
 
-    Mirrors the internals of ``splitters/semantic.py`` so the numbers printed
+    Mirrors the internals of ``src/splitters/semantic.py`` so the numbers printed
     here are exactly the ones the SemanticSplitter used to draw boundaries.
     """
     vectors = np.asarray(model.encode(sentences), dtype="float32")

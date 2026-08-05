@@ -7,7 +7,7 @@ reranked) is measured against: embed the query, rank every stored passage,
 keep the best k.
 
 This lab wraps the FAISS store from lab 03 in the ``SimilarityRetriever``
-block (``retrieval/similarity.py``) and does two things with it:
+block (``src/retrieval/similarity.py``) and does two things with it:
 
 * QUALITATIVE — retrieve top-k passages for three real questions from
   ``rag-mini-wikipedia/test.parquet`` (answers live inside the first 100
@@ -32,8 +32,8 @@ Deterministic, documented data choices (computed from the files at runtime):
   the ones with >=1 relevant document inside the 200-doc subset (first 3).
 
 Run from the repo root:
-    python curriculum/04-retrieval/01-top-k.py
-    python curriculum/04-retrieval/01-top-k.py --verify
+    python src/curriculum/04-retrieval/01-top-k.py
+    python src/curriculum/04-retrieval/01-top-k.py --verify
 """
 
 from __future__ import annotations
@@ -46,9 +46,9 @@ from pathlib import Path
 import pandas as pd
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/04-retrieval/01-top-k.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/04-retrieval/01-top-k.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from langchain_core.documents import Document  # noqa: E402

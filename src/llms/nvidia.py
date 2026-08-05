@@ -1,7 +1,7 @@
 """NVIDIA NIM LLM wrapper (OpenAI-compatible endpoint).
 
 LLM block: same ``invoke(prompt) -> str`` / ``json_object(prompt) -> dict``
-contract as ``llms/groq.py`` and ``llms/gemini.py``, so any retriever or
+contract as ``src/llms/groq.py`` and ``src/llms/gemini.py``, so any retriever or
 prompt that takes an "LLM exposing invoke(str) -> str" works unchanged.
 Backed by the NVIDIA hosted NIM endpoint (``integrate.api.nvidia.com``)
 with the DeepSeek chat model, thinking disabled for fast deterministic

@@ -16,11 +16,11 @@ Setup: the first 8,000 fiqa documents (deterministic head — embedding the
 full 57,638 takes too long for a lab) are indexed in FAISS with the local BGE
 embedder, then every test query whose gold documents are inside the subset is
 retrieved at top-10 and scored with all three metrics. The shared
-implementations live in ``evaluation/retrieval_metrics.py``.
+implementations live in ``src/evaluation/retrieval_metrics.py``.
 
 Run from the repo root:
-    python curriculum/07-evaluation/01-recall-mrr-ndcg.py
-    python curriculum/07-evaluation/01-recall-mrr-ndcg.py --verify
+    python src/curriculum/07-evaluation/01-recall-mrr-ndcg.py
+    python src/curriculum/07-evaluation/01-recall-mrr-ndcg.py --verify
 """
 
 from __future__ import annotations
@@ -31,9 +31,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/07-evaluation/01-recall-mrr-ndcg.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/07-evaluation/01-recall-mrr-ndcg.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from evaluation.retrieval_metrics import (  # noqa: E402

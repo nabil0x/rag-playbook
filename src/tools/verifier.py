@@ -16,7 +16,7 @@ structured-output device, so ``verify_claim`` never raises and never returns
 a verdict outside the three-value set. Retrieval is cosine over embeddings
 computed in pure Python (no vector store required).
 
-Used by curriculum/10-agentic-rag/ lab 03.
+Used by src/curriculum/10-agentic-rag/ lab 03.
 """
 from __future__ import annotations
 

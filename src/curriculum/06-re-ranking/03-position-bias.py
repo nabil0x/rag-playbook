@@ -24,8 +24,8 @@ passages directly. That is the point — reranking makes retrieval
 order-agnostic.
 
 Run from the repo root:
-    python curriculum/06-re-ranking/03-position-bias.py
-    python curriculum/06-re-ranking/03-position-bias.py --verify
+    python src/curriculum/06-re-ranking/03-position-bias.py
+    python src/curriculum/06-re-ranking/03-position-bias.py --verify
 """
 
 from __future__ import annotations
@@ -37,9 +37,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/06-re-ranking/03-position-bias.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/06-re-ranking/03-position-bias.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from langchain_core.documents import Document  # noqa: E402
 from tools.reranker import CrossEncoderReranker  # noqa: E402

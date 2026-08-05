@@ -15,7 +15,7 @@ cheap and good at it — while the (expensive) embedding model only ever sees
 document-shaped text.
 
 This lab wraps the ``SimilarityRetriever`` in the ``HyDERetriever``
-(``retrieval/hyde.py``) and compares, for the same questions:
+(``src/retrieval/hyde.py``) and compares, for the same questions:
 
 * RAW — plain top-k: embed the question as the user typed it.
 * HYDE — embed an LLM-written hypothetical passage instead.
@@ -25,8 +25,8 @@ transformations directly. The Groq LLM only writes the hypothetical passage;
 embeddings stay local BGE.
 
 Run from the repo root:
-    python curriculum/05-query-transformation/04-hyde.py
-    python curriculum/05-query-transformation/04-hyde.py --verify
+    python src/curriculum/05-query-transformation/04-hyde.py
+    python src/curriculum/05-query-transformation/04-hyde.py --verify
 """
 
 from __future__ import annotations
@@ -39,9 +39,9 @@ import pandas as pd
 from dotenv import load_dotenv
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/05-query-transformation/04-hyde.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/05-query-transformation/04-hyde.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 load_dotenv(REPO_ROOT / ".env")  # GROQ_API_KEY lives in the repo-root .env
 

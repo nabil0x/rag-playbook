@@ -20,7 +20,7 @@ chunk with empty metadata. The printed comparison shows exactly where the
 ``<title>`` and the styled top heading end up — and why structure-preserving
 parsing for these documents needs XBRL/table-aware parsing (the SD-06 track).
 
-See ``splitters/token_splitter.py`` for the sibling style; the plan is
+See ``src/splitters/token_splitter.py`` for the sibling style; the plan is
 ``.omo/plans/layer1-rag-playbook.md``.
 """
 

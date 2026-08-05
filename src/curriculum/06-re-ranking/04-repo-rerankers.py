@@ -1,9 +1,9 @@
 """Lab 04 — The repo's reranker arsenal, wired end-to-end.
 
-Labs 01-03 used ``tools/reranker.py`` (CrossEncoderReranker). The component
-library ships more: ``retrieval/rerank.py`` wraps the same engine in a
+Labs 01-03 used ``src/tools/reranker.py`` (CrossEncoderReranker). The component
+library ships more: ``src/retrieval/rerank.py`` wraps the same engine in a
 composable ``RerankRetriever`` (retrieve wide, rerank short, one call), and
-``retrieval/rerank_advanced.py`` adds three more families — ColBERT's
+``src/retrieval/rerank_advanced.py`` adds three more families — ColBERT's
 token-level MaxSim late interaction, a pointwise MonoT5, and LLM pointwise
 scoring. This lab wires them all onto the same nfcorpus pool as lab 02 and
 measures each on nDCG@5 against the bi-encoder baseline:
@@ -20,9 +20,9 @@ The gate covers only the two local systems; the optional sections print a
 SKIP notice when their dependency is missing.
 
 Run from the repo root:
-    python curriculum/06-re-ranking/04-repo-rerankers.py
-    python curriculum/06-re-ranking/04-repo-rerankers.py --verify
-    python curriculum/06-re-ranking/04-repo-rerankers.py --with-llm
+    python src/curriculum/06-re-ranking/04-repo-rerankers.py
+    python src/curriculum/06-re-ranking/04-repo-rerankers.py --verify
+    python src/curriculum/06-re-ranking/04-repo-rerankers.py --with-llm
 """
 
 from __future__ import annotations
@@ -35,9 +35,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/06-re-ranking/04-repo-rerankers.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/06-re-ranking/04-repo-rerankers.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from langchain_core.documents import Document  # noqa: E402

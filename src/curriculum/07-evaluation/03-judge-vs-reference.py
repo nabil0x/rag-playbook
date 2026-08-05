@@ -23,8 +23,8 @@ kappa means the LLM judge is NOT a drop-in replacement for the reference
 metric — exactly the failure this check exists to catch.
 
 Run from the repo root:
-    python curriculum/07-evaluation/03-judge-vs-reference.py
-    python curriculum/07-evaluation/03-judge-vs-reference.py --verify
+    python src/curriculum/07-evaluation/03-judge-vs-reference.py
+    python src/curriculum/07-evaluation/03-judge-vs-reference.py --verify
 """
 
 from __future__ import annotations
@@ -35,8 +35,8 @@ from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
 # directly.
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import pandas as pd  # noqa: E402
 from dotenv import load_dotenv  # noqa: E402

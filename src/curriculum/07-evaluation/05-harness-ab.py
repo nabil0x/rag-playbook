@@ -3,7 +3,7 @@
 Labs 01-04 measured pieces (retrieval metrics, faithfulness, judge agreement,
 regression). This lab runs the full generation-metric suite — the RAGAS
 quartet faithfulness / answer relevance / context precision / context recall —
-through ``evaluation/harness.py::EvaluationHarness`` on a hand-checked golden
+through ``src/evaluation/harness.py::EvaluationHarness`` on a hand-checked golden
 set, for TWO retrieval variants:
 
 * Variant A — BGE (BAAI/bge-base-en-v1.5), the repo default embedder.
@@ -14,14 +14,14 @@ same judge, same generator, same top_k). Only the embedding model changes, so
 any metric difference is attributable to the embedder — that is the A/B
 discipline: change one knob, measure everything.
 
-The golden set below is authored like ``evaluation/golden.py``: hand-written
+The golden set below is authored like ``src/evaluation/golden.py``: hand-written
 references, but grounded — each question was kept only because its gold answer
 is contained verbatim in a retrievable passage of the indexed corpus (checked
 at authoring time), so a good retriever can genuinely answer it.
 
 Run from the repo root:
-    python curriculum/07-evaluation/05-harness-ab.py
-    python curriculum/07-evaluation/05-harness-ab.py --verify
+    python src/curriculum/07-evaluation/05-harness-ab.py
+    python src/curriculum/07-evaluation/05-harness-ab.py --verify
 """
 
 from __future__ import annotations
@@ -32,8 +32,8 @@ from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
 # directly.
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import pandas as pd  # noqa: E402
 from dotenv import load_dotenv  # noqa: E402

@@ -1,7 +1,7 @@
 """Groq LLM wrapper.
 
 LLM block: swap Gemini -> Groq with one line — same ``invoke(prompt) -> str``
-contract as ``llms/gemini.py`` and ``llms/openai.py``, so any retriever or
+contract as ``src/llms/gemini.py`` and ``src/llms/openai.py``, so any retriever or
 prompt that takes an "LLM exposing invoke(str) -> str" works unchanged.
 See Topics/Project-01-Baseline-RAG/README.md.
 """

@@ -1,11 +1,11 @@
 """Local Ollama LLM wrapper (fully offline, zero quota).
 
 LLM block: same ``invoke(prompt) -> str`` / ``json_object(prompt) -> dict``
-contract as ``llms/groq.py``, ``llms/gemini.py`` and ``llms/nvidia.py``, so
+contract as ``src/llms/groq.py``, ``src/llms/gemini.py`` and ``src/llms/nvidia.py``, so
 any retriever or prompt that takes an "LLM exposing invoke(str) -> str"
 works unchanged. Backed by ``langchain_ollama.ChatOllama`` running the
 locally served ``qwen2.5-coder:7b`` model (the same model the repo's
-``evaluation/judge.py`` LLMJudge uses) — a deterministic, no-quota
+``src/evaluation/judge.py`` LLMJudge uses) — a deterministic, no-quota
 fallback when hosted providers are rate-limited.
 """
 

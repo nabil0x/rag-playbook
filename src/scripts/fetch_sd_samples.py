@@ -34,7 +34,7 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 from zipfile import ZIP_DEFLATED, ZipFile
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_DIR = os.path.join(ROOT, "Data")
 MANIFEST = os.path.join(DATA_DIR, ".samples-manifest.txt")
 USER_AGENT = "rag-playbook/1.0 contact@example.com"

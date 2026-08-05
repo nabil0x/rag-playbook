@@ -20,8 +20,8 @@ labels, which makes it a clean ground-truth view of what "multi-hop"
 structure actually looks like.
 
 Run from the repo root:
-    python curriculum/08-graphrag/02-evidence-graph.py
-    python curriculum/08-graphrag/02-evidence-graph.py --verify
+    python src/curriculum/08-graphrag/02-evidence-graph.py
+    python src/curriculum/08-graphrag/02-evidence-graph.py --verify
 """
 
 from __future__ import annotations
@@ -31,9 +31,9 @@ import sys
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/08-graphrag/02-evidence-graph.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/08-graphrag/02-evidence-graph.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import networkx as nx  # noqa: E402
 

@@ -20,8 +20,8 @@ communities, summarize the top ones, then evaluate both searches against
 the dataset's gold answer and gold paragraphs (``supporting_facts``).
 
 Run from the repo root:
-    python curriculum/08-graphrag/04-local-global.py
-    python curriculum/08-graphrag/04-local-global.py --verify
+    python src/curriculum/08-graphrag/04-local-global.py
+    python src/curriculum/08-graphrag/04-local-global.py --verify
 """
 
 from __future__ import annotations
@@ -32,9 +32,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/08-graphrag/04-local-global.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/08-graphrag/04-local-global.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from llms.ollama import OllamaLLM  # noqa: E402

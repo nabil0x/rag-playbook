@@ -10,7 +10,7 @@ This lab builds both arms over the same deterministic subset of
 ``Data/corpus/rag-mini-wikipedia``:
 
 * DENSE arm — ``FAISSVectorStore`` + ``SimilarityRetriever`` (repo
-  ``retrieval/similarity.py``): BGE embeddings, cosine-style top-k.
+  ``src/retrieval/similarity.py``): BGE embeddings, cosine-style top-k.
 * SPARSE arm — ``BM25Retriever`` from ``langchain_classic`` (rank_bm25
   backend): token-overlap top-k.
 
@@ -23,13 +23,13 @@ Two fusion implementations are demonstrated side by side:
 
 * ``EnsembleRetriever`` (langchain-classic, the plan-preferred path) — the
   dense arm is wrapped as a Runnable, weights ``[0.5, 0.5]``, ``c=60``.
-* ``HybridRetriever`` (repo ``retrieval/hybrid.py``) — same RRF math
+* ``HybridRetriever`` (repo ``src/retrieval/hybrid.py``) — same RRF math
   (``1/(60+rank)``), dedup by ``page_content``; the sparse arm is adapted to
   its ``retrieve(question)`` contract with a 5-line ``BM25Adapter``.
 
 Run from the repo root:
-    python curriculum/04-retrieval/03-hybrid.py
-    python curriculum/04-retrieval/03-hybrid.py --verify
+    python src/curriculum/04-retrieval/03-hybrid.py
+    python src/curriculum/04-retrieval/03-hybrid.py --verify
 """
 
 from __future__ import annotations
@@ -41,9 +41,9 @@ from pathlib import Path
 import pandas as pd
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/04-retrieval/03-hybrid.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/04-retrieval/03-hybrid.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from langchain_classic.retrievers import EnsembleRetriever  # noqa: E402
@@ -104,7 +104,7 @@ def passage_lookup(texts: list[str], ids: list[int]) -> dict[int, str]:
 class BM25Adapter:
     """Expose langchain-classic ``BM25Retriever`` as the repo ``.retrieve()`` contract.
 
-    ``HybridRetriever`` (``retrieval/hybrid.py``) calls
+    ``HybridRetriever`` (``src/retrieval/hybrid.py``) calls
     ``sparse_retriever.retrieve(question)``; the classic BM25 retriever is a
     Runnable and speaks ``.invoke()`` instead. This 5-line adapter bridges the
     two so the repo fusion class can consume the same sparse arm.

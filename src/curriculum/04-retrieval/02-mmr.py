@@ -18,8 +18,8 @@ the overlap with the plain top-5 (a relevance proxy) and the mean pairwise
 cosine distance between the returned passage vectors (a diversity proxy).
 
 Run from the repo root:
-    python curriculum/04-retrieval/02-mmr.py
-    python curriculum/04-retrieval/02-mmr.py --verify
+    python src/curriculum/04-retrieval/02-mmr.py
+    python src/curriculum/04-retrieval/02-mmr.py --verify
 """
 
 from __future__ import annotations
@@ -31,9 +31,9 @@ from pathlib import Path
 import pandas as pd
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/04-retrieval/02-mmr.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/04-retrieval/02-mmr.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from langchain_core.documents import Document  # noqa: E402

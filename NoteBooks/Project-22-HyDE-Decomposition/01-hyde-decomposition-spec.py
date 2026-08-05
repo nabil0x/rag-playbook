@@ -1,12 +1,12 @@
 """Project 22 -- HyDE & Query Decomposition -- notebook spec.
 
-Source for scripts/gen_notebook.py. Generate the notebook with:
+Source for src/scripts/gen_notebook.py. Generate the notebook with:
 
-    python scripts/gen_notebook.py \
+    python src/scripts/gen_notebook.py \
         NoteBooks/Project-22-HyDE-Decomposition/01-hyde-decomposition-spec.py \
         NoteBooks/Project-22-HyDE-Decomposition/01-hyde-decomposition.ipynb
 
-Teaching style follows scripts/NOTEBOOK_TEMPLATE.md: teacher-first markdown
+Teaching style follows src/scripts/NOTEBOOK_TEMPLATE.md: teacher-first markdown
 cells, one concept per code cell, real libraries (langchain + installed
 deps, not the repo component modules). TODO comments mark the cells YOU
 finish while executing the project.
@@ -29,7 +29,7 @@ CELLS: list[dict] = [
         "source": (
             "## 0. Setup -- environment & imports\n\n"
             "Loads `.env` for the LLM key, then imports langchain pieces and the "
-            "retriever stubs from `retrieval/`. No optional installs for this "
+            "retriever stubs from `src/retrieval/`. No optional installs for this "
             "project -- you need an LLM to write hypothetical documents and "
             "sub-questions (Google AI key, or switch to OpenAI / local Ollama -- "
             "see the TODO below)."
@@ -119,7 +119,7 @@ CELLS: list[dict] = [
             "far away. HyDE's trick: the LLM writes a short hypothetical passage "
             "that would answer the question, in source-document style -- embedding "
             "THAT text lands near the real chunks. Finish "
-            "`retrieval/hyde.py` (implement `_hypothetical`), then wrap the "
+            "`src/retrieval/hyde.py` (implement `_hypothetical`), then wrap the "
             "baseline retriever and re-run the same hit-rate measure."
         ),
     },
@@ -144,7 +144,7 @@ CELLS: list[dict] = [
             "DECOMPOSE_PROMPT asks for all sub-questions in one call (the "
             "parallel pattern); a sequential pattern would ask one sub-question "
             "at a time, using each answer to plan the next -- slower, but needed "
-            "when facts depend on each other. Finish `retrieval/decompose.py` "
+            "when facts depend on each other. Finish `src/retrieval/decompose.py` "
             "(implement `_decompose`), wrap the baseline retriever, measure again."
         ),
     },

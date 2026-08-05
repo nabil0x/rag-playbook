@@ -11,7 +11,7 @@ are merged and deduplicated. The general context now has a retrieval pass of
 its own; the original query keeps precision.
 
 This lab wraps the ``SimilarityRetriever`` in the ``StepBackRetriever``
-(``retrieval/step_back.py``) and compares, for the same questions:
+(``src/retrieval/step_back.py``) and compares, for the same questions:
 
 * RAW — plain top-k: embed the question as the user typed it.
 * STEP-BACK — merged retrieval over the step-back + original questions.
@@ -21,8 +21,8 @@ the transformations directly. The Groq LLM only writes the step-back
 question; embeddings stay local BGE.
 
 Run from the repo root:
-    python curriculum/05-query-transformation/05-step-back.py
-    python curriculum/05-query-transformation/05-step-back.py --verify
+    python src/curriculum/05-query-transformation/05-step-back.py
+    python src/curriculum/05-query-transformation/05-step-back.py --verify
 """
 
 from __future__ import annotations
@@ -35,9 +35,9 @@ import pandas as pd
 from dotenv import load_dotenv
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/05-query-transformation/05-step-back.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/05-query-transformation/05-step-back.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 load_dotenv(REPO_ROOT / ".env")  # GROQ_API_KEY lives in the repo-root .env
 

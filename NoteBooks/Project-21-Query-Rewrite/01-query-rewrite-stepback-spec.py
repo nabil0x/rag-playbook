@@ -1,12 +1,12 @@
 """Project 21 — Query Rewrite & Step-Back — notebook spec.
 
-Source for scripts/gen_notebook.py. Generate the notebook with:
+Source for src/scripts/gen_notebook.py. Generate the notebook with:
 
-    python scripts/gen_notebook.py \
+    python src/scripts/gen_notebook.py \
         NoteBooks/Project-21-Query-Rewrite/01-query-rewrite-stepback-spec.py \
         NoteBooks/Project-21-Query-Rewrite/01-query-rewrite-stepback.ipynb
 
-Teaching style follows scripts/NOTEBOOK_TEMPLATE.md: teacher-first markdown
+Teaching style follows src/scripts/NOTEBOOK_TEMPLATE.md: teacher-first markdown
 cells, one concept per code cell, real libraries (langchain + installed
 deps, not the repo component modules). TODO comments mark the cells YOU
 finish while executing the project.
@@ -28,7 +28,7 @@ CELLS: list[dict] = [
         "source": (
             "## 0 · Setup — environment & imports\n\n"
             "Loads `.env` for the LLM key, then imports langchain pieces and the "
-            "retriever stubs from `retrieval/`. No optional installs for this "
+            "retriever stubs from `src/retrieval/`. No optional installs for this "
             "project."
         ),
     },
@@ -106,7 +106,7 @@ CELLS: list[dict] = [
         "type": "md",
         "source": (
             "## 3 · Query rewrite wrapper\n\n"
-            "Finish `retrieval/query_rewrite.py` (implement `_rewrite`), then "
+            "Finish `src/retrieval/query_rewrite.py` (implement `_rewrite`), then "
             "wrap the baseline retriever and re-run the same hit-rate measure."
         ),
     },
@@ -126,7 +126,7 @@ CELLS: list[dict] = [
         "type": "md",
         "source": (
             "## 4 · Step-back wrapper\n\n"
-            "Finish `retrieval/step_back.py` (implement `_step_back`), wrap the "
+            "Finish `src/retrieval/step_back.py` (implement `_step_back`), wrap the "
             "baseline retriever, measure again. Step-back should win on questions "
             "that need general background."
         ),

@@ -3,7 +3,7 @@
 The first decision in every RAG pipeline is: how do I cut a long document
 into chunks? This lab runs the two classic answers head to head on the same
 three public-domain Project Gutenberg novels — loaded through
-``loaders/gutenberg.GutenbergLoader``, which strips the Gutenberg license
+``src/loaders/gutenberg.GutenbergLoader``, which strips the Gutenberg license
 preamble/footer — with the same ``chunk_size``/``chunk_overlap``:
 
 * FIXED splitting (``langchain_text_splitters.CharacterTextSplitter`` with
@@ -13,7 +13,7 @@ preamble/footer — with the same ``chunk_size``/``chunk_overlap``:
   (Note: ``CharacterTextSplitter`` defaults to a ``\\n\\n`` separator, which
   would quietly respect paragraphs — passing ``separator=""`` turns it into
   the blind character counter that "fixed splitting" really means.)
-* RECURSIVE splitting (``splitters/recursive.DocumentProcessor`` →
+* RECURSIVE splitting (``src/splitters/recursive.DocumentProcessor`` →
   ``RecursiveCharacterTextSplitter``) climbs a ladder of separators —
   paragraphs (``\\n\\n``), newlines (``\\n``), spaces — and only falls back
   to characters when nothing else fits. Chunks end on paragraph/word
@@ -25,7 +25,7 @@ points where neighbouring chunks meet, so retrieval quality degrades where
 structure matters most.
 
 Run from the repo root:
-    python curriculum/01-chunking/01-fixed-vs-recursive.py
+    python src/curriculum/01-chunking/01-fixed-vs-recursive.py
 """
 
 from __future__ import annotations
@@ -38,9 +38,9 @@ from langchain_core.documents import Document
 from langchain_text_splitters import CharacterTextSplitter
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/01-chunking/01-fixed-vs-recursive.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/01-chunking/01-fixed-vs-recursive.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from loaders.gutenberg import GutenbergLoader  # noqa: E402
 from splitters.recursive import DocumentProcessor  # noqa: E402

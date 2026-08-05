@@ -24,8 +24,8 @@ elaborated answer, the Ollama judge scores faithfulness, and both correctness
 measures are computed against the gold answer.
 
 Run from the repo root:
-    python curriculum/07-evaluation/02-faithfulness-correctness.py
-    python curriculum/07-evaluation/02-faithfulness-correctness.py --verify
+    python src/curriculum/07-evaluation/02-faithfulness-correctness.py
+    python src/curriculum/07-evaluation/02-faithfulness-correctness.py --verify
 """
 
 from __future__ import annotations
@@ -37,8 +37,8 @@ from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
 # directly.
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import pandas as pd  # noqa: E402
 from dotenv import load_dotenv  # noqa: E402

@@ -23,8 +23,8 @@ top-k context (characters + whitespace-token estimate) next to the compressed
 context and the reduction percentage.
 
 Run from the repo root:
-    python curriculum/04-retrieval/05-compression.py
-    python curriculum/04-retrieval/05-compression.py --verify
+    python src/curriculum/04-retrieval/05-compression.py
+    python src/curriculum/04-retrieval/05-compression.py --verify
 """
 
 from __future__ import annotations
@@ -37,9 +37,9 @@ import pandas as pd
 from dotenv import load_dotenv
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/04-retrieval/05-compression.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/04-retrieval/05-compression.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 load_dotenv(REPO_ROOT / ".env")  # GROQ_API_KEY lives in the repo-root .env
 

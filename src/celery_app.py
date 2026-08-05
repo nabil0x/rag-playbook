@@ -2,7 +2,7 @@
 
 Production block: move load -> split -> embed -> store off the HTTP request
 path. The API enqueues an ``ingest_document`` job and polls its status; a
-worker (``celery -A celery_app worker``) executes it with retries and a
+worker (``celery -A src.celery_app worker``) executes it with retries and a
 content-hash idempotency guard. Celery is optional: importing this module
 never fails, it just leaves ``app`` as None. See Topics/Project-33-Async-Ingestion/README.md.
 """
@@ -80,4 +80,4 @@ if __name__ == "__main__":
         assert task is not None
         assert task.max_retries == 3 and task.retry_backoff is True
         assert task.autoretry_for == (Exception,)
-        print("OK: Celery app + ingest_document task configured (run: celery -A celery_app worker)")
+        print("OK: Celery app + ingest_document task configured (run: celery -A src.celery_app worker)")

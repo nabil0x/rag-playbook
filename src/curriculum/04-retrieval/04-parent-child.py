@@ -23,8 +23,8 @@ Local embeddings only (BGE via sentence-transformers); no LLM, no API keys.
 The vector store is FAISS in-memory — nothing is written to disk.
 
 Run from the repo root:
-    python curriculum/04-retrieval/04-parent-child.py
-    python curriculum/04-retrieval/04-parent-child.py --verify
+    python src/curriculum/04-retrieval/04-parent-child.py
+    python src/curriculum/04-retrieval/04-parent-child.py --verify
 """
 
 from __future__ import annotations
@@ -36,9 +36,9 @@ from pathlib import Path
 import pandas as pd
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/04-retrieval/04-parent-child.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/04-retrieval/04-parent-child.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from langchain_classic.retrievers import ParentDocumentRetriever  # noqa: E402
 from langchain_community.vectorstores import FAISS  # noqa: E402

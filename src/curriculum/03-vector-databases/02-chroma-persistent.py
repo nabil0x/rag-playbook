@@ -32,8 +32,8 @@ Chroma pays a little disk I/O for it, and Qdrant (lab 03) offers both a
 persistent mode and an in-memory one on the same API.
 
 Run from the repo root:
-    python curriculum/03-vector-databases/02-chroma-persistent.py
-    python curriculum/03-vector-databases/02-chroma-persistent.py --verify
+    python src/curriculum/03-vector-databases/02-chroma-persistent.py
+    python src/curriculum/03-vector-databases/02-chroma-persistent.py --verify
 """
 
 from __future__ import annotations
@@ -50,9 +50,9 @@ from pathlib import Path
 import pandas as pd
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/03-vector-databases/02-chroma-persistent.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/03-vector-databases/02-chroma-persistent.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from langchain_core.documents import Document  # noqa: E402
@@ -150,7 +150,7 @@ def run_experiment() -> dict:
         json.dump(query_vecs[1], fh)  # Q1610 "Who founded Montevideo?"
     sub_script = (
         "import sys, json\n"
-        f"sys.path.insert(0, {str(REPO_ROOT)!r})\n"
+        f"sys.path.insert(0, {str(REPO_ROOT / 'src')!r})\n"
         "from vectordb.chroma import ChromaVectorStore\n"
         f"q = json.load(open({qvec_file!r}))\n"
         f"s = ChromaVectorStore(collection_name={COLLECTION!r}, persist_dir={persist_dir!r})\n"

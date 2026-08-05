@@ -9,7 +9,7 @@ The expansion terms pull stage 2 toward the vocabulary of the documents the
 first stage already judged relevant — no LLM, no training, no index rebuild.
 
 This lab wraps the ``SimilarityRetriever`` in the ``PRFRetriever``
-(``tools/prf.py``) and compares, for the same questions:
+(``src/tools/prf.py``) and compares, for the same questions:
 
 * RAW — plain top-k: embed the question as the user typed it.
 * PRF — two-stage: raw query -> harvest terms -> expanded query -> top-k.
@@ -19,8 +19,8 @@ the transformations directly. No LLM anywhere — embeddings are local BGE and
 every other step is pure Python (``re`` + ``Counter``).
 
 Run from the repo root:
-    python curriculum/05-query-transformation/06-prf.py
-    python curriculum/05-query-transformation/06-prf.py --verify
+    python src/curriculum/05-query-transformation/06-prf.py
+    python src/curriculum/05-query-transformation/06-prf.py --verify
 """
 
 from __future__ import annotations
@@ -32,9 +32,9 @@ from pathlib import Path
 import pandas as pd
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/05-query-transformation/06-prf.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/05-query-transformation/06-prf.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from langchain_core.documents import Document  # noqa: E402

@@ -2,7 +2,7 @@
 
 Generation metrics grade answers; attribution metrics grade *whether the
 answer is actually backed by the retrieved evidence*. This lab implements the
-evidence-verification half of that idea with ``tools/verifier.py`` over the
+evidence-verification half of that idea with ``src/tools/verifier.py`` over the
 SciFact corpus.
 
 For each claim we (1) embed the claim and rank the whole 5183-doc corpus by
@@ -22,8 +22,8 @@ a non-empty reason (or the explicit "parse failure" fallback), and that the
 loop terminated.
 
 Run from the repo root:
-    python curriculum/10-agentic-rag/03-scifact-verify.py
-    python curriculum/10-agentic-rag/03-scifact-verify.py --verify
+    python src/curriculum/10-agentic-rag/03-scifact-verify.py
+    python src/curriculum/10-agentic-rag/03-scifact-verify.py --verify
 """
 
 from __future__ import annotations
@@ -34,9 +34,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/10-agentic-rag/03-scifact-verify.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/10-agentic-rag/03-scifact-verify.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from collections import Counter  # noqa: E402
 

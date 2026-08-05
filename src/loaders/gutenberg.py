@@ -10,7 +10,7 @@ everything between the ``*** START OF THE PROJECT GUTENBERG EBOOK`` and
 ``*** END OF THE PROJECT GUTENBERG EBOOK`` markers by default.
 
 Corpus provenance lives in `Data/.corpus-manifest.txt`; fetch new books with
-`scripts/fetch_gutenberg.py`. Books are public domain.
+`src/scripts/fetch_gutenberg.py`. Books are public domain.
 """
 
 from __future__ import annotations
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
     sample = Path("Data/corpus/gutenberg/pride-and-prejudice.txt")
     if not sample.exists():
-        print("SKIP: no gutenberg corpus yet — run scripts/fetch_gutenberg.py first")
+        print("SKIP: no gutenberg corpus yet — run src/scripts/fetch_gutenberg.py first")
         sys.exit(0)
     docs = GutenbergLoader(sample).load()
     text = docs[0].page_content

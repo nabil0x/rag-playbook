@@ -13,10 +13,10 @@ to that passage. Each chunk size gets a FRESH split + embed + FAISS index so
 the comparison is clean.
 
 Embeddings are local BGE (BAAI/bge-base-en-v1.5) via the repo's
-``embeddings/bge.py`` when the installed langchain-huggingface still ships
+``src/embeddings/bge.py`` when the installed langchain-huggingface still ships
 ``HuggingFaceBgeEmbeddings``; otherwise we fall back to a direct
 sentence-transformers wrapper with the same contract. Indexing reuses
-``vectordb/faiss.py`` (FAISSVectorStore with precomputed embeddings).
+``src/vectordb/faiss.py`` (FAISSVectorStore with precomputed embeddings).
 
 Lab 6 (final) of track 01-chunking. See .omo/plans/layer1-rag-playbook.md.
 """
@@ -45,9 +45,9 @@ from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/01-chunking/06-chunk-size-sweep.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/01-chunking/06-chunk-size-sweep.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from vectordb.faiss import FAISSVectorStore  # noqa: E402

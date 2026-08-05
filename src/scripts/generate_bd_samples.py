@@ -31,7 +31,7 @@ Design notes
 
 Usage
 -----
-    python3 scripts/generate_bd_samples.py [--seed 42]
+    python3 src/scripts/generate_bd_samples.py [--seed 42]
 
 Requirements: reportlab (>= 4), pypdf or pdfplumber (verification), and a
 Unicode TTF with Bengali coverage (auto-discovered, with a download fallback).
@@ -54,17 +54,17 @@ from pathlib import Path
 # Paths & font discovery
 # --------------------------------------------------------------------------
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = REPO_ROOT / "Data"
 SD06 = DATA_DIR / "SD-06-tables"
 SD07 = DATA_DIR / "SD-07-chat"
 SD08 = DATA_DIR / "SD-08-invoices"
-FONT_DIR = REPO_ROOT / "scripts" / "fonts"
+FONT_DIR = REPO_ROOT / "src" / "scripts" / "fonts"
 
 BENGALI_BLOCK = range(0x0980, 0x0A00)  # includes ৳ (U+09F3)
 
 BENGALI_FONT_CANDIDATES = [
-    "NotoSansBengali-Regular.ttf",  # under scripts/fonts/
+    "NotoSansBengali-Regular.ttf",  # under src/scripts/fonts/
     "/usr/share/fonts/noto/NotoSansBengali-Regular.ttf",
     "/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf",
     "/usr/share/fonts/google/noto-sans-bengali/NotoSansBengali-Regular.ttf",
@@ -114,7 +114,7 @@ def _fc_list_bangla():
 
 
 def find_bengali_font():
-    """Locate a TTF with Bengali coverage; download into scripts/fonts/ as fallback."""
+    """Locate a TTF with Bengali coverage; download into src/scripts/fonts/ as fallback."""
     for cand in BENGALI_FONT_CANDIDATES:
         p = cand if cand.startswith("/") else str(FONT_DIR / cand)
         if Path(p).is_file():
@@ -125,7 +125,7 @@ def find_bengali_font():
     for p in _fc_list_bangla():
         if p.lower().endswith((".ttf", ".otf")):
             return p
-    # Download fallback into scripts/fonts/ (single regular TTF, <= ~1 MB).
+    # Download fallback into src/scripts/fonts/ (single regular TTF, <= ~1 MB).
     FONT_DIR.mkdir(parents=True, exist_ok=True)
     dest = FONT_DIR / "NotoSansBengali-Regular.ttf"
     for url in FONT_DOWNLOAD_URLS:
@@ -139,7 +139,7 @@ def find_bengali_font():
             print(f"  [font] download failed ({url}): {exc}", file=sys.stderr)
     raise SystemExit(
         "No usable Bengali font found and automatic download failed. "
-        "Please place NotoSansBengali-Regular.ttf in scripts/fonts/."
+        "Please place NotoSansBengali-Regular.ttf in src/scripts/fonts/."
     )
 
 
@@ -447,7 +447,7 @@ def generate_bkash(seed, fonts):
 
     schema = {
         "_meta": {
-            "generator": "scripts/generate_bd_samples.py",
+            "generator": "src/scripts/generate_bd_samples.py",
             "doc": "bkash_statement",
             "project": "SD-06 PDF Tables (Bangladeshi extension)",
             "seed": seed,
@@ -739,7 +739,7 @@ def generate_nagad(seed, fonts):
 
     schema = {
         "_meta": {
-            "generator": "scripts/generate_bd_samples.py",
+            "generator": "src/scripts/generate_bd_samples.py",
             "doc": "nagad_statement",
             "project": "SD-06 PDF Tables (Bangladeshi extension)",
             "seed": seed,
@@ -962,7 +962,7 @@ def generate_mushak(seed, fonts):
 
     schema = {
         "_meta": {
-            "generator": "scripts/generate_bd_samples.py",
+            "generator": "src/scripts/generate_bd_samples.py",
             "doc": "mushak63_invoice",
             "project": "SD-08 Invoices (Bangladeshi extension)",
             "seed": seed,
@@ -1252,7 +1252,7 @@ def generate_restaurant(seed, fonts):
     }
     schema = {
         "_meta": {
-            "generator": "scripts/generate_bd_samples.py",
+            "generator": "src/scripts/generate_bd_samples.py",
             "doc": "bilingual_restaurant_bill",
             "project": "SD-08 Invoices (Bangladeshi extension)",
             "seed": seed,
@@ -1548,7 +1548,7 @@ def generate_chat(seed, fonts):
 
     schema = {
         "_meta": {
-            "generator": "scripts/generate_bd_samples.py",
+            "generator": "src/scripts/generate_bd_samples.py",
             "doc": "bangla_chat",
             "project": "SD-07 Chat Exports (Bangladeshi extension)",
             "seed": seed,

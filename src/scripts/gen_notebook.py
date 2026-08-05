@@ -2,7 +2,7 @@
 """Generate a valid Jupyter notebook (.ipynb, nbformat 4.5) from a Python spec file.
 
 Usage:
-    python scripts/gen_notebook.py <spec.py> <output.ipynb>
+    python src/scripts/gen_notebook.py <spec.py> <output.ipynb>
 
 The spec file must define a top-level `CELLS` list of dicts:
     {"type": "md" | "code", "source": "cell text (\\n for newlines)"}
@@ -19,7 +19,7 @@ import sys
 
 def main() -> None:
     if len(sys.argv) != 3:
-        sys.exit("usage: python scripts/gen_notebook.py <spec.py> <output.ipynb>")
+        sys.exit("usage: python src/scripts/gen_notebook.py <spec.py> <output.ipynb>")
 
     spec_path, out_path = sys.argv[1], sys.argv[2]
 

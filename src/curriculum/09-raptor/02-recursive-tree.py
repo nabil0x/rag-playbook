@@ -5,7 +5,7 @@ artifact RAPTOR actually queries: a *tree* where the leaves are the raw
 chunks and every internal node is a short LLM summary of the cluster of
 chunks beneath it.
 
-The build is ``tools/raptor.build_tree``:
+The build is ``src/tools/raptor.build_tree``:
 
 * level 0 — every chunk is a leaf node carrying its own text;
 * cluster the leaf embeddings with the recursive GMM from lab 01;
@@ -24,8 +24,8 @@ Two properties make the tree useful instead of a glorified flat list:
    far cheaper than re-reading every chunk at query time.
 
 Run from the repo root:
-    python curriculum/09-raptor/02-recursive-tree.py
-    python curriculum/09-raptor/02-recursive-tree.py --verify
+    python src/curriculum/09-raptor/02-recursive-tree.py
+    python src/curriculum/09-raptor/02-recursive-tree.py --verify
 """
 
 from __future__ import annotations
@@ -35,9 +35,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/09-raptor/02-recursive-tree.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/09-raptor/02-recursive-tree.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import pandas as pd  # noqa: E402
 

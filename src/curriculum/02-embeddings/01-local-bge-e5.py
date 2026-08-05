@@ -10,7 +10,7 @@ decide everything downstream:
   the storage cost of your vector database: 768 floats x 4 bytes per chunk.
 * NORM — the length of the embedding vector. A unit-norm vector makes cosine
   similarity identical to a dot product, which matters when your vector
-  database offers fast dot-product scoring. ``embeddings/bge.py`` normalizes
+  database offers fast dot-product scoring. ``src/embeddings/bge.py`` normalizes
   BGE explicitly (``encode_kwargs`` ``normalize_embeddings``); the E5 model
   on the Hub ships its own ``2_Normalize`` layer, so it comes out unit-norm
   too. A surprising number of embedders do NOT normalize — always check.
@@ -23,16 +23,16 @@ machine. BGE (``BAAI/bge-base-en-v1.5``) is an English retrieval model
 trained with normalized embeddings; E5 (``intfloat/multilingual-e5-base``)
 covers many languages and is trained with instruction prefixes — E5 queries
 are prefixed ``"query: "`` and passages ``"passage: "`` before embedding,
-which ``embeddings/e5.py`` applies automatically. Prefix mismatches are a
+which ``src/embeddings/e5.py`` applies automatically. Prefix mismatches are a
 classic silent retrieval killer.
 
-Note on BGE construction: the shared ``embeddings/bge.py`` module builds the
+Note on BGE construction: the shared ``src/embeddings/bge.py`` module builds the
 model with the current universal ``HuggingFaceEmbeddings`` class (the same
-class ``embeddings/e5.py`` uses) plus ``encode_kwargs`` ``normalize_embeddings``
+class ``src/embeddings/e5.py`` uses) plus ``encode_kwargs`` ``normalize_embeddings``
 = True, so its ``BGEEmbedding`` exposes the same contract as ``E5Embedding``.
 
 Run from the repo root:
-    python curriculum/02-embeddings/01-local-bge-e5.py
+    python src/curriculum/02-embeddings/01-local-bge-e5.py
 """
 
 from __future__ import annotations
@@ -45,9 +45,9 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/02-embeddings/01-local-bge-e5.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/02-embeddings/01-local-bge-e5.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from embeddings.e5 import E5Embedding  # noqa: E402

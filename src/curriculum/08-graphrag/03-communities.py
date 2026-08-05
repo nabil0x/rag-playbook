@@ -9,9 +9,9 @@ actually queries. The recipe:
    connected. This is the unsupervised structure discovery that makes
    GraphRAG useful over a whole corpus without a query in sight.
 2. Map — summarize every community's internal relations into a few prose
-   sentences (``tools/graphrag.community_summaries``).
+   sentences (``src/tools/graphrag.community_summaries``).
 3. Reduce — fold the community summaries into one global corpus summary
-   (``tools/graphrag.global_summary``).
+   (``src/tools/graphrag.global_summary``).
 
 Community detection runs fully locally (sknetwork Leiden with a networkx
 Louvain fallback — no model call); only the two summarization steps talk
@@ -19,8 +19,8 @@ to the LLM, so the whole index costs roughly one LLM call per passage plus
 one per community.
 
 Run from the repo root:
-    python curriculum/08-graphrag/03-communities.py
-    python curriculum/08-graphrag/03-communities.py --verify
+    python src/curriculum/08-graphrag/03-communities.py
+    python src/curriculum/08-graphrag/03-communities.py --verify
 """
 
 from __future__ import annotations
@@ -30,9 +30,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/08-graphrag/03-communities.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/08-graphrag/03-communities.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import pandas as pd  # noqa: E402
 

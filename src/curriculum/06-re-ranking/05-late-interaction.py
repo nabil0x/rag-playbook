@@ -16,7 +16,7 @@ the EXACT SAME per-token BGE embeddings — one embedding pass per (query, doc)
 
 Both implementations are written inline in numpy (10 lines each) so the
 mechanism is visible; the component-library ``ColBERTReranker`` from
-``retrieval/rerank_advanced.py`` is then run on the same pool as a cross-check
+``src/retrieval/rerank_advanced.py`` is then run on the same pool as a cross-check
 — it should agree with the hand-rolled MaxSim to within float noise, which
 verifies the teaching implementation against the shipped one.
 
@@ -24,8 +24,8 @@ The gate asserts: (1) MaxSim >= pooled cosine, (2) MaxSim >= bi-encoder
 baseline, (3) hand-rolled MaxSim agrees with the component ColBERTReranker.
 
 Run from the repo root:
-    python curriculum/06-re-ranking/05-late-interaction.py
-    python curriculum/06-re-ranking/05-late-interaction.py --verify
+    python src/curriculum/06-re-ranking/05-late-interaction.py
+    python src/curriculum/06-re-ranking/05-late-interaction.py --verify
 """
 
 from __future__ import annotations
@@ -37,9 +37,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/06-re-ranking/05-late-interaction.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/06-re-ranking/05-late-interaction.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import numpy as np  # noqa: E402
 from embeddings.bge import BGEEmbedding  # noqa: E402
@@ -136,7 +136,7 @@ def maxsim_score(q_tokens: list[list[float]], d_tokens: list[list[float]]) -> fl
     """Late interaction: sum over query tokens of their best doc-token cosine.
 
     Same normalization and arithmetic as
-    ``ColBERTReranker._maxsim_score`` in ``retrieval/rerank_advanced.py`` —
+    ``ColBERTReranker._maxsim_score`` in ``src/retrieval/rerank_advanced.py`` —
     this copy exists so the mechanism is visible in the lab.
     """
     if not q_tokens or not d_tokens:

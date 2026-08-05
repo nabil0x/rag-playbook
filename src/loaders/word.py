@@ -29,7 +29,7 @@ A .docx is a zip of XML whose body is a sequence of blocks — paragraphs
 
 Note: the file is named ``word.py`` (not ``docx.py``) on purpose — a module
 called ``docx`` would shadow the ``python-docx`` package itself when the
-``loaders/`` directory is on ``sys.path``.
+``src/loaders/`` directory is on ``sys.path``.
 
 See Topics/Project-13-Multi-format-RAG/README.md (multi-format loaders).
 """

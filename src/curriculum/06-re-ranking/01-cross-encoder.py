@@ -11,7 +11,7 @@ pair, which is why the cross-encoder only ever sees a SHORT candidate list.
 This lab wires the two together on nfcorpus (BEIR medical FAQ corpus):
 
 * stage 1 — bi-encoder (BGE) retrieves a wide top-20 candidate list;
-* stage 2 — ``tools/reranker.py`` CrossEncoder re-scores the 20 candidates
+* stage 2 — ``src/tools/reranker.py`` CrossEncoder re-scores the 20 candidates
   and keeps the top 3.
 
 For each question we track the position of the gold (qrels-relevant) passage
@@ -21,8 +21,8 @@ bi-encoder put OUTSIDE its top-3 but INSIDE its top-20 — the cases where a
 reranker earns its keep.
 
 Run from the repo root:
-    python curriculum/06-re-ranking/01-cross-encoder.py
-    python curriculum/06-re-ranking/01-cross-encoder.py --verify
+    python src/curriculum/06-re-ranking/01-cross-encoder.py
+    python src/curriculum/06-re-ranking/01-cross-encoder.py --verify
 """
 
 from __future__ import annotations
@@ -33,9 +33,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/06-re-ranking/01-cross-encoder.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/06-re-ranking/01-cross-encoder.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from langchain_core.documents import Document  # noqa: E402

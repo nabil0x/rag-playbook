@@ -4,10 +4,10 @@ LangChain has no native entity-graph builder, so this module fills the gap:
 documents -> LLM-extracted (head, relation, tail) triples -> a networkx graph.
 
 The extraction step talks to any LLM exposing a ``json_object(prompt)``
-method that returns a dict (e.g. GroqLLM from ``llms/groq.py``). Everything
+method that returns a dict (e.g. GroqLLM from ``src/llms/groq.py``). Everything
 after extraction is pure networkx and requires no model.
 
-Used by curriculum/08-graphrag/ labs 01, 03 and 04.
+Used by src/curriculum/08-graphrag/ labs 01, 03 and 04.
 """
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ import networkx as nx
 TRIPLE_SCHEMA = '{"triples": [{"head": "...", "relation": "...", "tail": "..."}]}'
 
 #: JSON extraction LLM: anything exposing ``json_object(prompt) -> dict | list``.
-#: GroqLLM from ``llms/groq.py`` matches this contract.
+#: GroqLLM from ``src/llms/groq.py`` matches this contract.
 class JsonLLM(Protocol):
     def json_object(self, prompt: str) -> dict | list: ...
 

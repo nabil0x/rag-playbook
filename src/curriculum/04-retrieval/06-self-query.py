@@ -38,8 +38,8 @@ workaround for this version.
 Run from the repo root (needs ``GROQ_API_KEY`` in ``.env`` for the query
 parser; embeddings are local BGE):
 
-    python curriculum/04-retrieval/06-self-query.py
-    python curriculum/04-retrieval/06-self-query.py --verify
+    python src/curriculum/04-retrieval/06-self-query.py
+    python src/curriculum/04-retrieval/06-self-query.py --verify
 """
 
 from __future__ import annotations
@@ -52,9 +52,9 @@ import pandas as pd
 from dotenv import load_dotenv
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/04-retrieval/06-self-query.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/04-retrieval/06-self-query.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from langchain_chroma import Chroma  # noqa: E402
 from langchain_classic.chains.query_constructor.schema import AttributeInfo  # noqa: E402

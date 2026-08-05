@@ -1,6 +1,6 @@
-"""GraphRAG index and query helpers built on ``tools/graph``.
+"""GraphRAG index and query helpers built on ``src/tools/graph``.
 
-Implements the second half of the GraphRAG recipe from curriculum/08-graphrag/:
+Implements the second half of the GraphRAG recipe from src/curriculum/08-graphrag/:
 
 1. Community detection over the entity graph (sknetwork Leiden primary,
    networkx Louvain fallback - both verified against networkx 3.6.1).
@@ -8,7 +8,7 @@ Implements the second half of the GraphRAG recipe from curriculum/08-graphrag/:
 3. Two query strategies: local search (entity linking + 1-hop expansion)
    and global search (embedding-routed over community summaries).
 
-Embedders are BGEEmbedding / E5Embedding from ``embeddings/``; both expose
+Embedders are BGEEmbedding / E5Embedding from ``src/embeddings/``; both expose
 ``embed_documents(list[str]) -> list[list[float]]``. LLMs expose
 ``invoke(prompt) -> str`` (GroqLLM). The entity-graph builder needs the
 additional ``json_object(prompt) -> dict`` method, so we re-export

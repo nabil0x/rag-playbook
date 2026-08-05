@@ -18,8 +18,8 @@ cluster. That partition is the raw material for the tree — lab 02 turns
 each cluster into a summary node.
 
 Run from the repo root:
-    python curriculum/09-raptor/01-chunk-clustering.py
-    python curriculum/09-raptor/01-chunk-clustering.py --verify
+    python src/curriculum/09-raptor/01-chunk-clustering.py
+    python src/curriculum/09-raptor/01-chunk-clustering.py --verify
 """
 
 from __future__ import annotations
@@ -29,9 +29,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/09-raptor/01-chunk-clustering.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/09-raptor/01-chunk-clustering.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import pandas as pd  # noqa: E402
 

@@ -7,7 +7,7 @@ right chunks, and how does it compare with the flat baseline it replaces?
 * **Flat baseline** — embed the question and cosine-rank every one of the
   N=24 passages directly; take the top 4. This is standard vector search:
   O(N) similarity computations, no summaries.
-* **Tree retrieval** — ``tools/raptor.retrieve`` walks the tree instead:
+* **Tree retrieval** — ``src/tools/raptor.retrieve`` walks the tree instead:
   at each level it embeds the question, keeps the ``top_k`` most similar
   children, descends into them, and finally returns the best *leaf* chunks
   (``collapse=True``) or the chosen summary nodes (``collapse=False``).
@@ -23,8 +23,8 @@ printed but not hard-required by the verification gate; the gate checks
 only that both methods return well-formed retrievals.
 
 Run from the repo root:
-    python curriculum/09-raptor/03-tree-vs-flat.py
-    python curriculum/09-raptor/03-tree-vs-flat.py --verify
+    python src/curriculum/09-raptor/03-tree-vs-flat.py
+    python src/curriculum/09-raptor/03-tree-vs-flat.py --verify
 """
 
 from __future__ import annotations
@@ -34,9 +34,9 @@ import time
 from pathlib import Path
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/09-raptor/03-tree-vs-flat.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/09-raptor/03-tree-vs-flat.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 import pandas as pd  # noqa: E402
 

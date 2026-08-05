@@ -5,10 +5,10 @@ ever reach: retrieval quality is bounded by embedding quality before any
 retriever, prompt, or LLM gets a vote. This lab runs two local bi-encoder
 models head to head on the same corpus and the same 60 real Q/A pairs:
 
-* BGE — ``BAAI/bge-base-en-v1.5`` via ``embeddings/bge.BGEEmbedding``. bge
+* BGE — ``BAAI/bge-base-en-v1.5`` via ``src/embeddings/bge.BGEEmbedding``. bge
   models are *trained* for cosine similarity: embeddings are produced with
   ``normalize_embeddings=True``, so every vector leaves the model unit-length.
-* E5 — ``intfloat/multilingual-e5-base`` via ``embeddings/e5.E5Embedding``.
+* E5 — ``intfloat/multilingual-e5-base`` via ``src/embeddings/e5.E5Embedding``.
   E5 models are trained with instruction prefixes: the wrapper prepends
   ``"query: "`` to questions and ``"passage: "`` to passages automatically.
   Unlike BGE, the E5 wrapper does **not** normalize the output vectors.
@@ -33,7 +33,7 @@ single most-similar passage. No LLM, no judge, no API: pure retrieval
 measurement on real Q/A pairs.
 
 Run from the repo root:
-    python curriculum/02-embeddings/03-model-comparison.py
+    python src/curriculum/02-embeddings/03-model-comparison.py
 """
 
 from __future__ import annotations
@@ -52,9 +52,9 @@ import numpy as np
 import pandas as pd
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/02-embeddings/03-model-comparison.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/02-embeddings/03-model-comparison.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from embeddings.e5 import E5Embedding  # noqa: E402

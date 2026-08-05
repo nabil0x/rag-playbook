@@ -41,8 +41,8 @@ This lab adds the two things real apps need on top of that:
    bytes.
 
 Run from the repo root:
-    python curriculum/03-vector-databases/04-benchmark.py
-    python curriculum/03-vector-databases/04-benchmark.py --verify
+    python src/curriculum/03-vector-databases/04-benchmark.py
+    python src/curriculum/03-vector-databases/04-benchmark.py --verify
 """
 
 from __future__ import annotations
@@ -58,9 +58,9 @@ import pandas as pd
 import psutil
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/03-vector-databases/04-benchmark.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/03-vector-databases/04-benchmark.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from langchain_core.documents import Document  # noqa: E402

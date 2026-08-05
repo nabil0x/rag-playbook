@@ -30,8 +30,8 @@ for diversity, so a query can surface passages about different aspects of the
 topic instead of near-duplicates.
 
 Run from the repo root:
-    python curriculum/03-vector-databases/01-faiss.py
-    python curriculum/03-vector-databases/01-faiss.py --verify
+    python src/curriculum/03-vector-databases/01-faiss.py
+    python src/curriculum/03-vector-databases/01-faiss.py --verify
 """
 
 from __future__ import annotations
@@ -43,9 +43,9 @@ from pathlib import Path
 import pandas as pd
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/03-vector-databases/01-faiss.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/03-vector-databases/01-faiss.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 from langchain_core.documents import Document  # noqa: E402

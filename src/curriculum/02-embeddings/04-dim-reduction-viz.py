@@ -24,9 +24,9 @@ passages about the same subject end up near each other, which is exactly the
 signal retrieval exploits.
 
 Run from the repo root:
-    python curriculum/02-embeddings/04-dim-reduction-viz.py
+    python src/curriculum/02-embeddings/04-dim-reduction-viz.py
 
-The scatter plot is saved to ``curriculum/02-embeddings/umap_scatter.png``
+The scatter plot is saved to ``src/curriculum/02-embeddings/umap_scatter.png``
 (the notebook conversion shows it inline).
 """
 
@@ -49,9 +49,9 @@ from sklearn.decomposition import PCA  # noqa: E402
 from sklearn.metrics import silhouette_score  # noqa: E402
 
 # Make the repo-root component library importable when this file is run
-# directly (``python curriculum/02-embeddings/04-dim-reduction-viz.py``).
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+# directly (``python src/curriculum/02-embeddings/04-dim-reduction-viz.py``).
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from embeddings.bge import BGEEmbedding  # noqa: E402
 
@@ -68,7 +68,7 @@ except ImportError:
 CORPUS_PATH = Path("Data/corpus/rag-mini-wikipedia/passages.parquet")
 N_PASSAGES = 400  # deterministic subset: head(400), keeps runtime under ~3 min
 N_CLUSTERS = 5
-OUT_PLOT = Path("curriculum/02-embeddings/umap_scatter.png")
+OUT_PLOT = Path("src/curriculum/02-embeddings/umap_scatter.png")
 
 
 # --------------------------------------------------------------------------

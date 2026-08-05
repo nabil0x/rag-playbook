@@ -11,11 +11,11 @@ or the chosen summaries (``collapse=False``).
 The index costs roughly one LLM call per internal node; query time jumps to
 the relevant leaves in a few similarity steps instead of scanning every
 chunk. Embedders expose ``embed_documents(list[str]) -> list[list[float]]``
-(e.g. BGEEmbedding from ``embeddings/``); LLMs expose ``invoke(prompt) -> str``
-(e.g. OllamaLLM from ``llms/ollama.py``). Only summarization talks to the
+(e.g. BGEEmbedding from ``src/embeddings/``); LLMs expose ``invoke(prompt) -> str``
+(e.g. OllamaLLM from ``src/llms/ollama.py``). Only summarization talks to the
 LLM — ``cluster_embeddings`` alone is LLM-free.
 
-Used by curriculum/09-raptor/ labs 01, 02 and 03.
+Used by src/curriculum/09-raptor/ labs 01, 02 and 03.
 """
 from __future__ import annotations
 

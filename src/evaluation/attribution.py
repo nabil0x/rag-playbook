@@ -104,7 +104,7 @@ class AttributionEvaluator:
 class CitationFormatter:
     """Format an answer with inline [1] [2] markers and a sources list.
 
-    The pipeline prompt (``prompts/citation.py``) asks the LLM to emit
+    The pipeline prompt (``src/prompts/citation.py``) asks the LLM to emit
     citations; this formatter normalizes them into a trailing source list
     so every ``[n]`` maps to a real chunk.
     """
