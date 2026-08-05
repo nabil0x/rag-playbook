@@ -99,6 +99,22 @@ class LLMJudge:
         )
         return self._get_llm().invoke(prompt).content.strip()
 
+    @staticmethod
+    def _strip_code_fence(text: str) -> str:
+        """Remove a surrounding markdown code fence (```json ... ```).
+
+        Coder-oriented models (qwen2.5-coder) routinely wrap their JSON
+        answers in a fenced block; ``json.loads`` cannot parse the raw text.
+        Strips the leading ````` line (and optional ``json`` label) and the
+        trailing ````` line, leaving the bare JSON.
+        """
+        lines = text.strip().splitlines()
+        if lines and lines[0].startswith("```"):
+            lines = lines[1:]
+        if lines and lines[-1].strip() == "```":
+            lines = lines[:-1]
+        return "\n".join(lines).strip()
+
     def judge(self, instruction: str, prompt: str) -> dict:
         """Ask the model to output ONLY a JSON object and parse it.
 
@@ -115,7 +131,7 @@ class LLMJudge:
                 full += " Respond with ONLY valid JSON."
             try:
                 text = self._get_llm().invoke(full).content
-                return json.loads(text)
+                return json.loads(self._strip_code_fence(text))
             except (json.JSONDecodeError, ValueError) as exc:
                 last_error = str(exc)
         return {

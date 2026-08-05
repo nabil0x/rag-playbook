@@ -24,8 +24,10 @@ class BGEEmbedding(Embeddings):
     are only imported at that point.
     """
 
-    def __init__(self, model_name: str = "BAAI/bge-base-en-v1.5"):
+    def __init__(self, model_name: str = "BAAI/bge-base-en-v1.5",
+                 device: str | None = None):
         self.model_name = model_name
+        self.device = device
         self._model = None
 
     def _get_model(self):
@@ -47,8 +49,10 @@ class BGEEmbedding(Embeddings):
 
             try:
                 # bge models require normalized embeddings for cosine similarity.
+                model_kwargs = {"device": self.device} if self.device else {}
                 self._model = HuggingFaceEmbeddings(
                     model_name=self.model_name,
+                    model_kwargs=model_kwargs,
                     encode_kwargs={"normalize_embeddings": True},
                 )
             except (ImportError, RuntimeError) as exc:

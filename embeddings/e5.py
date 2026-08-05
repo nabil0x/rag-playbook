@@ -26,8 +26,10 @@ class E5Embedding(Embeddings):
     embedding. The model is built lazily on first use and cached.
     """
 
-    def __init__(self, model_name: str = "intfloat/multilingual-e5-base"):
+    def __init__(self, model_name: str = "intfloat/multilingual-e5-base",
+                 device: str | None = None):
         self.model_name = model_name
+        self.device = device
         self._model = None
 
     def _get_model(self):
@@ -42,7 +44,10 @@ class E5Embedding(Embeddings):
                 ) from exc
 
             try:
-                self._model = HuggingFaceEmbeddings(model_name=self.model_name)
+                model_kwargs = {"device": self.device} if self.device else {}
+                self._model = HuggingFaceEmbeddings(
+                    model_name=self.model_name, model_kwargs=model_kwargs
+                )
             except (ImportError, RuntimeError) as exc:
                 raise ImportError(
                     "E5Embedding needs sentence-transformers and torch: "

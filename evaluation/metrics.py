@@ -39,12 +39,32 @@ class FaithfulnessMetric:
         result = self.judge.judge(instruction, prompt)
         if "error" in result:
             return 0.0
-        claims = result.get("claims", [])
-        supported = result.get("supported", [])
+        claims, supported = self._normalize(result)
         n = min(len(claims), len(supported))
         if n == 0:
             return 0.0
         return sum(1 for flag in supported[:n] if flag) / n
+
+    @staticmethod
+    def _normalize(result: dict) -> tuple[list[str], list[bool]]:
+        """Coerce the judge's JSON into parallel (claims, supported) lists.
+
+        The judge is asked for ``{"claims": [...], "supported": [...]}`` but
+        coder models routinely simplify to a singular ``{"claim": "...",
+        "supported": true}``. Accept both: read ``claims``/``claim`` and
+        ``supported`` as a list OR a single bool (a scalar bool is applied to
+        every claim).
+        """
+        claims = result.get("claims")
+        if not claims:
+            claim = result.get("claim")
+            claims = [claim] if claim else []
+        supported = result.get("supported")
+        if isinstance(supported, bool):
+            supported = [supported] * len(claims)
+        elif not isinstance(supported, list):
+            supported = []
+        return list(claims), list(supported)
 
 
 class AnswerRelevanceMetric:
