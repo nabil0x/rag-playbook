@@ -6,7 +6,7 @@
 
 ## Why
 
-The pipeline in `main.py` is a script: it answers one question in-process. A
+The pipeline in `src/main.py` is a script: it answers one question in-process. A
 real deployment is a service — something that can sit behind a load balancer,
 be called by other programs, and be restarted without losing state. This
 project turns the pipeline into HTTP: a `POST /query` endpoint that returns
@@ -29,9 +29,9 @@ the same service runs anywhere.
 ## Execute
 
 1. **Setup** — `pip install fastapi uvicorn redis`; Docker Desktop or daemon for the container step
-2. **Read** — `api/main.py` (routes + lazy pipeline assembly), `docker/Dockerfile`, `docker/docker-compose.yml`
+2. **Read** — `src/api/main.py` (routes + lazy pipeline assembly), `docker/Dockerfile`, `docker/docker-compose.yml`
 3. **Implement** — the `/query` handler (pipeline call + cache lookup/store) and `/ingest` handler (load → split → embed → store)
-4. **Run** — `uvicorn api.main:app --reload`, then `curl localhost:8000/health` and a `POST /query`
+4. **Run** — `uvicorn src.api.main:app --reload`, then `curl localhost:8000/health` and a `POST /query`
 5. **Measure** — query twice: second call is a cache hit (compare latency); `POST /ingest` a new file, then verify the cached answer is gone
 6. **Acceptance criteria** — repeated identical question returns from cache (measurably faster, no new LLM call); ingest invalidates the cache; `docker compose up` serves the same API with redis on its own container
 
@@ -47,7 +47,7 @@ the same service runs anywhere.
 
 ## Code
 
-- `api/main.py` — FastAPI app: `/query` (cached), `/ingest`, `/health`
+- `src/api/main.py` — FastAPI app: `/query` (cached), `/ingest`, `/health`
 - `docker/Dockerfile` — python:3.11-slim build; `docker/docker-compose.yml` — api + redis
 
 ## Notebook
@@ -55,5 +55,5 @@ the same service runs anywhere.
 `NoteBooks/Project-32-RAG-Service/01-rag-service-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-32-RAG-Service/01-rag-service-spec.py NoteBooks/Project-32-RAG-Service/01-rag-service.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-32-RAG-Service/01-rag-service-spec.py NoteBooks/Project-32-RAG-Service/01-rag-service.ipynb
 ```

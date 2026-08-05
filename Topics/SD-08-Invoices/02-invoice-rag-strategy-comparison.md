@@ -64,8 +64,8 @@ from pathlib import Path
 REPO_ROOT = Path.cwd().parent.parent
 DATA_DIR = REPO_ROOT / "Data" / "SD-08-invoices"
 
-# Add the repo root to sys.path so we can import the project's modules.
-sys.path.insert(0, str(REPO_ROOT))
+# Add the repo root src/ dir to sys.path so we can import the project's modules.
+sys.path.insert(0, str(REPO_ROOT / "src"))
 
 print(f"REPO_ROOT : {REPO_ROOT}")
 print(f"DATA_DIR  : {DATA_DIR}")

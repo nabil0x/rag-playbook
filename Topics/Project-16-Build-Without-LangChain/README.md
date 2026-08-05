@@ -11,7 +11,7 @@ FAISS
 OpenAI SDK
 ```
 
-You already started this in `loaders/web.py` (plain `requests` + `bs4`).
+You already started this in `src/loaders/web.py` (plain `requests` + `bs4`).
 
 ## Article
 

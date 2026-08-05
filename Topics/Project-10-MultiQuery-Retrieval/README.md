@@ -21,7 +21,7 @@ Retrieve using all queries, dedupe results.
 
 ## Code
 
-`retrieval/` (add `multi_query.py`)
+`src/retrieval/` (add `multi_query.py`)
 
 ## Notebook
 

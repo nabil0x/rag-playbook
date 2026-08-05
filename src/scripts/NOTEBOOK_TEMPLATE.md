@@ -14,7 +14,7 @@ real library imports and patterns used in this repo.
 - **Teacher-first markdown.** Every markdown cell explains WHAT the step does,
   WHY it matters for RAG, and WHAT to expect in the output. No bare headers.
 - **Runnable, real code.** Notebooks use the real libraries already in
-  `requirements.txt` — never the repo component modules in `loaders/`…`llms/`
+  `requirements.txt` — never the repo component modules in `src/loaders/`…`src/llms/`
   (they are the Project 17 assembly, not what the notebooks teach). Match the
   imports of `04-baseline-rag.ipynb`.
 - **Honest about optional deps.** If a step needs an optional package
@@ -134,7 +134,7 @@ missing.
    ```
 2. Generate the notebook:
    ```bash
-   python3 scripts/gen_notebook.py /tmp/opencode/<spec>.py NoteBooks/Project-NN-<Name>/01-<slug>.ipynb
+   python src/scripts/gen_notebook.py /tmp/opencode/<spec>.py NoteBooks/Project-NN-<Name>/01-<slug>.ipynb
    ```
 3. Validate your output:
    ```bash
@@ -155,7 +155,7 @@ missing.
 
 - Small section-wise cells: split logic into many tiny code cells; md cells teach each step.
 - Every markdown section explains WHAT + WHY (learning documentation).
-- Use real libraries only (cheat-sheet above); the repo component modules in `loaders/`…`llms/` are off-limits (notebooks teach the underlying libraries, not the repo's Project-17 assembly).
+- Use real libraries only (cheat-sheet above); the repo component modules in `src/loaders/`…`src/llms/` are off-limits (notebooks teach the underlying libraries, not the repo's Project-17 assembly).
 - Match the kernelspec/format produced by the generator (never hand-write ipynb JSON).
 - End with "What you should notice" + "Exercises" markdown sections.
 - Keep code cells ≤ ~15 lines; if a step is long, split it into more cells.
@@ -164,9 +164,9 @@ missing.
 ## MUST NOT DO
 
 - Do NOT edit anything outside the notebook(s) you are assigned.
-- Do NOT modify `Topics/`, `README.md`, `requirements.txt`, repo component modules, or `scripts/`.
+- Do NOT modify `Topics/`, `README.md`, `requirements.txt`, repo component modules, or `src/scripts/`.
 - Do NOT delete or rename the existing Project-01 notebooks.
 - Do NOT execute notebook cells (no API calls, no model downloads, no training).
-- Do NOT use `nbformat` (not installed); always go through `scripts/gen_notebook.py`.
+- Do NOT use `nbformat` (not installed); always go through `src/scripts/gen_notebook.py`.
 - Do NOT invent libraries that are not in `requirements.txt` without an install cell.
 - No bare markdown headers — every section header must have explanation text under it.

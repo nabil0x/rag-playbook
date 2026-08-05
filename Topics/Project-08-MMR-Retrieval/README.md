@@ -13,7 +13,7 @@
 
 ## Code
 
-`retrieval/mmr.py` (`MMRRetriever`)
+`src/retrieval/mmr.py` (`MMRRetriever`)
 
 ## Notebook
 

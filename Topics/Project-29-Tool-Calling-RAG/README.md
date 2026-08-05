@@ -28,7 +28,7 @@ the tool-call trace — which is the first step toward agentic RAG (Projects
 ## Execute
 
 1. **Setup** — `pip install langchain-classic` and have Ollama running (or `GOOGLE_API_KEY` in `.env`)
-2. **Read** — `agent/tool_calling.py` — the `ToolCallingAgent` stub and its two tool schemas
+2. **Read** — `src/agent/tool_calling.py` — the `ToolCallingAgent` stub and its two tool schemas
 3. **Implement** — `search_documents(query)` (top-k chunks from a wrapped retriever) and `read_document(doc_id)` (full document text); wire the agent loop and capture `tool_calls`
 4. **Run** — `python agent/tool_calling.py` for the smoke test; then ask the three question types
 5. **Measure** — the tool-call trace per question: how many retrievals, which queries, did it retrieve when it shouldn't have
@@ -46,12 +46,12 @@ the tool-call trace — which is the first step toward agentic RAG (Projects
 
 ## Code
 
-- `agent/tool_calling.py` — `ToolCallingAgent(llm, retriever)` — tool-calling loop; `search_documents` + `read_document` tools
+- `src/agent/tool_calling.py` — `ToolCallingAgent(llm, retriever)` — tool-calling loop; `search_documents` + `read_document` tools
 
 ## Notebook
 
 `NoteBooks/Project-29-Tool-Calling-RAG/01-tool-calling-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-29-Tool-Calling-RAG/01-tool-calling-spec.py NoteBooks/Project-29-Tool-Calling-RAG/01-tool-calling.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-29-Tool-Calling-RAG/01-tool-calling-spec.py NoteBooks/Project-29-Tool-Calling-RAG/01-tool-calling.ipynb
 ```

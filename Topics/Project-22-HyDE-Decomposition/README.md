@@ -37,9 +37,9 @@ at the query, not at the result list.
 ## Execute
 
 1. **Setup** — no new dependencies. Reuses your Project 17 `RAGPipeline` blocks
-   and an LLM from `llms/` (OpenAI / Gemini / local Ollama) — the LLM writes
+   and an LLM from `src/llms/` (OpenAI / Gemini / local Ollama) — the LLM writes
    the hypothetical documents and the sub-questions.
-2. **Read** `retrieval/hyde.py` and `retrieval/decompose.py` — both are stubs
+2. **Read** `src/retrieval/hyde.py` and `src/retrieval/decompose.py` — both are stubs
    with `TODO`s and a no-network `__main__` smoke test.
 3. **Implement** both wrappers:
    - `HyDERetriever` — LLM writes a hypothetical passage, embed the passage,
@@ -48,7 +48,7 @@ at the query, not at the result list.
      retrieve with the original question AND each sub-question, dedupe by page
      content (first occurrence wins), return top-k.
 4. **Build the eval set** — 10–15 multi-hop questions: reuse 3–5 from
-   `evaluation/golden.py` where possible, synthesize the rest from
+   `src/evaluation/golden.py` where possible, synthesize the rest from
    `Data/Waiting.txt`. Each question must need 2 chunks stitched together —
    "Who wrote it, and in what year?" — so plain top-k misses part of it.
 5. **Run the comparison** — same vector store, same top-k: baseline vs HyDE
@@ -75,10 +75,10 @@ at the query, not at the result list.
 
 ## Code
 
-- `retrieval/hyde.py` — `HyDERetriever(hyde_llm, retriever, top_k)` — writes a
+- `src/retrieval/hyde.py` — `HyDERetriever(hyde_llm, retriever, top_k)` — writes a
   hypothetical answer passage with an LLM, embeds it, then delegates retrieval
   to the wrapped retriever.
-- `retrieval/decompose.py` — `DecomposeRetriever(decomposer_llm, retriever, top_k)`
+- `src/retrieval/decompose.py` — `DecomposeRetriever(decomposer_llm, retriever, top_k)`
   — splits a multi-hop question into sub-questions, retrieves with the original
   plus each sub-question, and merges the deduplicated results.
 
@@ -88,7 +88,7 @@ at the query, not at the result list.
 generate the notebook with:
 
 ```bash
-python scripts/gen_notebook.py \
+python src/scripts/gen_notebook.py \
   NoteBooks/Project-22-HyDE-Decomposition/01-hyde-decomposition-spec.py \
   NoteBooks/Project-22-HyDE-Decomposition/01-hyde-decomposition.ipynb
 ```

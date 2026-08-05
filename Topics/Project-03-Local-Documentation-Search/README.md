@@ -35,7 +35,7 @@ project/
 
 ## Code
 
-`loaders/` (add `directory.py`), `embeddings/bge.py`, `vectordb/faiss.py`
+`src/loaders/` (add `directory.py`), `src/embeddings/bge.py`, `src/vectordb/faiss.py`
 
 ## Notebook
 

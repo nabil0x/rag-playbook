@@ -48,14 +48,14 @@ modules it exercises, and the matching notebook. Tick boxes as articles are publ
 
 ## How content maps to code
 
-- Component modules (repo root): `loaders/`, `splitters/`, `embeddings/`, `vectordb/`,
-  `retrieval/`, `prompts/`, `llms/` — one class per component, named in each project card.
-- Advanced modules (Projects 21–36): `agent/` (tool-calling, LangGraph, multi-agent),
-  `api/` (FastAPI service, Celery ingestion), `observability/` (tracing, metrics,
-  logging), `docker/` (Dockerfile + docker-compose), `evaluation/` (online eval,
+- Component modules (repo root): `src/loaders/`, `src/splitters/`, `src/embeddings/`, `src/vectordb/`,
+  `src/retrieval/`, `src/prompts/`, `src/llms/` — one class per component, named in each project card.
+- Advanced modules (Projects 21–36): `src/agent/` (tool-calling, LangGraph, multi-agent),
+  `src/api/` (FastAPI service, Celery ingestion), `src/observability/` (tracing, metrics,
+  logging), `docker/` (Dockerfile + docker-compose), `src/evaluation/` (online eval,
   drift, regression).
 - Hands-on notebooks: `NoteBooks/Project-NN-*` (see each project card). Advanced
-  cards ship a `01-*-spec.py` source you render with `scripts/gen_notebook.py`.
+  cards ship a `01-*-spec.py` source you render with `src/scripts/gen_notebook.py`.
 - Sample data: `Data/` (e.g. `Waiting.txt`, a public-domain Project Gutenberg book).
 
 ## Publishing workflow

@@ -29,7 +29,7 @@ rerankers, three mechanisms; this project makes the difference concrete.
 ## Execute
 
 1. **Setup** — `pip install sentence-transformers transformers torch` (Ollama optional for the LLM reranker)
-2. **Read** — `retrieval/rerank_advanced.py` — `ColBERTReranker`, `MonoT5Reranker`, `LLMPointwiseReranker` stubs
+2. **Read** — `src/retrieval/rerank_advanced.py` — `ColBERTReranker`, `MonoT5Reranker`, `LLMPointwiseReranker` stubs
 3. **Implement** — token-embedding MaxSim scoring for ColBERT; MonoT5 "true/false" logit mapping; a yes/no prompt for the LLM reranker
 4. **Run** — `python retrieval/rerank_advanced.py` for the smoke test; rerank the same 20-candidate pool with all three
 5. **Measure** — same questions as Project 25; compare ColBERT vs cross-encoder vs LLM rerank on order agreement and wall-clock time
@@ -47,12 +47,12 @@ rerankers, three mechanisms; this project makes the difference concrete.
 
 ## Code
 
-- `retrieval/rerank_advanced.py` — `ColBERTReranker(model_name)` — MaxSim late interaction; `MonoT5Reranker(model_name)` — seq2seq true/false; `LLMPointwiseReranker(llm)` — yes/no prompt
+- `src/retrieval/rerank_advanced.py` — `ColBERTReranker(model_name)` — MaxSim late interaction; `MonoT5Reranker(model_name)` — seq2seq true/false; `LLMPointwiseReranker(llm)` — yes/no prompt
 
 ## Notebook
 
 `NoteBooks/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank-spec.py NoteBooks/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank-spec.py NoteBooks/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank.ipynb
 ```

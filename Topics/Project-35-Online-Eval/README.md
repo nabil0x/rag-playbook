@@ -28,7 +28,7 @@ significance check and learn why `n` is the most important metric.
 ## Execute
 
 1. **Setup** — stdlib only (`sqlite3`/`csv`); optional `pip install scipy` for the t-test
-2. **Read** — `evaluation/online.py` — `FeedbackEvent`, `OnlineEvaluator`, `ABTest` stubs
+2. **Read** — `src/evaluation/online.py` — `FeedbackEvent`, `OnlineEvaluator`, `ABTest` stubs
 3. **Implement** — feedback logging to SQLite, `summary()` stats, `assign()` variant choice, and `compare()` with the significance check
 4. **Run** — `python evaluation/online.py` for the smoke test; then simulate 100 feedback events with a real rating difference between variants
 5. **Measure** — mean rating per variant, the win rate, and the significance verdict at n=20 vs n=100
@@ -46,12 +46,12 @@ significance check and learn why `n` is the most important metric.
 
 ## Code
 
-- `evaluation/online.py` — `OnlineEvaluator` (SQLite feedback log + summary), `ABTest` (assignment + significance)
+- `src/evaluation/online.py` — `OnlineEvaluator` (SQLite feedback log + summary), `ABTest` (assignment + significance)
 
 ## Notebook
 
 `NoteBooks/Project-35-Online-Eval/01-online-eval-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-35-Online-Eval/01-online-eval-spec.py NoteBooks/Project-35-Online-Eval/01-online-eval.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-35-Online-Eval/01-online-eval-spec.py NoteBooks/Project-35-Online-Eval/01-online-eval.ipynb
 ```

@@ -18,7 +18,7 @@
   sites; the stub already carries the docstring, the import contract, and a
   no-network `__main__` smoke test.
 - **Notebook specs** (`NoteBooks/Project-NN-*/01-*-spec.py`) render into runnable
-  notebooks with `scripts/gen_notebook.py`.
+  notebooks with `src/scripts/gen_notebook.py`.
 - **Do them in order within a phase.** Phases build on each other; projects within
   a phase are independent enough that order matters only for narrative.
 - **Skip freely.** The "Stretch" section of each card is optional. Items marked
@@ -44,21 +44,21 @@
 
 | # | Project | Phase | Core concept | New module(s) |
 |---|---------|-------|--------------|---------------|
-| 21 | [Query Rewrite & Step-Back](Project-21-Query-Rewrite/README.md) | 1 | Rewrite vague/verbose queries; step back to a broader question | `retrieval/query_rewrite.py`, `retrieval/step_back.py` |
-| 22 | [HyDE & Query Decomposition](Project-22-HyDE-Decomposition/README.md) | 1 | Embed a hypothetical answer; split multi-hop questions | `retrieval/hyde.py`, `retrieval/decompose.py` |
-| 24 | [Vector Index Internals](Project-24-Vector-Index-Internals/README.md) | 2 | IVF, HNSW, PQ, OPQ — how ANN search actually works | `vectordb/faiss_index.py` |
-| 25 | [CrossEncoder Reranking](Project-25-CrossEncoder-Reranking/README.md) | 3 | Bi-encoder to retrieve, cross-encoder to rerank | `retrieval/rerank.py` |
-| 26 | [Late-Interaction & LLM Rerankers](Project-26-Late-Interaction-LLM-Rerankers/README.md) | 3 | ColBERT token-level matching; MonoT5 & LLM pointwise rerank | `retrieval/rerank_advanced.py` |
-| 27 | [Context Assembly & Lost-in-the-Middle](Project-27-Context-Assembly/README.md) | 4 | Dedup, ordering, token budget; answer-position bias | `retrieval/context_assembly.py` |
-| 28 | [Citations & Attribution](Project-28-Citations-Attribution/README.md) | 4 | Claim-level groundedness, hallucination detection | `evaluation/attribution.py` |
-| 29 | [Tool-Calling RAG](Project-29-Tool-Calling-RAG/README.md) | 5 | LLM decides *when* to retrieve via tools | `agent/tool_calling.py` |
-| 30 | [LangGraph Agentic RAG](Project-30-LangGraph-Agentic-RAG/README.md) | 5 | Stateful graph: plan → retrieve → answer → reflect | `agent/langgraph_agent.py` |
-| 31 | [Multi-Agent RAG](Project-31-Multi-Agent-RAG/README.md) | 5 | Supervisor + specialist agents, parallel retrieval | `agent/multi_agent.py` |
-| 32 | [RAG as a Service](Project-32-RAG-Service/README.md) | 6 | FastAPI, Redis cache, Docker | `api/main.py`, `docker/*` |
-| 33 | [Async Ingestion](Project-33-Async-Ingestion/README.md) | 6 | Celery task queue for embedding pipelines | `celery_app.py` |
-| 34 | [Observability](Project-34-Observability/README.md) | 6 | Traces, metrics, structured logs | `observability/*` |
-| 35 | [Online Eval & A/B](Project-35-Online-Eval/README.md) | 7 | Feedback loops, A/B tests, significance | `evaluation/online.py` |
-| 36 | [Drift & Prompt Regression](Project-36-Drift-Prompt-Regression/README.md) | 7 | Drift detection; CI regression gates | `evaluation/drift.py`, `evaluation/regression.py` |
+| 21 | [Query Rewrite & Step-Back](Project-21-Query-Rewrite/README.md) | 1 | Rewrite vague/verbose queries; step back to a broader question | `src/retrieval/query_rewrite.py`, `src/retrieval/step_back.py` |
+| 22 | [HyDE & Query Decomposition](Project-22-HyDE-Decomposition/README.md) | 1 | Embed a hypothetical answer; split multi-hop questions | `src/retrieval/hyde.py`, `src/retrieval/decompose.py` |
+| 24 | [Vector Index Internals](Project-24-Vector-Index-Internals/README.md) | 2 | IVF, HNSW, PQ, OPQ — how ANN search actually works | `src/vectordb/faiss_index.py` |
+| 25 | [CrossEncoder Reranking](Project-25-CrossEncoder-Reranking/README.md) | 3 | Bi-encoder to retrieve, cross-encoder to rerank | `src/retrieval/rerank.py` |
+| 26 | [Late-Interaction & LLM Rerankers](Project-26-Late-Interaction-LLM-Rerankers/README.md) | 3 | ColBERT token-level matching; MonoT5 & LLM pointwise rerank | `src/retrieval/rerank_advanced.py` |
+| 27 | [Context Assembly & Lost-in-the-Middle](Project-27-Context-Assembly/README.md) | 4 | Dedup, ordering, token budget; answer-position bias | `src/retrieval/context_assembly.py` |
+| 28 | [Citations & Attribution](Project-28-Citations-Attribution/README.md) | 4 | Claim-level groundedness, hallucination detection | `src/evaluation/attribution.py` |
+| 29 | [Tool-Calling RAG](Project-29-Tool-Calling-RAG/README.md) | 5 | LLM decides *when* to retrieve via tools | `src/agent/tool_calling.py` |
+| 30 | [LangGraph Agentic RAG](Project-30-LangGraph-Agentic-RAG/README.md) | 5 | Stateful graph: plan → retrieve → answer → reflect | `src/agent/langgraph_agent.py` |
+| 31 | [Multi-Agent RAG](Project-31-Multi-Agent-RAG/README.md) | 5 | Supervisor + specialist agents, parallel retrieval | `src/agent/multi_agent.py` |
+| 32 | [RAG as a Service](Project-32-RAG-Service/README.md) | 6 | FastAPI, Redis cache, Docker | `src/api/main.py`, `docker/*` |
+| 33 | [Async Ingestion](Project-33-Async-Ingestion/README.md) | 6 | Celery task queue for embedding pipelines | `src/celery_app.py` |
+| 34 | [Observability](Project-34-Observability/README.md) | 6 | Traces, metrics, structured logs | `src/observability/*` |
+| 35 | [Online Eval & A/B](Project-35-Online-Eval/README.md) | 7 | Feedback loops, A/B tests, significance | `src/evaluation/online.py` |
+| 36 | [Drift & Prompt Regression](Project-36-Drift-Prompt-Regression/README.md) | 7 | Drift detection; CI regression gates | `src/evaluation/drift.py`, `src/evaluation/regression.py` |
 
 > **Project 23 is intentionally skipped** (numbering keeps the original 20 as the
 > foundation; the gap marks where the advanced curriculum begins).
@@ -120,7 +120,7 @@ Every project card references the same four artifacts, in the same order:
    and a self-checking `__main__` block.
 3. **Notebook spec** — `NoteBooks/Project-NN-*/01-*-spec.py`, rendered with:
    ```bash
-   python scripts/gen_notebook.py NoteBooks/Project-NN-*/01-*-spec.py \
+   python src/scripts/gen_notebook.py NoteBooks/Project-NN-*/01-*-spec.py \
        NoteBooks/Project-NN-*/01-*.ipynb
    ```
 4. **Article** — optional write-up drafted inside the project folder as the

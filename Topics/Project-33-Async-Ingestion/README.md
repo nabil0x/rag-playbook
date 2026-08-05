@@ -21,7 +21,7 @@ re-enqueues it).
 ## Learn
 
 - Sync vs async ingestion: what blocks, what doesn't, and where the timeout lives
-- Celery fundamentals: `@app.task`, the Redis broker, and the worker process (`celery -A celery_app worker`)
+- Celery fundamentals: `@app.task`, the Redis broker, and the worker process (`celery -A src.celery_app worker`)
 - Status lifecycle: PENDING → STARTED → SUCCESS / FAILURE, and polling `AsyncResult`
 - Retries with backoff: `autoretry_for=(Exception,)`, `retry_backoff=True`, `max_retries`
 - Idempotency: content-hash the source document; skip the job if it is already indexed
@@ -30,9 +30,9 @@ re-enqueues it).
 ## Execute
 
 1. **Setup** — `pip install celery redis`; Redis running locally (or reuse the Project 32 compose file)
-2. **Read** — `celery_app.py` — the app config, the `ingest_document` task skeleton, and the idempotency hook
+2. **Read** — `src/celery_app.py` — the app config, the `ingest_document` task skeleton, and the idempotency hook
 3. **Implement** — the task body (load → split → embed → store, all lazy imports), the content-hash guard, and retry config
-4. **Run** — start the worker (`celery -A celery_app worker --loglevel=info`), enqueue 3 files, poll their statuses
+4. **Run** — start the worker (`celery -A src.celery_app worker --loglevel=info`), enqueue 3 files, poll their statuses
 5. **Measure** — request returns instantly with a `task_id`; worker logs show per-document progress; re-enqueue the same file and watch it skip
 6. **Acceptance criteria** — enqueuing returns before embedding completes; status polls move PENDING → SUCCESS; a forced exception (bad file) ends FAILURE then retries; a duplicate document is skipped, not re-embedded
 
@@ -48,12 +48,12 @@ re-enqueues it).
 
 ## Code
 
-- `celery_app.py` — Celery app + `ingest_document(file_path)` task with retries and content-hash idempotency
+- `src/celery_app.py` — Celery app + `ingest_document(file_path)` task with retries and content-hash idempotency
 
 ## Notebook
 
 `NoteBooks/Project-33-Async-Ingestion/01-async-ingestion-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-33-Async-Ingestion/01-async-ingestion-spec.py NoteBooks/Project-33-Async-Ingestion/01-async-ingestion.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-33-Async-Ingestion/01-async-ingestion-spec.py NoteBooks/Project-33-Async-Ingestion/01-async-ingestion.ipynb
 ```

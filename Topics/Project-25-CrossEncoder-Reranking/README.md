@@ -28,7 +28,7 @@ lines around the retriever you already built.
 ## Execute
 
 1. **Setup** — `pip install sentence-transformers`
-2. **Read** — `retrieval/rerank.py` — the `CrossEncoderReranker` and `RerankRetriever` stubs
+2. **Read** — `src/retrieval/rerank.py` — the `CrossEncoderReranker` and `RerankRetriever` stubs
 3. **Implement** — `rerank(query, documents, top_k)`: load the cross-encoder lazily, score pairs, sort descending, keep `top_k`, attach scores
 4. **Run** — `python retrieval/rerank.py` for the smoke test; then wire `RerankRetriever` (retrieve 20 → rerank to 5) into a pipeline
 5. **Measure** — ask 3 questions through plain top-5 retrieval and through retrieve-20-rerank-5; compare answer quality and the score spread
@@ -46,12 +46,12 @@ lines around the retriever you already built.
 
 ## Code
 
-- `retrieval/rerank.py` — `CrossEncoderReranker(model_name, top_k)` — pair-scoring rerank; `RerankRetriever(base, k_retrieve, top_k)` — retrieve-wide-rerank-short
+- `src/retrieval/rerank.py` — `CrossEncoderReranker(model_name, top_k)` — pair-scoring rerank; `RerankRetriever(base, k_retrieve, top_k)` — retrieve-wide-rerank-short
 
 ## Notebook
 
 `NoteBooks/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking-spec.py NoteBooks/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking-spec.py NoteBooks/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking.ipynb
 ```

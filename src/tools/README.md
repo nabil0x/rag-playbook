@@ -2,7 +2,7 @@
 
 Where LangChain and its associated frameworks do not support an operation, the
 needed class is built here — shared, reusable, and implementing the same
-contract style as the component library (`loaders/`, `retrieval/`, …).
+contract style as the component library (`src/loaders/`, `src/retrieval/`, …).
 
 ## Inventory
 
@@ -16,4 +16,4 @@ contract style as the component library (`loaders/`, `retrieval/`, …).
 | `verifier.py` | Evidence verification: retrieve candidate evidence + LLM claim verdict (SUPPORTED / REFUTED / NOT_ENOUGH_INFO) | 10-agentic-rag |
 
 Rule of thumb: if LangChain already ships it (or a class in this repo does),
-reuse it — do not reimplement. `tools/` is only for the gaps.
+reuse it — do not reimplement. `src/tools/` is only for the gaps.

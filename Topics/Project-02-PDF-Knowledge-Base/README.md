@@ -28,7 +28,7 @@ University regulations, research papers, books, course notes
 
 ## Code
 
-`loaders/pdf.py` (`PDFLoader`) — implement with `PyPDFLoader`
+`src/loaders/pdf.py` (`PDFLoader`) — implement with `PyPDFLoader`
 
 ## Notebook
 

@@ -20,7 +20,7 @@ PDF + Markdown + CSV + Web + JSON
 
 ## Code
 
-`loaders/pdf.py`, `loaders/csv_loader.py`, `loaders/web.py` (+ markdown, json later)
+`src/loaders/pdf.py`, `src/loaders/csv_loader.py`, `src/loaders/web.py` (+ markdown, json later)
 
 ## Notebook
 

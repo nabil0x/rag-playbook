@@ -28,7 +28,7 @@ and becomes four named functions.
 ## Execute
 
 1. **Setup** — `pip install langgraph` (plus `langchain-classic` if using agent utilities) and Ollama or Gemini
-2. **Read** — `agent/langgraph_agent.py` — the `LangGraphRAGAgent` stub with its node skeletons and state schema
+2. **Read** — `src/agent/langgraph_agent.py` — the `LangGraphRAGAgent` stub with its node skeletons and state schema
 3. **Implement** — the five nodes, the conditional reflect edge, and the loop counter in state
 4. **Run** — `python agent/langgraph_agent.py` for the smoke test; then compile and invoke the graph on a hard question
 5. **Measure** — print the node-by-node trace (which nodes ran, in what order) and the number of reflect→re-retrieve loops before the critique passes
@@ -46,12 +46,12 @@ and becomes four named functions.
 
 ## Code
 
-- `agent/langgraph_agent.py` — `LangGraphRAGAgent(llm, retriever, max_loops)` — compiles a plan/retrieve/generate/reflect `StateGraph`
+- `src/agent/langgraph_agent.py` — `LangGraphRAGAgent(llm, retriever, max_loops)` — compiles a plan/retrieve/generate/reflect `StateGraph`
 
 ## Notebook
 
 `NoteBooks/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag-spec.py NoteBooks/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag-spec.py NoteBooks/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag.ipynb
 ```

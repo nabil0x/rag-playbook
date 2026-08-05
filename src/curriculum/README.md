@@ -9,15 +9,15 @@ before it is converted to a notebook under
 
 | Track | Data | Reuses | Custom tools |
 |---|---|---|---|
-| 01-chunking | `Data/corpus/gutenberg/` (public domain), `Data/local-docs/`, SD samples | `splitters/` | — |
-| 02-embeddings | rag-mini-wikipedia | `embeddings/{bge,e5}.py` | — |
-| 03-vector-databases | rag-mini-wikipedia | `vectordb/{faiss,chroma,qdrant}.py` | — |
-| 04-retrieval | rag-mini + beir qrels | `retrieval/`, `evaluation/` | — |
-| 05-query-transformation | rag-mini test, hotpotqa | `retrieval/{query_rewrite,hyde,decompose,step_back}.py` | `tools/prf.py` |
-| 06-re-ranking | beir qrels, lost-in-the-middle | `retrieval/{rerank,rerank_advanced}.py` | `tools/reranker.py` |
-| 07-evaluation | qrels + gold answers | `evaluation/` | — |
-| 08-graphrag | hotpotqa, rag-mini | `llms/ollama.py` | `tools/{graph,graphrag}.py` |
-| 09-raptor | rag-mini-wikipedia | `llms/ollama.py`, `embeddings/bge.py` | `tools/raptor.py` |
-| 10-agentic-rag | hotpotqa, scifact | `llms/ollama.py`, `embeddings/bge.py`, LangGraph | `tools/verifier.py` |
+| 01-chunking | `Data/corpus/gutenberg/` (public domain), `Data/local-docs/`, SD samples | `src/splitters/` | — |
+| 02-embeddings | rag-mini-wikipedia | `src/embeddings/{bge,e5}.py` | — |
+| 03-vector-databases | rag-mini-wikipedia | `src/vectordb/{faiss,chroma,qdrant}.py` | — |
+| 04-retrieval | rag-mini + beir qrels | `src/retrieval/`, `src/evaluation/` | — |
+| 05-query-transformation | rag-mini test, hotpotqa | `src/retrieval/{query_rewrite,hyde,decompose,step_back}.py` | `src/tools/prf.py` |
+| 06-re-ranking | beir qrels, lost-in-the-middle | `src/retrieval/{rerank,rerank_advanced}.py` | `src/tools/reranker.py` |
+| 07-evaluation | qrels + gold answers | `src/evaluation/` | — |
+| 08-graphrag | hotpotqa, rag-mini | `src/llms/ollama.py` | `src/tools/{graph,graphrag}.py` |
+| 09-raptor | rag-mini-wikipedia | `src/llms/ollama.py`, `src/embeddings/bge.py` | `src/tools/raptor.py` |
+| 10-agentic-rag | hotpotqa, scifact | `src/llms/ollama.py`, `src/embeddings/bge.py`, LangGraph | `src/tools/verifier.py` |
 
 Full plan: `.omo/plans/layer1-rag-playbook.md`.

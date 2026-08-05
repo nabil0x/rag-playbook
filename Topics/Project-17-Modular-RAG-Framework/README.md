@@ -43,8 +43,8 @@ pipeline = RAGPipeline(
 
 ## Code
 
-This is what `loaders/`, `splitters/`, `embeddings/`, `vectordb/`, `retrieval/`,
-`prompts/`, `llms/` + `main.py` become — every block in the repo root is a
+This is what `src/loaders/`, `src/splitters/`, `src/embeddings/`, `src/vectordb/`, `src/retrieval/`,
+`src/prompts/`, `src/llms/` + `src/main.py` become — every block in the repo root is a
 working implementation, and the interface each one follows is the contract
 you'd enforce here.
 

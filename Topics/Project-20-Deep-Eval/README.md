@@ -45,7 +45,7 @@ Also prepares for interviews: *why* this embedding, *why* this retriever.
 
 ## Code
 
-New `evaluation/` folder (metrics, harness), reusing every component module.
+New `src/evaluation/` folder (metrics, harness), reusing every component module.
 
 - `golden.py` (`GOLDEN_QA` — 23 hand-checked QA pairs across 6 invoice docs; `load_golden()`)
 - `judge.py` (`LocalEmbeddings` adapter over fastembed; `LLMJudge` over local Ollama `qwen2.5-coder:7b`)
@@ -57,4 +57,4 @@ All components run locally — zero external API cost.
 
 ## Notebook
 
-`NoteBooks/Project-20-Deep-Eval/01-deep-eval.ipynb` — capstone notebook, generated via `scripts/gen_notebook.py`, executed end-to-end on the local magus kernel (zero API cost)
+`NoteBooks/Project-20-Deep-Eval/01-deep-eval.ipynb` — capstone notebook, generated via `src/scripts/gen_notebook.py`, executed end-to-end on the local magus kernel (zero API cost)

@@ -28,7 +28,7 @@ wrong, you know which specialist produced the bad step.
 ## Execute
 
 1. **Setup** — `pip install langchain-classic` (for agent utilities) and Ollama or Gemini
-2. **Read** — `agent/multi_agent.py` — the `SupervisorAgent`, `SearchPlannerAgent`, `RetrieverAgent`, `WriterAgent` stubs
+2. **Read** — `src/agent/multi_agent.py` — the `SupervisorAgent`, `SearchPlannerAgent`, `RetrieverAgent`, `WriterAgent` stubs
 3. **Implement** — the router decision, the intent decomposition, the parallel retrieval fan-out, and the writer synthesis
 4. **Run** — `python agent/multi_agent.py` for the smoke test; then a multi-hop question through `run(question)`
 5. **Measure** — the route chosen, the intents planned, wall-clock time with parallel vs serial retrieval, and the writer's evidence list
@@ -46,12 +46,12 @@ wrong, you know which specialist produced the bad step.
 
 ## Code
 
-- `agent/multi_agent.py` — `SupervisorAgent`, `SearchPlannerAgent`, `RetrieverAgent`, `WriterAgent` — routed, parallel multi-agent RAG
+- `src/agent/multi_agent.py` — `SupervisorAgent`, `SearchPlannerAgent`, `RetrieverAgent`, `WriterAgent` — routed, parallel multi-agent RAG
 
 ## Notebook
 
 `NoteBooks/Project-31-Multi-Agent-RAG/01-multi-agent-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-31-Multi-Agent-RAG/01-multi-agent-spec.py NoteBooks/Project-31-Multi-Agent-RAG/01-multi-agent.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-31-Multi-Agent-RAG/01-multi-agent-spec.py NoteBooks/Project-31-Multi-Agent-RAG/01-multi-agent.ipynb
 ```

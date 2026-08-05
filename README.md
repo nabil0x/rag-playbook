@@ -60,16 +60,16 @@ Each folder maps to one part of that pipeline:
 
 | Pipeline block | Folder | Examples |
 |---|---|---|
-| Load documents | `loaders/` | Web, PDF, CSV, Word, Gutenberg |
-| Split text | `splitters/` | Recursive, semantic, token-aware |
-| Embed chunks | `embeddings/` | Local BGE, local E5, Gemini |
-| Store vectors | `vectordb/` | Chroma, FAISS, Qdrant, FAISS index internals |
-| Retrieve context | `retrieval/` | Similarity, MMR, hybrid, rewrite, HyDE, decomposition, rerank, context assembly |
-| Build prompts | `prompts/` | Basic prompt, citation prompt |
-| Generate answers | `llms/` | Gemini, OpenAI, Groq, NVIDIA NIM, local Ollama |
-| Measure behavior | `evaluation/` | Metrics, golden tests, judge, attribution, drift, regression, online eval |
+| Load documents | `src/loaders/` | Web, PDF, CSV, Word, Gutenberg |
+| Split text | `src/splitters/` | Recursive, semantic, token-aware |
+| Embed chunks | `src/embeddings/` | Local BGE, local E5, Gemini |
+| Store vectors | `src/vectordb/` | Chroma, FAISS, Qdrant, FAISS index internals |
+| Retrieve context | `src/retrieval/` | Similarity, MMR, hybrid, rewrite, HyDE, decomposition, rerank, context assembly |
+| Build prompts | `src/prompts/` | Basic prompt, citation prompt |
+| Generate answers | `src/llms/` | Gemini, OpenAI, Groq, NVIDIA NIM, local Ollama |
+| Measure behavior | `src/evaluation/` | Metrics, golden tests, judge, attribution, drift, regression, online eval |
 
-The endgame is [`main.py`](main.py), where these pieces become a pluggable
+The endgame is [`src/main.py`](src/main.py), where these pieces become a pluggable
 `RAGPipeline`.
 
 ```python
@@ -98,17 +98,17 @@ If you are evaluating this repo quickly, these are the strongest signals.
 | Retrieval engineering | Similarity, MMR, hybrid, parent-child, query transformation, context compression, reranking |
 | Embedding and vector search | Local BGE/E5, Gemini embeddings, FAISS, Chroma, Qdrant, index tradeoffs |
 | Evaluation | BEIR qrels, rag-mini-wikipedia, HotpotQA, SciFact, generation metrics, attribution, drift, regression |
-| Production patterns | [`api/`](api/), [`agent/`](agent/), [`observability/`](observability/), [`docker/`](docker/) |
+| Production patterns | [`src/api/`](src/api/), [`src/agent/`](src/agent/), [`src/observability/`](src/observability/), [`docker/`](docker/) |
 | Learning-to-teaching | Topic cards, curriculum tracks, notebooks, and special-document studies |
 | Engineering discipline | Python-first labs, verification before notebooks, shared components, local embeddings by default |
 
 Suggested review path:
 
-1. Start with [`main.py`](main.py) to see the final architecture.
-2. Open [`curriculum/README.md`](curriculum/README.md) to see the concept map.
+1. Start with [`src/main.py`](src/main.py) to see the final architecture.
+2. Open [`src/curriculum/README.md`](src/curriculum/README.md) to see the concept map.
 3. Open [`Topics/README.md`](Topics/README.md) to see the full project roadmap.
-4. Inspect [`retrieval/`](retrieval/) and [`evaluation/`](evaluation/) for advanced RAG work.
-5. Run one notebook from [`NoteBooks/Project-01-Baseline-RAG/`](NoteBooks/Project-01-Baseline-RAG/) or one curriculum lab from [`curriculum/`](curriculum/).
+4. Inspect [`src/retrieval/`](src/retrieval/) and [`src/evaluation/`](src/evaluation/) for advanced RAG work.
+5. Run one notebook from [`NoteBooks/Project-01-Baseline-RAG/`](NoteBooks/Project-01-Baseline-RAG/) or one curriculum lab from [`src/curriculum/`](src/curriculum/).
 
 ---
 
@@ -135,7 +135,7 @@ Project cards live in [`Topics/`](Topics/). Notebooks live in
 ### 2. Curriculum Track: Study Core Concepts Directly
 
 The curriculum is python-first. Each lab starts as a standalone `.py` file under
-[`curriculum/`](curriculum/) and is converted to a notebook only after it runs
+[`src/curriculum/`](src/curriculum/) and is converted to a notebook only after it runs
 and passes verification.
 
 | Track | Concept |
@@ -151,7 +151,7 @@ and passes verification.
 | 09 | RAPTOR |
 | 10 | Agentic RAG |
 
-See [`curriculum/README.md`](curriculum/README.md) for the detailed map.
+See [`src/curriculum/README.md`](src/curriculum/README.md) for the detailed map.
 
 ### 3. Special Documents Track: RAG On Messy Real Formats
 
@@ -217,8 +217,8 @@ By default, labs and notebooks embed locally with sentence-transformer models:
 
 | Model family | Module |
 |---|---|
-| BGE | [`embeddings/bge.py`](embeddings/bge.py) |
-| E5 | [`embeddings/e5.py`](embeddings/e5.py) |
+| BGE | [`src/embeddings/bge.py`](src/embeddings/bge.py) |
+| E5 | [`src/embeddings/e5.py`](src/embeddings/e5.py) |
 
 API models such as Gemini, OpenAI, Groq, or NVIDIA NIM are used as LLM backends
 when a lab needs generation, and the advanced curriculum tracks (08-10) default
@@ -236,26 +236,28 @@ cheap to run, and easier to compare.
 .
 |-- README.md                  # portfolio and learning entrypoint
 |-- AGENTS.md                  # working conventions for this repo
-|-- main.py                    # pluggable RAGPipeline assembly
 |-- requirements.txt           # Python dependencies
-|-- curriculum/                # python-first concept labs
+|-- src/                       # all Python code
+|   |-- main.py                # pluggable RAGPipeline assembly
+|   |-- curriculum/            # python-first concept labs
+|   |-- loaders/               # document loaders
+|   |-- splitters/             # chunking strategies
+|   |-- embeddings/            # local and API embedding wrappers
+|   |-- vectordb/              # vector store wrappers and index internals
+|   |-- retrieval/             # retrieval, query transformation, reranking
+|   |-- prompts/               # prompt templates
+|   |-- llms/                  # LLM adapters
+|   |-- evaluation/            # metrics, judge, drift, regression
+|   |-- tools/                 # custom tools where LangChain has gaps
+|   |-- agent/                 # tool-calling, LangGraph-style, multi-agent RAG
+|   |-- api/                   # service layer experiments
+|   |-- observability/         # tracing and metrics
+|   `-- scripts/               # corpus fetchers and notebook tooling
 |-- Topics/                    # project cards and article plans
 |-- NoteBooks/                 # runnable notebooks
 |-- Data/                      # samples, benchmark corpora, manifests
-|-- loaders/                   # document loaders
-|-- splitters/                 # chunking strategies
-|-- embeddings/                # local and API embedding wrappers
-|-- vectordb/                  # vector store wrappers and index internals
-|-- retrieval/                 # retrieval, query transformation, reranking
-|-- prompts/                   # prompt templates
-|-- llms/                      # LLM adapters
-|-- evaluation/                # metrics, judge, drift, regression
-|-- tools/                     # custom tools where LangChain has gaps
-|-- agent/                     # tool-calling, LangGraph-style, multi-agent RAG
-|-- api/                       # service layer experiments
-|-- observability/             # tracing and metrics
 |-- docker/                    # deployment-oriented files
-`-- scripts/                   # corpus fetchers and notebook tooling
+`-- .omo/plans/                # approved plans (this repo plans by plan-doc)
 ```
 
 ---
@@ -299,16 +301,16 @@ labs need no embedding API key at all.
 ### 3. Run A Python Lab
 
 ```bash
-python curriculum/01-chunking/01-fixed-vs-recursive.py
+python src/curriculum/01-chunking/01-fixed-vs-recursive.py
 ```
 
 ### 4. Run The End-To-End Pipeline
 
-`main.py` uses Gemini for embeddings and generation, so it requires
+`src/main.py` uses Gemini for embeddings and generation, so it requires
 `GOOGLE_API_KEY`.
 
 ```bash
-python main.py
+python src/main.py
 ```
 
 ### 5. Open A Notebook

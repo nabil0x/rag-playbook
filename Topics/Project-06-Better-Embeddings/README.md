@@ -20,7 +20,7 @@ Gemini ↓ BGE ↓ E5 ↓ Nomic ↓ Jina
 
 ## Code
 
-`embeddings/gemini.py`, `embeddings/bge.py`, `embeddings/e5.py` (+ nomic, jina later)
+`src/embeddings/gemini.py`, `src/embeddings/bge.py`, `src/embeddings/e5.py` (+ nomic, jina later)
 
 ## Notebook
 

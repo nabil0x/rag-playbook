@@ -22,13 +22,13 @@ project gets down to the sentence that is wrong.
 - Claim extraction: splitting an answer into atomic, checkable statements
 - Attribution checking: exact-match first, embedding-similarity fallback, and why thresholds need tuning
 - Groundedness = supported claims / total claims — and its complement, the hallucination rate
-- Inline citation formatting `[1] [2]` tied to a sources list (the `CitationPrompt` in `prompts/citation.py` asks for these markers)
+- Inline citation formatting `[1] [2]` tied to a sources list (the `CitationPrompt` in `src/prompts/citation.py` asks for these markers)
 - The attribution boundary: a claim can be "supported" yet incomplete — coverage is a separate axis
 
 ## Execute
 
 1. **Setup** — `pip install fastembed` (or reuse the repo embedder); optional LLM for claim extraction
-2. **Read** — `evaluation/attribution.py` — `Citation`, `AttributionEvaluator`, `CitationFormatter` stubs
+2. **Read** — `src/evaluation/attribution.py` — `Citation`, `AttributionEvaluator`, `CitationFormatter` stubs
 3. **Implement** — sentence-level claim splitting, the exact-then-fuzzy support check, and the `[n]` formatting
 4. **Run** — `python evaluation/attribution.py` for the smoke test; then evaluate 3 answers: fully grounded, partially grounded, one hallucinated claim
 5. **Measure** — groundedness % per answer, the list of unsupported claims, and the formatted cited answer
@@ -38,7 +38,7 @@ project gets down to the sentence that is wrong.
 
 - Use an LLM to extract claims instead of naive sentence splitting — compare coverage
 - Add a coverage score: did the chunks *contain* everything the answer needed?
-- Wire the formatter into `main.py`'s prompt so every pipeline answer ships with citations
+- Wire the formatter into `src/main.py`'s prompt so every pipeline answer ships with citations
 
 ## Article
 
@@ -46,12 +46,12 @@ project gets down to the sentence that is wrong.
 
 ## Code
 
-- `evaluation/attribution.py` — `Citation` dataclass; `AttributionEvaluator(embedder, threshold)` — claim-level support check; `CitationFormatter` — inline `[n]` + sources
+- `src/evaluation/attribution.py` — `Citation` dataclass; `AttributionEvaluator(embedder, threshold)` — claim-level support check; `CitationFormatter` — inline `[n]` + sources
 
 ## Notebook
 
 `NoteBooks/Project-28-Citations-Attribution/01-citations-attribution-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-28-Citations-Attribution/01-citations-attribution-spec.py NoteBooks/Project-28-Citations-Attribution/01-citations-attribution.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-28-Citations-Attribution/01-citations-attribution-spec.py NoteBooks/Project-28-Citations-Attribution/01-citations-attribution.ipynb
 ```

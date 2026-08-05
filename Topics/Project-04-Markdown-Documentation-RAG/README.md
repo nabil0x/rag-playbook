@@ -30,7 +30,7 @@ Installation ↓ Usage ↓ API
 
 ## Code
 
-`splitters/` (add `markdown_header.py`), `prompts/citation.py`
+`src/splitters/` (add `markdown_header.py`), `src/prompts/citation.py`
 
 ## Notebook
 

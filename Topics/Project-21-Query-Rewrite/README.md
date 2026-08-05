@@ -26,15 +26,15 @@ hand-labeled eval set.
 ## Execute
 
 1. **Setup** — no new dependencies. Reuses your Project 17 `RAGPipeline` blocks
-   and an LLM from `llms/` (OpenAI / Gemini / local Ollama).
-2. **Read** `retrieval/query_rewrite.py` and `retrieval/step_back.py` — both are
+   and an LLM from `src/llms/` (OpenAI / Gemini / local Ollama).
+2. **Read** `src/retrieval/query_rewrite.py` and `src/retrieval/step_back.py` — both are
    stubs with `TODO`s and a no-network `__main__` smoke test.
 3. **Implement** both wrappers:
    - `QueryRewriteRetriever` — LLM rewrites the question, embed the rewrite,
      delegate retrieval to the wrapped retriever.
    - `StepBackRetriever` — LLM produces a step-back question, retrieve with it,
      merge with the original-query results, dedupe, return top-k.
-4. **Build the eval set** — take 15–20 questions: reuse `evaluation/golden.py`
+4. **Build the eval set** — take 15–20 questions: reuse `src/evaluation/golden.py`
    where possible, plus a few deliberately vague/pronoun-heavy questions about
    `Data/Waiting.txt` (the kind a chatbot would really receive).
 5. **Run the comparison** — same vector store, same top-k: baseline vs rewrite
@@ -61,10 +61,10 @@ hand-labeled eval set.
 
 ## Code
 
-- `retrieval/query_rewrite.py` — `QueryRewriteRetriever(rewriter_llm, retriever, top_k)`
+- `src/retrieval/query_rewrite.py` — `QueryRewriteRetriever(rewriter_llm, retriever, top_k)`
   — rewrites the question with an LLM, then delegates retrieval to the wrapped
   retriever.
-- `retrieval/step_back.py` — `StepBackRetriever(stepback_llm, retriever, top_k)`
+- `src/retrieval/step_back.py` — `StepBackRetriever(stepback_llm, retriever, top_k)`
   — generates a step-back question, retrieves with it, and merges with the
   original-query results.
 
@@ -74,7 +74,7 @@ hand-labeled eval set.
 generate the notebook with:
 
 ```bash
-python scripts/gen_notebook.py \
+python src/scripts/gen_notebook.py \
   NoteBooks/Project-21-Query-Rewrite/01-query-rewrite-stepback-spec.py \
   NoteBooks/Project-21-Query-Rewrite/01-query-rewrite-stepback.ipynb
 ```

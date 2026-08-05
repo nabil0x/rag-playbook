@@ -27,8 +27,8 @@ LLM         : Gemini 2.5 Flash
 
 ## Code
 
-`loaders/web.py` (`WebLoader`), `splitters/recursive.py`, `embeddings/gemini.py`,
-`vectordb/chroma.py`, `retrieval/similarity.py`, `prompts/basic.py`, `llms/gemini.py`
+`src/loaders/web.py` (`WebLoader`), `src/splitters/recursive.py`, `src/embeddings/gemini.py`,
+`src/vectordb/chroma.py`, `src/retrieval/similarity.py`, `src/prompts/basic.py`, `src/llms/gemini.py`
 
 ## Notebook
 

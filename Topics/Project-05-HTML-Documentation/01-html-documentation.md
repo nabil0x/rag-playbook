@@ -110,7 +110,7 @@ already thrown away the HTML markup. That matters, because
 loader": fetch the page ourselves with `requests`, and parse it with
 `BeautifulSoup`.
 
-This is the same idea as `loaders/web.py` in the repo — you control exactly
+This is the same idea as `src/loaders/web.py` in the repo — you control exactly
 what gets extracted. Here we keep only the `<div role="main">` content and drop
 the site navigation.
 

@@ -26,13 +26,13 @@ correct without a human reading every answer.
 - Query-embedding drift: centroid + mean cosine distance from baseline as a simple, effective signal
 - Retrieval hit-rate monitoring: recall@k against the golden set over time windows
 - Golden-set regression as a CI gate: run, score, compare to baseline, fail on regression
-- The judge loop from Project 20 feeding the regression gate (`evaluation/judge.py`)
+- The judge loop from Project 20 feeding the regression gate (`src/evaluation/judge.py`)
 - Thresholds and alerting: flag, don't page — drift is a signal to investigate
 
 ## Execute
 
-1. **Setup** — `pip install fastembed`; reuse the Project 20 judge stack (`evaluation/golden.py`, `evaluation/judge.py`)
-2. **Read** — `evaluation/drift.py` (`DriftDetector`) and `evaluation/regression.py` (`PromptRegressionSuite`) stubs
+1. **Setup** — `pip install fastembed`; reuse the Project 20 judge stack (`src/evaluation/golden.py`, `src/evaluation/judge.py`)
+2. **Read** — `src/evaluation/drift.py` (`DriftDetector`) and `src/evaluation/regression.py` (`PromptRegressionSuite`) stubs
 3. **Implement** — query centroid tracking + threshold flag; retrieval hit-rate over windows; the regression suite (run → score → compare → pass/fail)
 4. **Run** — `python evaluation/drift.py` and `python evaluation/regression.py` smoke tests; then simulate: shift the question topic, degrade a prompt
 5. **Measure** — drift flagged on the shifted topic but not the original; regression suite passes the good prompt and fails the degraded one with a delta
@@ -50,13 +50,13 @@ correct without a human reading every answer.
 
 ## Code
 
-- `evaluation/drift.py` — `DriftDetector` — query-centroid drift + retrieval hit-rate monitoring
-- `evaluation/regression.py` — `PromptRegressionSuite` — golden-set prompt regression gate
+- `src/evaluation/drift.py` — `DriftDetector` — query-centroid drift + retrieval hit-rate monitoring
+- `src/evaluation/regression.py` — `PromptRegressionSuite` — golden-set prompt regression gate
 
 ## Notebook
 
 `NoteBooks/Project-36-Drift-Prompt-Regression/01-drift-regression-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-36-Drift-Prompt-Regression/01-drift-regression-spec.py NoteBooks/Project-36-Drift-Prompt-Regression/01-drift-regression.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-36-Drift-Prompt-Regression/01-drift-regression-spec.py NoteBooks/Project-36-Drift-Prompt-Regression/01-drift-regression.ipynb
 ```

@@ -28,7 +28,7 @@ Python docs, FastAPI docs, LangGraph docs
 
 ## Code
 
-`loaders/web.py` (`WebLoader` — extend for generic sites), `splitters/` (add `html_header.py`), `embeddings/e5.py`
+`src/loaders/web.py` (`WebLoader` — extend for generic sites), `src/splitters/` (add `html_header.py`), `src/embeddings/e5.py`
 
 ## Notebook
 

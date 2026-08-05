@@ -26,7 +26,7 @@ LLM         : Gemini
 
 ## Code
 
-`retrieval/` (add `parent_child.py`)
+`src/retrieval/` (add `parent_child.py`)
 
 ## Notebook
 

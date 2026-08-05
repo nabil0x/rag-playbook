@@ -21,7 +21,7 @@ Basic ↓ JSON Output ↓ Few-shot ↓ Citation ↓ Reasoning
 
 ## Code
 
-`prompts/basic.py`, `prompts/citation.py` (+ json, few-shot, reasoning later)
+`src/prompts/basic.py`, `src/prompts/citation.py` (+ json, few-shot, reasoning later)
 
 ## Notebook
 

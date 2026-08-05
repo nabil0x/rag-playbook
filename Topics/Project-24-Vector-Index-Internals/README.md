@@ -29,7 +29,7 @@ This project makes those tradeoffs measurable in your own hands.
 ## Execute
 
 1. **Setup** — `pip install faiss-cpu sentence-transformers` (or `fastembed`)
-2. **Read** — `vectordb/faiss_index.py` — the `FaissIndex` stub: index types, `build`, `search`, `benchmark`
+2. **Read** — `src/vectordb/faiss_index.py` — the `FaissIndex` stub: index types, `build`, `search`, `benchmark`
 3. **Implement** — fill in the four index constructors and the `benchmark` loop that returns `recall@k` and latency per index type
 4. **Run** — `python vectordb/faiss_index.py` for the smoke test; then embed ~300 chunks from `Data/local-docs/` and benchmark
 5. **Measure** — recall@10 vs mean latency for flat / IVF / HNSW / PQ on the same query set; report the memory footprint of each index
@@ -47,12 +47,12 @@ This project makes those tradeoffs measurable in your own hands.
 
 ## Code
 
-- `vectordb/faiss_index.py` — `FaissIndex(index_type, dim)` — build/search/benchmark for flat, IVF, HNSW, PQ
+- `src/vectordb/faiss_index.py` — `FaissIndex(index_type, dim)` — build/search/benchmark for flat, IVF, HNSW, PQ
 
 ## Notebook
 
 `NoteBooks/Project-24-Vector-Index-Internals/01-index-internals-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-24-Vector-Index-Internals/01-index-internals-spec.py NoteBooks/Project-24-Vector-Index-Internals/01-index-internals.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-24-Vector-Index-Internals/01-index-internals-spec.py NoteBooks/Project-24-Vector-Index-Internals/01-index-internals.ipynb
 ```

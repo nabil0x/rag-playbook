@@ -15,7 +15,7 @@ Keyword + Semantic
 
 ## Code
 
-`retrieval/hybrid.py` (`HybridRetriever` — reciprocal rank fusion)
+`src/retrieval/hybrid.py` (`HybridRetriever` — reciprocal rank fusion)
 
 ## Notebook
 

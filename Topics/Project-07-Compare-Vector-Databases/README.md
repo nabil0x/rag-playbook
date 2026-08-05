@@ -22,7 +22,7 @@ Chroma ↓ FAISS ↓ Qdrant ↓ LanceDB
 
 ## Code
 
-`vectordb/chroma.py`, `vectordb/faiss.py`, `vectordb/qdrant.py` (+ lancedb later)
+`src/vectordb/chroma.py`, `src/vectordb/faiss.py`, `src/vectordb/qdrant.py` (+ lancedb later)
 
 ## Notebook
 

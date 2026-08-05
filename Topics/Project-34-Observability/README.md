@@ -30,7 +30,7 @@ requests?", logs answer "what did the code actually say?".
 ## Execute
 
 1. **Setup** — `pip install opentelemetry-sdk opentelemetry-api prometheus-client`
-2. **Read** — `observability/tracing.py` (tracer + span helpers) and `observability/metrics.py` (metric definitions + JSON logging)
+2. **Read** — `src/observability/tracing.py` (tracer + span helpers) and `src/observability/metrics.py` (metric definitions + JSON logging)
 3. **Implement** — the `ingest`/`retrieve`/`generate` spans with attributes; the counter/histogram updates at the right pipeline points
 4. **Run** — `python observability/tracing.py` and `python observability/metrics.py` smoke tests; then run 5 queries through a pipeline and export
 5. **Measure** — one trace per query (trace ID + span latencies), the metrics text (counts + latency histogram), and a JSON log line per query
@@ -48,13 +48,13 @@ requests?", logs answer "what did the code actually say?".
 
 ## Code
 
-- `observability/tracing.py` — `init_tracing(service_name)` + `trace_pipeline` spans (ingest/retrieve/generate)
-- `observability/metrics.py` — Prometheus counters/histogram + `setup_logging()` JSON formatter
+- `src/observability/tracing.py` — `init_tracing(service_name)` + `trace_pipeline` spans (ingest/retrieve/generate)
+- `src/observability/metrics.py` — Prometheus counters/histogram + `setup_logging()` JSON formatter
 
 ## Notebook
 
 `NoteBooks/Project-34-Observability/01-observability-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-34-Observability/01-observability-spec.py NoteBooks/Project-34-Observability/01-observability.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-34-Observability/01-observability-spec.py NoteBooks/Project-34-Observability/01-observability.ipynb
 ```

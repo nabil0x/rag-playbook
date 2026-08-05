@@ -20,7 +20,7 @@ BaseLLM          → generate → answer
 This is the capstone of the framework-building thread. In Project 16 you built
 every block with raw libraries; here you give those blocks **interfaces** and
 assemble them into your own `RAGPipeline`. The result mirrors the repo's
-`main.py` — the aspirational wiring shown in the README, where swapping
+`src/main.py` — the aspirational wiring shown in the README, where swapping
 `WebLoader()` for `PDFLoader()` changes only one line.
 
 ---
@@ -102,9 +102,9 @@ single method contract and raises `NotImplementedError` — an interface says
 only ever talks to `BaseRetriever.retrieve(...)`; it never knows whether the
 retriever is a naive top-k search, MMR, or hybrid — so swapping the retriever
 means writing a new concrete class, not touching the pipeline. This is the same
-idea as the repo's stub modules (`loaders/web.py`, `splitters/recursive.py`,
-`vectordb/faiss.py`, …): they each declare a contract and raise
-`NotImplementedError` until a project fills them in. `main.py` will eventually
+idea as the repo's stub modules (`src/loaders/web.py`, `src/splitters/recursive.py`,
+`src/vectordb/faiss.py`, …): they each declare a contract and raise
+`NotImplementedError` until a project fills them in. `src/main.py` will eventually
 wire concrete versions of these very classes.
 
 **WHAT TO EXPECT:** Six class definitions, then a cell proving you cannot call an
@@ -373,7 +373,7 @@ source=None)` runs retrieve → prompt → generate, and also runs `index` first
 a `source` is given, so a single `ask(question, source=url)` can drive the whole
 chain.
 
-**WHY:** This is the wiring the repo's `main.py` dreams of:
+**WHY:** This is the wiring the repo's `src/main.py` dreams of:
 
 ```python
 pipeline = RAGPipeline(
@@ -458,7 +458,7 @@ print("RAGPipeline wired OK with a fake loader")
 ## 4 · Run it end to end — one document, one query
 
 **WHAT:** We wire the six *real* concrete blocks into a `RAGPipeline` (exactly
-the `main.py` style), index one Project Gutenberg book, and ask it a question.
+the `src/main.py` style), index one Project Gutenberg book, and ask it a question.
 
 **WHY:** End-to-end is the proof the architecture works: the same pipeline that
 accepted a fake loader accepts the real one, because both implement
@@ -540,7 +540,7 @@ document with a second `pipeline.index(source)`. The cell below is your sandbox.
   makes every block replaceable — it is the entire architecture of this project.
 - **Interfaces are contracts, classes are implementations.** `BaseRetriever`
   says *what*; `SimilarityRetriever` says *how*. The repo's stub modules
-  (`loaders/`, `splitters/`, `embeddings/`, `vectordb/`, `retrieval/`, `llms/`)
+  (`src/loaders/`, `src/splitters/`, `src/embeddings/`, `src/vectordb/`, `src/retrieval/`, `src/llms/`)
   will become exactly these concrete classes.
 - **The framework adds structure, not functionality.** Every block here wraps a
   raw library from Project 16 — the RAG math is unchanged; only the *shape* of
@@ -548,7 +548,7 @@ document with a second `pipeline.index(source)`. The cell below is your sandbox.
 - **Separate ingestion from query.** `index()` (load→split→embed→store) runs
   once per document; `ask()` runs per question. Keeping them separate is why RAG
   can serve many questions cheaply after one indexing pass.
-- **`main.py` is the endgame.** Wiring `RAGPipeline(PDFLoader(), SemanticSplitter(),
+- **`src/main.py` is the endgame.** Wiring `RAGPipeline(PDFLoader(), SemanticSplitter(),
   BGEEmbedding(), FAISSVectorStore(), MMRRetriever(), GeminiLLM())` is now one
   keyword swap away from the classes you have just written.
 

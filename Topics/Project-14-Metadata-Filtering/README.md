@@ -12,7 +12,7 @@ Documents tagged `AI`, `Finance`, `Medicine` — query "only search Finance".
 
 ## Code
 
-`retrieval/` (add `metadata_filter.py`), `vectordb/chroma.py` (filters)
+`src/retrieval/` (add `metadata_filter.py`), `src/vectordb/chroma.py` (filters)
 
 ## Notebook
 

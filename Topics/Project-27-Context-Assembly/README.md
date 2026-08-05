@@ -28,7 +28,7 @@ context — and an experiment that proves ordering matters on your own data.
 ## Execute
 
 1. **Setup** — `pip install fastembed` (or reuse the repo's embedder), plus your usual LLM
-2. **Read** — `retrieval/context_assembly.py` — the `ContextAssembler` and `LostInTheMiddleExperiment` stubs
+2. **Read** — `src/retrieval/context_assembly.py` — the `ContextAssembler` and `LostInTheMiddleExperiment` stubs
 3. **Implement** — `dedupe` (exact + cosine > 0.9), `reorder` (best_first / retrieval_order / answer_first), `truncate` (greedy token budget)
 4. **Run** — `python retrieval/context_assembly.py` for the smoke test; then assemble a real context from a multi-query retrieval
 5. **Measure** — the lost-in-the-middle experiment: answer chunk at start / middle / end of 8 chunks, same LLM, 3 questions; record accuracy per position
@@ -46,12 +46,12 @@ context — and an experiment that proves ordering matters on your own data.
 
 ## Code
 
-- `retrieval/context_assembly.py` — `ContextAssembler(embedder)` — dedupe/reorder/truncate; `LostInTheMiddleExperiment(llm)` — position-bias measurement
+- `src/retrieval/context_assembly.py` — `ContextAssembler(embedder)` — dedupe/reorder/truncate; `LostInTheMiddleExperiment(llm)` — position-bias measurement
 
 ## Notebook
 
 `NoteBooks/Project-27-Context-Assembly/01-context-assembly-spec.py` → generate with:
 
 ```bash
-python scripts/gen_notebook.py NoteBooks/Project-27-Context-Assembly/01-context-assembly-spec.py NoteBooks/Project-27-Context-Assembly/01-context-assembly.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Project-27-Context-Assembly/01-context-assembly-spec.py NoteBooks/Project-27-Context-Assembly/01-context-assembly.ipynb
 ```

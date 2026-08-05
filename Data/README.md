@@ -10,10 +10,10 @@ Two manifests record every downloaded file, one line per file
 (`url|sha256|bytes|relpath`):
 
 - `Data/.corpus-manifest.txt` — benchmark corpora under `Data/corpus/`
-  (fetched by `scripts/fetch_fresh_corpus.py` and
-  `scripts/fetch_gutenberg.py`)
+  (fetched by `src/scripts/fetch_fresh_corpus.py` and
+  `src/scripts/fetch_gutenberg.py`)
 - `Data/.samples-manifest.txt` — Special Documents samples under `Data/SD-0N-*`
-  (fetched by `scripts/fetch_sd_samples.py`)
+  (fetched by `src/scripts/fetch_sd_samples.py`)
 
 Re-downloading is only needed when the manifest cannot verify a file; the
 fetchers are idempotent and skip files whose sha256 already matches.
@@ -32,7 +32,7 @@ fetchers are idempotent and skip files whose sha256 already matches.
 
 ### Notes
 
-- **Gutenberg** texts are public-domain works; `loaders/gutenberg.py` strips
+- **Gutenberg** texts are public-domain works; `src/loaders/gutenberg.py` strips
   the Project Gutenberg boilerplate. This corpus is the primary data for
   Layer-1 track 01 (chunking).
 - **BEIR** (`beir-cellar/beir`) is an Apache-2.0 *framework*, but it aggregates

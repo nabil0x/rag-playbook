@@ -20,7 +20,7 @@ ContextualCompressionRetriever
 
 ## Code
 
-`retrieval/` (add `compression.py`)
+`src/retrieval/` (add `compression.py`)
 
 ## Notebook
 
