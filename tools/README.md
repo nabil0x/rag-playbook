@@ -13,6 +13,7 @@ contract style as the component library (`loaders/`, `retrieval/`, …).
 | `graph.py` | Entity/relation graph construction (networkx) from documents | 08-graphrag |
 | `graphrag.py` | GraphRAG query flow: global vs local search over the graph | 08-graphrag |
 | `raptor.py` | RAPTOR: embedding clustering + recursive summarization tree build + tree traversal | 09-raptor |
+| `verifier.py` | Evidence verification: retrieve candidate evidence + LLM claim verdict (SUPPORTED / REFUTED / NOT_ENOUGH_INFO) | 10-agentic-rag |
 
 Rule of thumb: if LangChain already ships it (or a class in this repo does),
 reuse it — do not reimplement. `tools/` is only for the gaps.
