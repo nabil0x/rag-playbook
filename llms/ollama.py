@@ -1,42 +1,39 @@
-"""Groq LLM wrapper.
+"""Local Ollama LLM wrapper (fully offline, zero quota).
 
-LLM block: swap Gemini -> Groq with one line — same ``invoke(prompt) -> str``
-contract as ``llms/gemini.py`` and ``llms/openai.py``, so any retriever or
-prompt that takes an "LLM exposing invoke(str) -> str" works unchanged.
-See Topics/Project-01-Baseline-RAG/README.md.
+LLM block: same ``invoke(prompt) -> str`` / ``json_object(prompt) -> dict``
+contract as ``llms/groq.py``, ``llms/gemini.py`` and ``llms/nvidia.py``, so
+any retriever or prompt that takes an "LLM exposing invoke(str) -> str"
+works unchanged. Backed by ``langchain_ollama.ChatOllama`` running the
+locally served ``qwen2.5-coder:7b`` model (the same model the repo's
+``evaluation/judge.py`` LLMJudge uses) — a deterministic, no-quota
+fallback when hosted providers are rate-limited.
 """
 
 import json
-import os
 
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
-class GroqLLM:
-    """Generate answers with Groq's hosted Llama models."""
+class OllamaLLM:
+    """Generate answers with a locally served Ollama model."""
 
-    def __init__(self, model: str = "llama-3.3-70b-versatile", temperature: float = 0.0):
+    def __init__(self, model: str = "qwen2.5-coder:7b", temperature: float = 0.0):
         self.model = model
         self.temperature = temperature
         self._llm = None
 
     def _get_llm(self):
-        """Lazily build (and cache) the ChatGroq instance."""
+        """Lazily build (and cache) the ChatOllama instance."""
         if self._llm is None:
-            if not os.getenv("GROQ_API_KEY"):
-                raise RuntimeError(
-                    "GROQ_API_KEY is not set. Add GROQ_API_KEY=<your key> to "
-                    "the .env file next to this repo."
-                )
             try:
-                from langchain_groq import ChatGroq
+                from langchain_ollama import ChatOllama
             except ImportError:
                 raise ImportError(
-                    "GroqLLM needs langchain-groq: pip install langchain-groq"
+                    "OllamaLLM needs langchain-ollama: pip install langchain-ollama"
                 )
-            self._llm = ChatGroq(model=self.model, temperature=self.temperature)
+            self._llm = ChatOllama(model=self.model, temperature=self.temperature)
         return self._llm
 
     def invoke(self, prompt: str) -> str:
@@ -47,7 +44,7 @@ class GroqLLM:
     def _strip_code_fence(text: str) -> str:
         """Remove a surrounding markdown code fence (```json ... ```).
 
-        Hosted models routinely wrap their JSON answers in a fenced block;
+        Local models routinely wrap their JSON answers in a fenced block;
         ``json.loads`` cannot parse the raw text. Strips the leading `````
         line (and optional ``json`` label) and the trailing ````` line,
         leaving the bare JSON.
@@ -62,10 +59,10 @@ class GroqLLM:
     def json_object(self, prompt: str, retries: int = 2) -> dict:
         """Ask the model to output ONLY a JSON object and parse it.
 
-        Mirrors ``LLMJudge.judge``'s contract: strips a markdown code fence
-        if present, and on parse failure re-prompts with a JSON-only
-        instruction up to ``retries`` times. Returns ``{"error": ...}`` when
-        the model never produces parseable JSON.
+        Mirrors ``GroqLLM.json_object`` / ``GeminiLLM.json_object``: strips a
+        markdown code fence if present, and on parse failure re-prompts with
+        a JSON-only instruction up to ``retries`` times. Returns
+        ``{"error": ...}`` when the model never produces parseable JSON.
         """
         text = ""
         for attempt in range(retries + 1):
@@ -83,7 +80,4 @@ class GroqLLM:
 
 
 if __name__ == "__main__":
-    if not os.getenv("GROQ_API_KEY"):
-        print("SKIP: GROQ_API_KEY not set")
-    else:
-        print(GroqLLM().invoke("Say hello in one short sentence."))
+    print(OllamaLLM().invoke("Say hello in one short sentence."))
