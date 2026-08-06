@@ -50,8 +50,8 @@ significance check and learn why `n` is the most important metric.
 
 ## Notebook
 
-`NoteBooks/Project-35-Online-Eval/01-online-eval-spec.py` → generate with:
+`NoteBooks/Projects/Project-35-Online-Eval/01-online-eval-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-35-Online-Eval/01-online-eval-spec.py NoteBooks/Project-35-Online-Eval/01-online-eval.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-35-Online-Eval/01-online-eval-spec.py NoteBooks/Projects/Project-35-Online-Eval/01-online-eval.ipynb
 ```

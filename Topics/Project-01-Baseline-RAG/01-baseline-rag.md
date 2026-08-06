@@ -158,6 +158,6 @@ quality are now the two levers that decide whether the answer is right.
 - Project 8 — replace similarity with MMR, observe diversity
 
 The complete walkthrough lives in
-[`NoteBooks/Project-01-Baseline-RAG/04-baseline-rag.ipynb`](../../NoteBooks/Project-01-Baseline-RAG/04-baseline-rag.ipynb).
+[`NoteBooks/Projects/Project-01-Baseline-RAG/04-baseline-rag.ipynb`](../../NoteBooks/Projects/Project-01-Baseline-RAG/04-baseline-rag.ipynb).
 The component modules live in `src/loaders/`, `src/splitters/`, `src/embeddings/`,
 `src/vectordb/`, `src/retrieval/`, `src/prompts/`, `src/llms/` — each one a class you can swap.

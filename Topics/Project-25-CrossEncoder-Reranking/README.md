@@ -50,8 +50,8 @@ lines around the retriever you already built.
 
 ## Notebook
 
-`NoteBooks/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking-spec.py` → generate with:
+`NoteBooks/Projects/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking-spec.py NoteBooks/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking-spec.py NoteBooks/Projects/Project-25-CrossEncoder-Reranking/01-crossencoder-reranking.ipynb
 ```

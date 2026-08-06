@@ -32,4 +32,4 @@ Python docs, FastAPI docs, LangGraph docs
 
 ## Notebook
 
-`NoteBooks/Project-05-HTML-Documentation/01-html-documentation.ipynb`
+`NoteBooks/Projects/Project-05-HTML-Documentation/01-html-documentation.ipynb`

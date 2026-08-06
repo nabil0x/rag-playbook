@@ -50,8 +50,8 @@ project gets down to the sentence that is wrong.
 
 ## Notebook
 
-`NoteBooks/Project-28-Citations-Attribution/01-citations-attribution-spec.py` → generate with:
+`NoteBooks/Projects/Project-28-Citations-Attribution/01-citations-attribution-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-28-Citations-Attribution/01-citations-attribution-spec.py NoteBooks/Project-28-Citations-Attribution/01-citations-attribution.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-28-Citations-Attribution/01-citations-attribution-spec.py NoteBooks/Projects/Project-28-Citations-Attribution/01-citations-attribution.ipynb
 ```

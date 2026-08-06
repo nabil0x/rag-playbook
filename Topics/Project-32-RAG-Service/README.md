@@ -52,8 +52,8 @@ the same service runs anywhere.
 
 ## Notebook
 
-`NoteBooks/Project-32-RAG-Service/01-rag-service-spec.py` → generate with:
+`NoteBooks/Projects/Project-32-RAG-Service/01-rag-service-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-32-RAG-Service/01-rag-service-spec.py NoteBooks/Project-32-RAG-Service/01-rag-service.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-32-RAG-Service/01-rag-service-spec.py NoteBooks/Projects/Project-32-RAG-Service/01-rag-service.ipynb
 ```

@@ -50,8 +50,8 @@ context — and an experiment that proves ordering matters on your own data.
 
 ## Notebook
 
-`NoteBooks/Project-27-Context-Assembly/01-context-assembly-spec.py` → generate with:
+`NoteBooks/Projects/Project-27-Context-Assembly/01-context-assembly-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-27-Context-Assembly/01-context-assembly-spec.py NoteBooks/Project-27-Context-Assembly/01-context-assembly.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-27-Context-Assembly/01-context-assembly-spec.py NoteBooks/Projects/Project-27-Context-Assembly/01-context-assembly.ipynb
 ```

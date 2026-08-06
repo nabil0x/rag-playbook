@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-17-Modular-RAG-Framework/01-modular-rag-framework.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-17-Modular-RAG-Framework/01-modular-rag-framework.ipynb`
 
 
 ---

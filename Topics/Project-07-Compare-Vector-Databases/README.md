@@ -26,4 +26,4 @@ Chroma ↓ FAISS ↓ Qdrant ↓ LanceDB
 
 ## Notebook
 
-`NoteBooks/Project-07-Compare-Vector-Databases/01-comparing-vector-databases.ipynb`
+`NoteBooks/Projects/Project-07-Compare-Vector-Databases/01-comparing-vector-databases.ipynb`

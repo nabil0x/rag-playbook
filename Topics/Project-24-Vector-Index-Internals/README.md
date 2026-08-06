@@ -51,8 +51,8 @@ This project makes those tradeoffs measurable in your own hands.
 
 ## Notebook
 
-`NoteBooks/Project-24-Vector-Index-Internals/01-index-internals-spec.py` → generate with:
+`NoteBooks/Projects/Project-24-Vector-Index-Internals/01-index-internals-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-24-Vector-Index-Internals/01-index-internals-spec.py NoteBooks/Project-24-Vector-Index-Internals/01-index-internals.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-24-Vector-Index-Internals/01-index-internals-spec.py NoteBooks/Projects/Project-24-Vector-Index-Internals/01-index-internals.ipynb
 ```

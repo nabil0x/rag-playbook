@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-12-Prompt-Engineering/01-prompt-engineering.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-12-Prompt-Engineering/01-prompt-engineering.ipynb`
 
 
 ---

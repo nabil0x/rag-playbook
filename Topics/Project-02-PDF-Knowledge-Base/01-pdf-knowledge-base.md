@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-02-PDF-Knowledge-Base/01-pdf-knowledge-base.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-02-PDF-Knowledge-Base/01-pdf-knowledge-base.ipynb`
 
 
 ---

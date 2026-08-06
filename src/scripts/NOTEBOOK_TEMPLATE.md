@@ -2,7 +2,7 @@
 
 Every notebook in this repo follows the same teaching philosophy and structure.
 Read this file BEFORE writing any notebook. Also read
-`NoteBooks/Project-01-Baseline-RAG/04-baseline-rag.ipynb` as a reference for the
+`NoteBooks/Projects/Project-01-Baseline-RAG/04-baseline-rag.ipynb` as a reference for the
 real library imports and patterns used in this repo.
 
 ## Teaching philosophy
@@ -134,7 +134,7 @@ missing.
    ```
 2. Generate the notebook:
    ```bash
-   python src/scripts/gen_notebook.py /tmp/opencode/<spec>.py NoteBooks/Project-NN-<Name>/01-<slug>.ipynb
+   python src/scripts/gen_notebook.py /tmp/opencode/<spec>.py NoteBooks/Projects/Project-NN-<Name>/01-<slug>.ipynb
    ```
 3. Validate your output:
    ```bash

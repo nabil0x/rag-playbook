@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-03-Local-Documentation-Search/01-local-documentation-search.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-03-Local-Documentation-Search/01-local-documentation-search.ipynb`
 
 
 ---

@@ -57,4 +57,4 @@ All components run locally — zero external API cost.
 
 ## Notebook
 
-`NoteBooks/Project-20-Deep-Eval/01-deep-eval.ipynb` — capstone notebook, generated via `src/scripts/gen_notebook.py`, executed end-to-end on the local magus kernel (zero API cost)
+`NoteBooks/Projects/Project-20-Deep-Eval/01-deep-eval.ipynb` — capstone notebook, generated via `src/scripts/gen_notebook.py`, executed end-to-end on the local magus kernel (zero API cost)

@@ -24,4 +24,4 @@ ContextualCompressionRetriever
 
 ## Notebook
 
-`NoteBooks/Project-11-Context-Compression/01-context-compression.ipynb`
+`NoteBooks/Projects/Project-11-Context-Compression/01-context-compression.ipynb`

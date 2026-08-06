@@ -50,4 +50,4 @@ you'd enforce here.
 
 ## Notebook
 
-`NoteBooks/Project-17-Modular-RAG-Framework/01-modular-rag-framework.ipynb`
+`NoteBooks/Projects/Project-17-Modular-RAG-Framework/01-modular-rag-framework.ipynb`

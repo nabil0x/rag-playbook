@@ -55,8 +55,8 @@ correct without a human reading every answer.
 
 ## Notebook
 
-`NoteBooks/Project-36-Drift-Prompt-Regression/01-drift-regression-spec.py` → generate with:
+`NoteBooks/Projects/Project-36-Drift-Prompt-Regression/01-drift-regression-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-36-Drift-Prompt-Regression/01-drift-regression-spec.py NoteBooks/Project-36-Drift-Prompt-Regression/01-drift-regression.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-36-Drift-Prompt-Regression/01-drift-regression-spec.py NoteBooks/Projects/Project-36-Drift-Prompt-Regression/01-drift-regression.ipynb
 ```

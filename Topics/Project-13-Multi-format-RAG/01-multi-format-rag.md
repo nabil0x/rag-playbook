@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-13-Multi-format-RAG/01-multi-format-rag.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-13-Multi-format-RAG/01-multi-format-rag.ipynb`
 
 
 ---

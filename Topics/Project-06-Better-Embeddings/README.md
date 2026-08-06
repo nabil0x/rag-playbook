@@ -24,4 +24,4 @@ Gemini ↓ BGE ↓ E5 ↓ Nomic ↓ Jina
 
 ## Notebook
 
-`NoteBooks/Project-06-Better-Embeddings/01-comparing-embedding-models.ipynb`
+`NoteBooks/Projects/Project-06-Better-Embeddings/01-comparing-embedding-models.ipynb`

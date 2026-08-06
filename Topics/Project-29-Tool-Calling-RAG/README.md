@@ -50,8 +50,8 @@ the tool-call trace — which is the first step toward agentic RAG (Projects
 
 ## Notebook
 
-`NoteBooks/Project-29-Tool-Calling-RAG/01-tool-calling-spec.py` → generate with:
+`NoteBooks/Projects/Project-29-Tool-Calling-RAG/01-tool-calling-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-29-Tool-Calling-RAG/01-tool-calling-spec.py NoteBooks/Project-29-Tool-Calling-RAG/01-tool-calling.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-29-Tool-Calling-RAG/01-tool-calling-spec.py NoteBooks/Projects/Project-29-Tool-Calling-RAG/01-tool-calling.ipynb
 ```

@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-15-Hybrid-Search/01-hybrid-search.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-15-Hybrid-Search/01-hybrid-search.ipynb`
 
 
 ---

@@ -2,7 +2,7 @@
 
 Evaluation block: the 23 hand-checked question/answer pairs used to score
 generation quality. Source of truth is
-NoteBooks/SD-08-Invoices/02-invoice-rag-strategy-comparison.ipynb cell 5 (the
+NoteBooks/Special-Documents/SD-08-Invoices/02-invoice-rag-strategy-comparison.ipynb cell 5 (the
 ``QA`` dict) — extracted verbatim, not hand-rewritten.
 See Topics/Project-20-Deep-Eval/README.md.
 """

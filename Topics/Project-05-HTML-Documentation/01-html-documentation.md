@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-05-HTML-Documentation/01-html-documentation.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-05-HTML-Documentation/01-html-documentation.ipynb`
 
 
 ---

@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-07-Compare-Vector-Databases/01-comparing-vector-databases.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-07-Compare-Vector-Databases/01-comparing-vector-databases.ipynb`
 
 
 ---

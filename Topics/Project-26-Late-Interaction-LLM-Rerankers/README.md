@@ -51,8 +51,8 @@ rerankers, three mechanisms; this project makes the difference concrete.
 
 ## Notebook
 
-`NoteBooks/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank-spec.py` → generate with:
+`NoteBooks/Projects/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank-spec.py NoteBooks/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank-spec.py NoteBooks/Projects/Project-26-Late-Interaction-LLM-Rerankers/01-late-interaction-llm-rerank.ipynb
 ```

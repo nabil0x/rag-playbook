@@ -50,8 +50,8 @@ wrong, you know which specialist produced the bad step.
 
 ## Notebook
 
-`NoteBooks/Project-31-Multi-Agent-RAG/01-multi-agent-spec.py` → generate with:
+`NoteBooks/Projects/Project-31-Multi-Agent-RAG/01-multi-agent-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-31-Multi-Agent-RAG/01-multi-agent-spec.py NoteBooks/Project-31-Multi-Agent-RAG/01-multi-agent.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-31-Multi-Agent-RAG/01-multi-agent-spec.py NoteBooks/Projects/Project-31-Multi-Agent-RAG/01-multi-agent.ipynb
 ```

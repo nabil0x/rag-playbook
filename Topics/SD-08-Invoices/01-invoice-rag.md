@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/SD-08-Invoices/01-invoice-rag.ipynb`
+> Source notebook: `NoteBooks/Special-Documents/SD-08-Invoices/01-invoice-rag.ipynb`
 
 ---
 

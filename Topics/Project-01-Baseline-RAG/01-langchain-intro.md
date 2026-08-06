@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-01-Baseline-RAG/01-langchain-intro.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-01-Baseline-RAG/01-langchain-intro.ipynb`
 
 
 ---

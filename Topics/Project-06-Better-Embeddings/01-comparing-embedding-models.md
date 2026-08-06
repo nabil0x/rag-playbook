@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-06-Better-Embeddings/01-comparing-embedding-models.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-06-Better-Embeddings/01-comparing-embedding-models.ipynb`
 
 
 ---

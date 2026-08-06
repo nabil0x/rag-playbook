@@ -52,8 +52,8 @@ re-enqueues it).
 
 ## Notebook
 
-`NoteBooks/Project-33-Async-Ingestion/01-async-ingestion-spec.py` → generate with:
+`NoteBooks/Projects/Project-33-Async-Ingestion/01-async-ingestion-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-33-Async-Ingestion/01-async-ingestion-spec.py NoteBooks/Project-33-Async-Ingestion/01-async-ingestion.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-33-Async-Ingestion/01-async-ingestion-spec.py NoteBooks/Projects/Project-33-Async-Ingestion/01-async-ingestion.ipynb
 ```

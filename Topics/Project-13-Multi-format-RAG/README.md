@@ -24,4 +24,4 @@ PDF + Markdown + CSV + Web + JSON
 
 ## Notebook
 
-`NoteBooks/Project-13-Multi-format-RAG/01-multi-format-rag.ipynb`
+`NoteBooks/Projects/Project-13-Multi-format-RAG/01-multi-format-rag.ipynb`

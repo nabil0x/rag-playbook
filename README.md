@@ -108,7 +108,7 @@ Suggested review path:
 2. Open [`src/curriculum/README.md`](src/curriculum/README.md) to see the concept map.
 3. Open [`Topics/README.md`](Topics/README.md) to see the full project roadmap.
 4. Inspect [`src/retrieval/`](src/retrieval/) and [`src/evaluation/`](src/evaluation/) for advanced RAG work.
-5. Run one notebook from [`NoteBooks/Project-01-Baseline-RAG/`](NoteBooks/Project-01-Baseline-RAG/) or one curriculum lab from [`src/curriculum/`](src/curriculum/).
+5. Run one notebook from [`NoteBooks/Projects/Project-01-Baseline-RAG/`](NoteBooks/Projects/Project-01-Baseline-RAG/) or one curriculum lab from [`src/curriculum/`](src/curriculum/).
 
 ---
 
@@ -255,6 +255,10 @@ cheap to run, and easier to compare.
 |   `-- scripts/               # corpus fetchers and notebook tooling
 |-- Topics/                    # project cards and article plans
 |-- NoteBooks/                 # runnable notebooks
+|   |-- Projects/              # Project-NN series (Project-01 … Project-36)
+|   |-- Curriculum/            # Curriculum-NN series (lab-faithful notebooks)
+|   |-- Scratch/               # Scratch-NN series (LangChain-native mirrors)
+|   `-- Special-Documents/     # SD-NN series (Word, PPT, Excel, email, invoices)
 |-- Data/                      # samples, benchmark corpora, manifests
 |-- docker/                    # deployment-oriented files
 `-- .omo/plans/                # approved plans (this repo plans by plan-doc)
@@ -318,7 +322,7 @@ python src/main.py
 Start with:
 
 ```text
-NoteBooks/Project-01-Baseline-RAG/04-baseline-rag.ipynb
+NoteBooks/Projects/Project-01-Baseline-RAG/04-baseline-rag.ipynb
 ```
 
 Run notebooks from their own folder because paths are relative to the notebook

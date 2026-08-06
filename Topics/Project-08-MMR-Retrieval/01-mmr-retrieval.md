@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-08-MMR-Retrieval/01-mmr-retrieval.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-08-MMR-Retrieval/01-mmr-retrieval.ipynb`
 
 
 ---

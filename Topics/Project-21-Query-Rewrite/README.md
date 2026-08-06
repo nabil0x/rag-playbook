@@ -70,11 +70,11 @@ hand-labeled eval set.
 
 ## Notebook
 
-`NoteBooks/Project-21-Query-Rewrite/01-query-rewrite-stepback-spec.py` →
+`NoteBooks/Projects/Project-21-Query-Rewrite/01-query-rewrite-stepback-spec.py` →
 generate the notebook with:
 
 ```bash
 python src/scripts/gen_notebook.py \
-  NoteBooks/Project-21-Query-Rewrite/01-query-rewrite-stepback-spec.py \
-  NoteBooks/Project-21-Query-Rewrite/01-query-rewrite-stepback.ipynb
+  NoteBooks/Projects/Project-21-Query-Rewrite/01-query-rewrite-stepback-spec.py \
+  NoteBooks/Projects/Project-21-Query-Rewrite/01-query-rewrite-stepback.ipynb
 ```

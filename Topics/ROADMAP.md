@@ -17,7 +17,7 @@
 - **Module stubs live in the component folders.** You fill in the `NotImplementedError`
   sites; the stub already carries the docstring, the import contract, and a
   no-network `__main__` smoke test.
-- **Notebook specs** (`NoteBooks/Project-NN-*/01-*-spec.py`) render into runnable
+- **Notebook specs** (`NoteBooks/Projects/Project-NN-*/01-*-spec.py`) render into runnable
   notebooks with `src/scripts/gen_notebook.py`.
 - **Do them in order within a phase.** Phases build on each other; projects within
   a phase are independent enough that order matters only for narrative.
@@ -118,10 +118,10 @@ Every project card references the same four artifacts, in the same order:
 1. **`README.md`** — this card (why / learn / execute / acceptance criteria).
 2. **Stub module(s)** — importable class skeleton with `NotImplementedError` TODOs
    and a self-checking `__main__` block.
-3. **Notebook spec** — `NoteBooks/Project-NN-*/01-*-spec.py`, rendered with:
+3. **Notebook spec** — `NoteBooks/Projects/Project-NN-*/01-*-spec.py`, rendered with:
    ```bash
-   python src/scripts/gen_notebook.py NoteBooks/Project-NN-*/01-*-spec.py \
-       NoteBooks/Project-NN-*/01-*.ipynb
+   python src/scripts/gen_notebook.py NoteBooks/Projects/Project-NN-*/01-*-spec.py \
+       NoteBooks/Projects/Project-NN-*/01-*.ipynb
    ```
 4. **Article** — optional write-up drafted inside the project folder as the
    curriculum evolves (mirrors the existing Projects 01–20 pattern).

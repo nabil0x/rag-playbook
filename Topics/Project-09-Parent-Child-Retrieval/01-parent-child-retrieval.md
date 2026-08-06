@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-09-Parent-Child-Retrieval/01-parent-child-retrieval.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-09-Parent-Child-Retrieval/01-parent-child-retrieval.ipynb`
 
 
 ---

@@ -25,4 +25,4 @@ Retrieve using all queries, dedupe results.
 
 ## Notebook
 
-`NoteBooks/Project-10-MultiQuery-Retrieval/01-multiquery-retrieval.ipynb`
+`NoteBooks/Projects/Project-10-MultiQuery-Retrieval/01-multiquery-retrieval.ipynb`

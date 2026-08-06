@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/SD-01-Word-Documents/03-word-rag-pure-langchain.ipynb`
+> Source notebook: `NoteBooks/Special-Documents/SD-01-Word-Documents/03-word-rag-pure-langchain.ipynb`
 
 ---
 
@@ -80,7 +80,7 @@ from langchain_chroma import Chroma
 
 ```python
 # Resolve the repo-relative paths to the sample .docx files.
-# The notebook lives in NoteBooks/SD-01-Word-Documents/,
+# The notebook lives in NoteBooks/Special-Documents/SD-01-Word-Documents/,
 # so the repo root is two levels up.
 REPO_ROOT = Path.cwd().parent.parent
 DOCX_DIR = REPO_ROOT / "Data" / "SD-01-word"

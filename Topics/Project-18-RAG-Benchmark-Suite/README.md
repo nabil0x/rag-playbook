@@ -49,4 +49,4 @@ New `eval/` folder (metrics, harness), reusing every component module.
 
 ## Notebook
 
-`NoteBooks/Project-18-RAG-Benchmark-Suite/` — capstone notebook not created yet
+`NoteBooks/Projects/Project-18-RAG-Benchmark-Suite/` — capstone notebook not created yet

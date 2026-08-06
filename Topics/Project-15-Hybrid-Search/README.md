@@ -19,4 +19,4 @@ Keyword + Semantic
 
 ## Notebook
 
-`NoteBooks/Project-15-Hybrid-Search/01-hybrid-search.ipynb`
+`NoteBooks/Projects/Project-15-Hybrid-Search/01-hybrid-search.ipynb`

@@ -39,4 +39,4 @@ project/
 
 ## Notebook
 
-`NoteBooks/Project-03-Local-Documentation-Search/01-local-documentation-search.ipynb`
+`NoteBooks/Projects/Project-03-Local-Documentation-Search/01-local-documentation-search.ipynb`

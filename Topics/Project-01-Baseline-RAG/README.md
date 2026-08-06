@@ -32,4 +32,4 @@ LLM         : Gemini 2.5 Flash
 
 ## Notebook
 
-`NoteBooks/Project-01-Baseline-RAG/04-baseline-rag.ipynb`
+`NoteBooks/Projects/Project-01-Baseline-RAG/04-baseline-rag.ipynb`

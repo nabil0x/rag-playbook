@@ -84,11 +84,11 @@ at the query, not at the result list.
 
 ## Notebook
 
-`NoteBooks/Project-22-HyDE-Decomposition/01-hyde-decomposition-spec.py` →
+`NoteBooks/Projects/Project-22-HyDE-Decomposition/01-hyde-decomposition-spec.py` →
 generate the notebook with:
 
 ```bash
 python src/scripts/gen_notebook.py \
-  NoteBooks/Project-22-HyDE-Decomposition/01-hyde-decomposition-spec.py \
-  NoteBooks/Project-22-HyDE-Decomposition/01-hyde-decomposition.ipynb
+  NoteBooks/Projects/Project-22-HyDE-Decomposition/01-hyde-decomposition-spec.py \
+  NoteBooks/Projects/Project-22-HyDE-Decomposition/01-hyde-decomposition.ipynb
 ```

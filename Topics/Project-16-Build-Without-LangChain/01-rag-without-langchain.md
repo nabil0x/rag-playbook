@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-16-Build-Without-LangChain/01-rag-without-langchain.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-16-Build-Without-LangChain/01-rag-without-langchain.ipynb`
 
 
 ---

@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-10-MultiQuery-Retrieval/01-multiquery-retrieval.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-10-MultiQuery-Retrieval/01-multiquery-retrieval.ipynb`
 
 
 ---

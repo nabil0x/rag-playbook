@@ -23,4 +23,4 @@ Reference implementation lives under `scratch/` (pure Python, no framework impor
 
 ## Notebook
 
-`NoteBooks/Project-16-Build-Without-LangChain/01-rag-without-langchain.ipynb`
+`NoteBooks/Projects/Project-16-Build-Without-LangChain/01-rag-without-langchain.ipynb`

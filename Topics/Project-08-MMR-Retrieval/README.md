@@ -17,4 +17,4 @@
 
 ## Notebook
 
-`NoteBooks/Project-08-MMR-Retrieval/01-mmr-retrieval.ipynb`
+`NoteBooks/Projects/Project-08-MMR-Retrieval/01-mmr-retrieval.ipynb`

@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/Project-04-Markdown-Documentation-RAG/01-markdown-documentation-rag.ipynb`
+> Source notebook: `NoteBooks/Projects/Project-04-Markdown-Documentation-RAG/01-markdown-documentation-rag.ipynb`
 
 
 ---

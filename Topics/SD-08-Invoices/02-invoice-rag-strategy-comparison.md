@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/SD-08-Invoices/02-invoice-rag-strategy-comparison.ipynb`
+> Source notebook: `NoteBooks/Special-Documents/SD-08-Invoices/02-invoice-rag-strategy-comparison.ipynb`
 
 ---
 
@@ -59,7 +59,7 @@ import sys
 from pathlib import Path
 
 # Resolve the repo root relative to this notebook's directory.
-# When executed from NoteBooks/SD-08-Invoices/,
+# When executed from NoteBooks/Special-Documents/SD-08-Invoices/,
 # the repo root is two levels up.
 REPO_ROOT = Path.cwd().parent.parent
 DATA_DIR = REPO_ROOT / "Data" / "SD-08-invoices"

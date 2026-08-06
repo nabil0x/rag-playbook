@@ -1,4 +1,4 @@
-> Source notebook: `NoteBooks/SD-08-Invoices/03-invoice-rag-pure-langchain.ipynb`
+> Source notebook: `NoteBooks/Special-Documents/SD-08-Invoices/03-invoice-rag-pure-langchain.ipynb`
 
 ---
 
@@ -76,7 +76,7 @@ from langchain_chroma import Chroma
 
 ```python
 # Resolve the repo-relative paths to the sample invoice PDFs.
-# The notebook lives in NoteBooks/SD-08-Invoices/,
+# The notebook lives in NoteBooks/Special-Documents/SD-08-Invoices/,
 # so the repo root is two levels up.
 REPO_ROOT = Path.cwd().parent.parent
 INVOICE_DIR = REPO_ROOT / "Data" / "SD-08-invoices"

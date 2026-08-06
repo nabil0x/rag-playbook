@@ -25,4 +25,4 @@ Basic ↓ JSON Output ↓ Few-shot ↓ Citation ↓ Reasoning
 
 ## Notebook
 
-`NoteBooks/Project-12-Prompt-Engineering/01-prompt-engineering.ipynb`
+`NoteBooks/Projects/Project-12-Prompt-Engineering/01-prompt-engineering.ipynb`

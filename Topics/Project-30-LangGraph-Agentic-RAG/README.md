@@ -50,8 +50,8 @@ and becomes four named functions.
 
 ## Notebook
 
-`NoteBooks/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag-spec.py` → generate with:
+`NoteBooks/Projects/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag-spec.py NoteBooks/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag-spec.py NoteBooks/Projects/Project-30-LangGraph-Agentic-RAG/01-langgraph-rag.ipynb
 ```

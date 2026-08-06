@@ -53,8 +53,8 @@ requests?", logs answer "what did the code actually say?".
 
 ## Notebook
 
-`NoteBooks/Project-34-Observability/01-observability-spec.py` → generate with:
+`NoteBooks/Projects/Project-34-Observability/01-observability-spec.py` → generate with:
 
 ```bash
-python src/scripts/gen_notebook.py NoteBooks/Project-34-Observability/01-observability-spec.py NoteBooks/Project-34-Observability/01-observability.ipynb
+python src/scripts/gen_notebook.py NoteBooks/Projects/Project-34-Observability/01-observability-spec.py NoteBooks/Projects/Project-34-Observability/01-observability.ipynb
 ```

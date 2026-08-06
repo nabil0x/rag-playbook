@@ -16,4 +16,4 @@ Documents tagged `AI`, `Finance`, `Medicine` — query "only search Finance".
 
 ## Notebook
 
-`NoteBooks/Project-14-Metadata-Filtering/01-metadata-filtering.ipynb`
+`NoteBooks/Projects/Project-14-Metadata-Filtering/01-metadata-filtering.ipynb`

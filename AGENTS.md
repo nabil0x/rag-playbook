@@ -20,7 +20,7 @@ defaults; override them only when a task explicitly says otherwise.
   `src/curriculum/<NN>-<concept>/`.
 - The `.py` must **run and pass its verification gate** (concrete output +
   `py_compile` clean) **before** it is converted to a notebook under
-  `NoteBooks/Curriculum-<NN>-<concept>/`.
+  `NoteBooks/Curriculum/Curriculum-<NN>-<concept>/`.
 - Never write the notebook first.
 
 ## 3. LangChain ecosystem first; build your own only for the gaps
@@ -57,7 +57,9 @@ src/                   all Python (components, labs, scripts, service, entrypoin
   tools/               custom classes where LangChain has gaps
   loaders/…evaluation/ shared swappable component library (the pipeline blocks)
   scripts/             fetchers and tooling
-NoteBooks/             runnable notebooks (Project-0N, SD-0N, Curriculum-NN)
+NoteBooks/             runnable notebooks, grouped by series:
+                       Projects/ (Project-NN), Curriculum/ (Curriculum-NN),
+                       Scratch/ (Scratch-NN), Special-Documents/ (SD-NN)
 Topics/                publishable project cards
 Data/                  samples + corpus + manifests
 .omo/plans/            approved plans (this repo plans by plan-doc)
